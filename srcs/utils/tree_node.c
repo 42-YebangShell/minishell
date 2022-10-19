@@ -47,9 +47,9 @@ void	del_node(t_tree_node *node)
 	{
 		del_node(node->left);
 		del_node(node->right);
-		del_token(node->tokens);
-		del_token(node->redir);
-		del_token(node->words);
+		delete_token(node->tokens);
+		delete_token(node->redir);
+		delete_token(node->words);
 		free(node);
 		node = NULL;
 	}

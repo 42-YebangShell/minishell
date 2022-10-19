@@ -21,8 +21,7 @@ typedef struct s_global
 typedef struct s_token
 {
 	enum e_token_type	type;
-	char				*contents;
-	struct s_token		*prev;
+	char				*content;
 	struct s_token		*next;
 }	t_token;
 
@@ -38,8 +37,8 @@ typedef struct s_tree_node
 
 typedef struct s_info
 {
-	t_tree_node	*root;
-	t_token		*tokens;
+	t_tree_node	*r_node;
+	t_token		*h_token;
 }	t_info;
 
 #endif

@@ -25,8 +25,9 @@ static void	shell_loop()
 		signal(SIGINT, sig_handler);
 		signal(SIGQUIT, SIG_IGN);
 		cmd_line = readline("minish$ ");
+
 		if (cmd_line)
-		{	
+		{
 			// excution(cmd_line);
 			tokenizer(cmd_line);
 			// printf("%s\n", cmd_line);
