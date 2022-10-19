@@ -1,31 +1,49 @@
 #include "../../includes/minishell.h"
 
-int	tree_node_type(int type)
+static int	tree_node_type(int type);
+
+void	set_b_tree(t_tree_node	*node)
 {
-	if (type == OR)
-		return (TK_OR);
-	else if (type == AND)
-		return (TK_AND);
-	else if (type == PIPE)
-		return (TK_PIPE);
-	else if (type == PARENS)
-		return (TK_PARENS);
-	else
-		return (TK_WORD);
+	t_token	*parent;
+	t_token	*left_child;
+	t_token	*right_child;
+
+	if (!node)
+		return ;
+	parent = NULL;
+	left_child = NULL;
+	right_child = NULL;
+	parent = is_and_or_pipe(node->tokens);
+	if (!parent)
+		return ;
+	if (parent && (parent->type == AND || parent->type == OR || parent->type == PIPE))
+	{
+		node->type = node_type(parent->type);
+		insert_node(&node->tokens, parent);
+		left_child = node->tokens;
+		node->left = create_tree_node(left_child);
+		right_child = parent->next;
+		node->right = create_tree_node(right_child);
+
+		parent->next = NULL;
+		node->tokens = parent;
+
+		parsing(node->left);
+		parsing(node->right);
+	}
 }
 
-t_tree_node	*create_tree_node(t_token *tokens)
+void	*create_tree_node(t_token *tokens)
 {
 	int			type;
 	t_tree_node	*node;
 
-	node = ft_calloc(1, sizeof(t_tree_node));
-	node->tokens = ft_calloc(1, sizeof(t_token));
+	node = (t_tree_node *)ft_calloc(1, sizeof(t_tree_node));
+	node->tokens = (t_token *)ft_calloc(1, sizeof(t_token));
 	if (!node)
 		return (NULL);
 	node->type = tree_node_type(tokens->type);
 	node->tokens = tokens;
-	return (node);
 }
 
 void	insert_node(t_token *token, t_token *root)
@@ -41,16 +59,30 @@ void	insert_node(t_token *token, t_token *root)
 	token->next = NULL;
 }
 
-void	del_node(t_tree_node *node)
+void	delete_node(t_tree_node *node)
 {
 	if (node)
 	{
-		del_node(node->left);
-		del_node(node->right);
+		delete_node(node->left);
+		delete_node(node->right);
 		delete_token(node->tokens);
 		delete_token(node->redir);
-		delete_token(node->words);
+		delete_token(node->command);
 		free(node);
 		node = NULL;
 	}
+}
+
+static int	tree_node_type(int type)
+{
+	if (type == OR)
+		return (TK_OR);
+	else if (type == AND)
+		return (TK_AND);
+	else if (type == PIPE)
+		return (TK_PIPE);
+	else if (type == PARENS)
+		return (TK_PARENS);
+	else
+		return (TK_WORD);
 }

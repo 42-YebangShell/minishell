@@ -29,7 +29,7 @@ typedef struct s_tree_node
 {
 	enum e_node_type	type;
 	t_token				*tokens;
-	t_token				*words;
+	t_token				*command;
 	t_token				*redir;
 	struct s_tree_node	*left;
 	struct s_tree_node	*right;

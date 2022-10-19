@@ -16,8 +16,19 @@ int	main(int ac, char **av, char **envp)
 	ft_display_ctrlx_set(DISPLAY);
 }
 
+// void	print_token(t_token *token)
+// {
+// 	while(token)
+// 	{
+// 		printf("[%s]\t", token->content);
+// 		token = token->next;
+// 	}
+// 	printf("\n");
+// }
+
 static void	shell_loop()
 {
+	t_info	info;
 	char	*cmd_line;
 
 	while(1)
@@ -25,12 +36,13 @@ static void	shell_loop()
 		signal(SIGINT, sig_handler);
 		signal(SIGQUIT, SIG_IGN);
 		cmd_line = readline("minish$ ");
-
+		add_history(cmd_line);
 		if (cmd_line)
 		{
-			// excution(cmd_line);
-			tokenizer(cmd_line);
-			// printf("%s\n", cmd_line);
+			info.h_token = NULL;
+			tokenizer(&info.h_token, cmd_line);
+			create_tree_node(&info);
+			delete_token(info.h_token);
 		}
 		else
 		{

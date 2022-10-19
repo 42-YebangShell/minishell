@@ -1,8 +1,8 @@
 #ifndef DEFINE_H
 # define DEFINE_H
 
-# define ERROR -1
-# define NODISPLAY 0
+# define ERROR		-1
+# define NODISPLAY	0
 # define DISPLAY 	1
 
 enum	e_token_type

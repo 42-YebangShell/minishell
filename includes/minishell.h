@@ -33,15 +33,15 @@ void		add_token(t_token **token_list, t_token *new);
 t_token		*get_last_token(t_token *tokens);
 void		*delete_token(t_token *tokens);
 
-t_tree_node	*create_tree_node(t_token *tokens);
+void		*create_tree_node(t_token *tokens);
 void		insert_node(t_token *token, t_token *root);
-void		del_node(t_tree_node *node);
+void		delete_node(t_tree_node *node);
 
 /*	env		*/
 t_environ	*get_envp_list(char **envp);
 
 /*	parser	*/
-void 		tokenizer(char *cmd_line);
+void		tokenizer(t_token **tokens, char *cmd_line);
 t_token		check_quote(int *i, char *line);
 t_token		check_parens(int *i, char *line);
 t_token		check_and_or_pipe(int *i, char *line);
