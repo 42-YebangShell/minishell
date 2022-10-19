@@ -1,54 +1,53 @@
 #include "../../includes/minishell.h"
 
-t_token	*new_token(char *contents, int type)
+t_token	*new_token(t_token token)
 {
 	t_token	*new;
 
-	new = ft_calloc(1, sizeof(t_token));
+	new = (t_token *)ft_calloc(1, sizeof(t_token));
 	if (!new)
 		return (NULL);
-	new->type = type;
-	new->contents = contents;
+	new->type = token.type;
+	new->content = token.content;
 	return (new);
 }
 
-void	add_token(t_token *tokens, t_token *new)
+void	add_token(t_token **token_list, t_token *new)
 {
-	t_token	*buf;
+	t_token	*last;
 
-	if (!new || !tokens)
+	if (!token_list || !new)
 		return ;
-	if (!tokens)
+	if (!*token_list)
 	{
-		tokens = new;
+		*token_list = new;
 		return ;
 	}
-	buf = last_token(tokens);
-	buf->next = new;
+	last = get_last_token(*token_list);
+	last->next = new;
 }
 
-t_token	*last_token(t_token	*tokens)
+t_token	*get_last_token(t_token *tokens)
 {
-	t_token	*buf;
-
-	if (!tokens)
-		return (NULL);
-	buf = tokens;
-	while(buf->next)
-		buf = buf->next;
-	return (buf);
+	while (tokens)
+	{
+		if (!tokens->next)
+			return (tokens);
+		tokens = tokens->next;
+	}
+	return (NULL);
 }
 
-void	del_token(t_token *tokens)
+void	*delete_token(t_token *tokens)
 {
-	t_token	*del;
+	t_token	*next;
 
 	while (tokens)
 	{
-		del = tokens;
-		tokens = tokens->next;
-		free(del->contents);
-		free(del->next);
+		next = tokens->next;
+		free(tokens->content);
+		free(tokens);
+		tokens = next;
 	}
-	free(tokens);
+	return (NULL);
 }
