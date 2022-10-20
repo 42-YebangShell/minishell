@@ -63,7 +63,13 @@ static void	cut_btree_node(t_token	*token, t_token *root)
 static void set_btree_word(t_tree_node **node)
 {
 	t_token	*token;
-	t_token *prev;
-
-	return ;
+	
+	// (*node)->type = tree_node_type(root->type);
+	// token = (*node)->tokens;
+	// if (token->type == NONE)
+	// 	// error 
+	// // redir
+	// if (token->type >= 8 11 )
+	// // 
+	// if (token->type == HERE_DOC )
 }
