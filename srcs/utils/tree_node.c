@@ -1,56 +1,42 @@
 #include "../../includes/minishell.h"
 
-int	tree_node_type(int type)
+t_tree_node	*create_btree_node(t_token *tokens)
 {
-	if (type == OR)
-		return (TK_OR);
-	else if (type == AND)
-		return (TK_AND);
-	else if (type == PIPE)
-		return (TK_PIPE);
-	else if (type == PARENS)
-		return (TK_PARENS);
-	else
-		return (TK_WORD);
+	t_tree_node	*r_node;
+
+	r_node = (t_tree_node *)ft_calloc(1, sizeof(t_tree_node));
+	if (!r_node)
+		return NULL;
+	r_node->tokens = tokens;
+	return (r_node);
 }
 
-t_tree_node	*create_tree_node(t_token *tokens)
-{
-	int			type;
-	t_tree_node	*node;
-
-	node = ft_calloc(1, sizeof(t_tree_node));
-	node->tokens = ft_calloc(1, sizeof(t_token));
-	if (!node)
-		return (NULL);
-	node->type = tree_node_type(tokens->type);
-	node->tokens = tokens;
-	return (node);
-}
-
-void	insert_node(t_token *token, t_token *root)
-{
-	if (!token || root)
-		return ;
-	while (token->next)
-	{
-		if (token->next == root)
-			break;
-		token = token->next;
-	}
-	token->next = NULL;
-}
-
-void	del_node(t_tree_node *node)
+void	delete_node(t_tree_node *node)
 {
 	if (node)
 	{
-		del_node(node->left);
-		del_node(node->right);
+		delete_node(node->left);
+		delete_node(node->right);
 		delete_token(node->tokens);
 		delete_token(node->redir);
-		delete_token(node->words);
+		delete_token(node->command);
 		free(node);
 		node = NULL;
 	}
+}
+
+int	tree_node_type(int type)
+{
+	if (type == OR)
+		return (TN_OR);
+	else if (type == AND)
+		return (TN_AND);
+	else if (type == PIPE)
+		return (TN_PIPE);
+	else if (type == PARENS)
+		return (TN_PARENS);
+	// else if (type == NONE)
+	// 	return (TN_NONE);
+	else
+		return (TN_WORD);
 }

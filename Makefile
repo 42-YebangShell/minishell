@@ -29,7 +29,7 @@ HEADERS			= includes
 
 MAIN			= main	
 ENV				= environ
-PARSER			= tokenizer check_tokens
+PARSER			= tokenizer check_tokens set_btree
 UTILS			= perror token tree_node utils welcome_screen 
 SRCS 			= $(addsuffix .c, $(addprefix srcs/, $(MAIN)))			\
 				$(addsuffix .c, $(addprefix srcs/env/, $(ENV)))			\

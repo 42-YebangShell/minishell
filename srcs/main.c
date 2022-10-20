@@ -16,8 +16,41 @@ int	main(int ac, char **av, char **envp)
 	ft_display_ctrlx_set(DISPLAY);
 }
 
+void	show_tokens_data(t_token *tokens)
+{
+	t_token *tmp;
+
+	if (!tokens)
+		return;
+	tmp = tokens;
+	printf("\033[0;33m");
+	printf("token : \n");
+	printf("token type = %d\n", tmp->type);
+	while (tmp)
+	{
+		printf("\033[0;33m");
+		printf("[%s]", tmp->content);
+		tmp = tmp->next;
+	}
+	printf("\n");
+	printf("\n\033[0;0m\x1b[1A\x1b[M");
+}
+
+void	show_tree_data(t_tree_node *node, char *str)
+{
+	if (node)
+	{
+		printf("%s\n", str);
+		printf("node type : %d\n", node->type);
+		show_tokens_data(node->tokens);
+		show_tree_data(node->left, "left");
+		show_tree_data(node->right, "right");
+	}
+}
+
 static void	shell_loop()
 {
+	t_info	info;
 	char	*cmd_line;
 
 	while(1)
@@ -25,12 +58,15 @@ static void	shell_loop()
 		signal(SIGINT, sig_handler);
 		signal(SIGQUIT, SIG_IGN);
 		cmd_line = readline("minish$ ");
-
+		add_history(cmd_line);
 		if (cmd_line)
 		{
-			// excution(cmd_line);
-			tokenizer(cmd_line);
-			// printf("%s\n", cmd_line);
+			info.h_token = NULL;
+			tokenizer(&(info.h_token), cmd_line);
+			info.r_node = create_btree_node(info.h_token);
+			set_btree_node(&(info.r_node));
+			show_tree_data(info.r_node, "root");
+			delete_token(info.h_token);
 		}
 		else
 		{
