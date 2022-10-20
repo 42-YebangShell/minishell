@@ -56,5 +56,5 @@ void	set_btree_node(t_tree_node **node);
 
 
 
-void	show_tokens_data(t_token *tokens);
+void	show_tokens_data(t_token *tokens, char *str);
 #endif

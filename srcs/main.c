@@ -16,7 +16,7 @@ int	main(int ac, char **av, char **envp)
 	ft_display_ctrlx_set(DISPLAY);
 }
 
-void	show_tokens_data(t_token *tokens)
+void	show_tokens_data(t_token *tokens, char *str)
 {
 	t_token *tmp;
 
@@ -24,7 +24,7 @@ void	show_tokens_data(t_token *tokens)
 		return;
 	tmp = tokens;
 	printf("\033[0;33m");
-	printf("token : \n");
+	printf("token(%s) : \n", str);
 	printf("token type = %d\n", tmp->type);
 	while (tmp)
 	{
@@ -42,7 +42,9 @@ void	show_tree_data(t_tree_node *node, char *str)
 	{
 		printf("%s\n", str);
 		printf("node type : %d\n", node->type);
-		show_tokens_data(node->tokens);
+		// show_tokens_data(node->tokens);
+		show_tokens_data(node->command, "command");
+		show_tokens_data(node->redir, "redirection");
 		show_tree_data(node->left, "left");
 		show_tree_data(node->right, "right");
 	}
@@ -76,6 +78,8 @@ static void	shell_loop()
 				info.r_node = create_btree_node(info.h_token);
 				set_btree_node(&(info.r_node));
 				show_tree_data(info.r_node, "root");
+				//set redir and exec
+				// execution(info.r_node);
 			}
 			delete_token(info.h_token);
 		}
