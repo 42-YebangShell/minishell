@@ -24,11 +24,12 @@ enum	e_token_type
 
 enum	e_node_type
 {
-	TK_OR,
-	TK_AND,
-	TK_PIPE,
-	TK_WORD,
-	TK_PARENS
+	TN_NONE,
+	TN_OR,
+	TN_AND,
+	TN_PIPE,
+	TN_WORD,
+	TN_PARENS,
 };
 
 #endif

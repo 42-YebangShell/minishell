@@ -11,7 +11,6 @@ void tokenizer(t_token **tokens, char *cmd_line)
 	{
 		if (ft_strchr("\'\"", line[i]))
 			add_token(tokens, new_token(check_quote(&i, line)));
-		// PARENS
 		else if (ft_strchr("()", line[i]))
 			add_token(tokens, new_token(check_parens(&i, line)));
 		else if (ft_strchr("|&", line[i]))
@@ -25,6 +24,4 @@ void tokenizer(t_token **tokens, char *cmd_line)
 		if (line[i] == (char)' ')
 			i++;
 	}
-	// print_token(info.h_token);
-	// return (tokens);
 }
