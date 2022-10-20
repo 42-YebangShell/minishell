@@ -47,7 +47,15 @@ void	show_tree_data(t_tree_node *node, char *str)
 		show_tree_data(node->right, "right");
 	}
 }
-
+int	check_syntax_error(t_token *token)
+{
+	if (token->type == AND || token->type == OR || token->type == PIPE)
+	{
+		printf("syntax error near unexpected token `%s`\n", token->content);
+		return (0);
+	}
+	return (1);
+}
 static void	shell_loop()
 {
 	t_info	info;
@@ -63,9 +71,12 @@ static void	shell_loop()
 		{
 			info.h_token = NULL;
 			tokenizer(&(info.h_token), cmd_line);
-			info.r_node = create_btree_node(info.h_token);
-			set_btree_node(&(info.r_node));
-			show_tree_data(info.r_node, "root");
+			if (check_syntax_error(info.h_token))
+			{
+				info.r_node = create_btree_node(info.h_token);
+				set_btree_node(&(info.r_node));
+				show_tree_data(info.r_node, "root");
+			}
 			delete_token(info.h_token);
 		}
 		else
