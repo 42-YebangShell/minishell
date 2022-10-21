@@ -7,6 +7,8 @@ void	ft_perror(char *str)
 
 int	check_syntax_error(t_token *token)
 {
+	if (!token)
+		return (0);
 	if (token->type == AND || token->type == OR || token->type == PIPE)
 	{
 		printf("syntax error near unexpected token `%s`\n", token->content);

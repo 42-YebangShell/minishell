@@ -20,7 +20,7 @@ int	str_parens(char *str, int i)
 	int	cnt;
 
 	if (str[i] == (char)')')
-		return (0);
+		return (-1);
 	i += 1;
 	cnt = 1;
 	while (cnt && str[i])
@@ -31,7 +31,9 @@ int	str_parens(char *str, int i)
 			cnt -= 1;
 		i++;
 	}
-	if (cnt)
+	if (cnt > 0)
 		return (0);
+	else if (cnt < 0)
+		return (-1);
 	return (i);
 }
