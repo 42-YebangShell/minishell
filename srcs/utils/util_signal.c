@@ -12,3 +12,11 @@ void	sig_readline(int signo)
 	}
 	return;
 }
+
+void	sig_exec(int sig)
+{
+	if (sig == SIGINT)
+		printf("\n");
+	else if (sig == SIGQUIT)
+		printf("Quit: 3\n");
+}

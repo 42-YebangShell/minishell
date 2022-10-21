@@ -41,4 +41,12 @@ typedef struct s_info
 	t_token		*h_token;
 }	t_info;
 
+typedef struct s_pipe
+{
+	pid_t	pid;
+	int		cnt;
+	int		fd[2];
+	int		prev_fd;
+	int		status;
+}	t_pipe;
 #endif

@@ -4,6 +4,10 @@
 # define ERROR		-1
 # define NODISPLAY	0
 # define DISPLAY 	1
+# define READ_END	0
+# define WRITE_END	1
+# define TRUE		1
+# define FALSE		0
 
 enum	e_token_type
 {

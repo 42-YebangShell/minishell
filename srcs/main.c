@@ -63,7 +63,9 @@ static void	shell_loop()
 		{
 			info.r_node = create_btree_node(info.h_token);
 			set_btree_node(&(info.r_node));
-			show_tree_data(info.r_node, "root");
+			execution(&info);
+			free(cmd_line);
+			// show_tree_data(info.r_node, "root");
 		}
 		delete_token(info.h_token);
 	}
