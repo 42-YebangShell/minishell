@@ -7,6 +7,7 @@ int	check_syntax_error(t_token *token);
 /*	redirection.c	*/
 /*	signal_handler.c	*/
 void	sig_readline(int signo);
+
 /*	token.c	*/
 t_token	*new_token(t_token token);
 void	add_token(t_token **token_list, t_token *new);

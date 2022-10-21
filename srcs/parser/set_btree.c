@@ -81,7 +81,6 @@ static void set_btree_word(t_tree_node **node)
 			{
 				flag = 0;
 				add_token(&(*node)->redir, new_token(*token));
-
 			}
 			else
 				add_token(&(*node)->command, new_token(*token));
