@@ -35,8 +35,6 @@ int	tree_node_type(int type)
 		return (TN_PIPE);
 	else if (type == PARENS)
 		return (TN_PARENS);
-	// else if (type == NONE)
-	// 	return (TN_NONE);
 	else
 		return (TN_WORD);
 }

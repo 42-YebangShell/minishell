@@ -1,20 +1,7 @@
 #include "../includes/minishell.h"
 
 static void	shell_loop();
-static void	sig_handler(int signo);
 static void	ft_display_ctrlx_set(int flag);
-
-int	main(int ac, char **av, char **envp)
-{
-	(void)ac;
-	(void)av;
-	g_var.status = 0;
-	g_var.env_list = get_envp_list(envp);
-	welcome_screen();
-	ft_display_ctrlx_set(NODISPLAY);
-	shell_loop();
-	ft_display_ctrlx_set(DISPLAY);
-}
 
 void	show_tokens_data(t_token *tokens)
 {
@@ -25,11 +12,10 @@ void	show_tokens_data(t_token *tokens)
 	tmp = tokens;
 	printf("\033[0;33m");
 	printf("token : \n");
-	printf("token type = %d\n", tmp->type);
 	while (tmp)
 	{
 		printf("\033[0;33m");
-		printf("[%s]", tmp->content);
+		printf("[%s(%d)]\n", tmp->content, tmp->type);
 		tmp = tmp->next;
 	}
 	printf("\n");
@@ -47,15 +33,19 @@ void	show_tree_data(t_tree_node *node, char *str)
 		show_tree_data(node->right, "right");
 	}
 }
-int	check_syntax_error(t_token *token)
+
+int	main(int ac, char **av, char **envp)
 {
-	if (token->type == AND || token->type == OR || token->type == PIPE)
-	{
-		printf("syntax error near unexpected token `%s`\n", token->content);
-		return (0);
-	}
-	return (1);
+	(void)ac;
+	(void)av;
+	g_var.status = 0;
+	g_var.env_list = get_envp_list(envp);
+	welcome_screen();
+	ft_display_ctrlx_set(NODISPLAY);
+	shell_loop();
+	ft_display_ctrlx_set(DISPLAY);
 }
+
 static void	shell_loop()
 {
 	t_info	info;
@@ -85,22 +75,9 @@ static void	shell_loop()
 			printf("\033[7C");
 			printf(" exit\n");
 			free(cmd_line);
-			// ft_display_ctrlx_set();
 			exit(1);
 		}
 	}
-}
-
-static void	sig_handler(int signo)
-{
-	if (signo == SIGINT)
-	{
-		write(1, "\n", 1);
-		rl_on_new_line();
-		rl_replace_line("", 1);
-		rl_redisplay();
-	}
-	return;
 }
 
 static void	ft_display_ctrlx_set(int flag)

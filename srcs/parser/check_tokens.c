@@ -82,14 +82,12 @@ t_token	check_redir(int *i, char *line)
 
 t_token	check_cmd_or_option(int *i, char *line)
 {
-	int		idx;
 	int		len;
 	int		type;
 	t_token	new;
 
-	idx = 0;
 	new.type = CMD;
-	if (line[idx] == '-')
+	if (line[*i] == '-')
 		new.type = OPTION;
 	len = str_len(line, (char)' ', *i, CMD);
 	new.content = ft_substr(line, *i, len - *i);
