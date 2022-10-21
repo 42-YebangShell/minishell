@@ -22,5 +22,10 @@ int	execute_btree_node(t_info *info, t_tree_node *root)
 	else if (root->type == TN_PIPE)
 		status = exec_pipe(info, root);
 	else
-		status = exec_word(info, root);
+	{
+		if (!root->right)
+			status = exec_single_word(info, root);
+		else
+			status = exec_word(info, root);
+	}
 }

@@ -67,7 +67,8 @@ static void	shell_loop()
 			free(cmd_line);
 			// show_tree_data(info.r_node, "root");
 		}
-		delete_token(info.h_token);
+		else
+			delete_token(info.h_token);
 	}
 }
 
