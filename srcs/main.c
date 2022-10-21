@@ -1,9 +1,10 @@
 #include "../includes/minishell.h"
 
 static void	shell_loop();
+static char *set_read_line(t_info *info);
 static void	ft_display_ctrlx_set(int flag);
 
-void	show_tokens_data(t_token *tokens)
+void	show_tokens_data(t_token *tokens, char *str)
 {
 	t_token *tmp;
 
@@ -11,11 +12,11 @@ void	show_tokens_data(t_token *tokens)
 		return;
 	tmp = tokens;
 	printf("\033[0;33m");
-	printf("token : \n");
+	printf("token(%s) : \n", str);
 	while (tmp)
 	{
 		printf("\033[0;33m");
-		printf("[%s(%d)]\n", tmp->content, tmp->type);
+		printf("[%s(%d)]", tmp->content, tmp->type);
 		tmp = tmp->next;
 	}
 	printf("\n");
@@ -28,7 +29,9 @@ void	show_tree_data(t_tree_node *node, char *str)
 	{
 		printf("%s\n", str);
 		printf("node type : %d\n", node->type);
-		show_tokens_data(node->tokens);
+		show_tokens_data(node->tokens, "tokens");
+		show_tokens_data(node->command, "command");
+		show_tokens_data(node->redir, "redirection");
 		show_tree_data(node->left, "left");
 		show_tree_data(node->right, "right");
 	}
@@ -43,7 +46,6 @@ int	main(int ac, char **av, char **envp)
 	welcome_screen();
 	ft_display_ctrlx_set(NODISPLAY);
 	shell_loop();
-	ft_display_ctrlx_set(DISPLAY);
 }
 
 static void	shell_loop()
@@ -53,31 +55,37 @@ static void	shell_loop()
 
 	while(1)
 	{
-		signal(SIGINT, sig_handler);
-		signal(SIGQUIT, SIG_IGN);
-		cmd_line = readline("minish$ ");
+		cmd_line = set_read_line(&info);
 		add_history(cmd_line);
-		if (cmd_line)
+		info.h_token = NULL;
+		tokenizer(&(info.h_token), cmd_line);
+		if (check_syntax_error(info.h_token))
 		{
-			info.h_token = NULL;
-			tokenizer(&(info.h_token), cmd_line);
-			if (check_syntax_error(info.h_token))
-			{
-				info.r_node = create_btree_node(info.h_token);
-				set_btree_node(&(info.r_node));
-				show_tree_data(info.r_node, "root");
-			}
-			delete_token(info.h_token);
+			info.r_node = create_btree_node(info.h_token);
+			set_btree_node(&(info.r_node));
+			show_tree_data(info.r_node, "root");
 		}
-		else
-		{
-			printf("\033[1A");
-			printf("\033[7C");
-			printf(" exit\n");
-			free(cmd_line);
-			exit(1);
-		}
+		delete_token(info.h_token);
 	}
+}
+
+static char *set_read_line(t_info *info)
+{
+	char *line;
+
+	signal(SIGINT, sig_readline);
+	signal(SIGQUIT, SIG_IGN);
+	info->h_token = NULL;
+	line = readline("minish$ ");
+	if (!line)
+	{
+		printf("\033[1A");
+		printf("\033[7C");
+		printf(" exit\n");
+		ft_display_ctrlx_set(DISPLAY);
+		exit(g_var.status);
+	}
+	return (line);
 }
 
 static void	ft_display_ctrlx_set(int flag)
