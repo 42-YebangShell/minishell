@@ -10,18 +10,20 @@ void tokenizer(t_token **tokens, char *cmd_line)
 	while (line[i])
 	{
 		if (ft_strchr("\'\"", line[i]))
-			add_token(tokens, new_token(check_quote(&i, line)));
+			add_token(tokens, check_quote(&i, line));
 		else if (ft_strchr("()", line[i]))
-			add_token(tokens, new_token(check_parens(&i, line)));
+			add_token(tokens, check_parens(&i, line));
 		else if (ft_strchr("|&", line[i]))
-			add_token(tokens, new_token(check_and_or_pipe(&i, line)));
+			add_token(tokens, check_and_or_pipe(&i, line));
 		else if (ft_strchr("<>", line[i]))
-			add_token(tokens, new_token(check_redir(&i, line))); 
+			add_token(tokens, check_redir(&i, line)); 
 		else
-			add_token(tokens, new_token(check_cmd_or_option(&i, line)));
+			add_token(tokens, check_cmd_or_option(&i, line));
 		if (i >= ft_strlen(line))
 			break;
 		if (line[i] == (char)' ')
 			i++;
+		if (!*tokens)
+			break ;
 	}
 }

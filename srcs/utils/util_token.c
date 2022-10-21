@@ -16,8 +16,14 @@ void	add_token(t_token **token_list, t_token *new)
 {
 	t_token	*last;
 
-	if (!token_list || !new)
+	if (!token_list)
 		return ;
+	if (!new)
+	{
+		*token_list = NULL;
+		token_list = NULL;
+		return ;
+	}
 	if (!*token_list)
 	{
 		*token_list = new;

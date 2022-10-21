@@ -5,7 +5,7 @@ t_tree_node	*create_btree_node(t_token *tokens)
 	t_tree_node	*r_node;
 
 	r_node = (t_tree_node *)ft_calloc(1, sizeof(t_tree_node));
-	if (!r_node)
+	if (!r_node || !tokens)
 		return NULL;
 	r_node->tokens = tokens;
 	return (r_node);

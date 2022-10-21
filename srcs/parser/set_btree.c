@@ -63,7 +63,7 @@ static void	cut_btree_node(t_token	*token, t_token *root)
 static void set_btree_word(t_tree_node **node)
 {
 	int		flag;
-	t_token	*token;
+	t_token *token;
 
 	flag = 0;
 	token = (*node)->tokens;
@@ -72,7 +72,7 @@ static void set_btree_word(t_tree_node **node)
 	{
 		while (token)
 		{
-			if (token->type >= 8 && token->type <= 11 )
+			if (token->type >= 8 && token->type <= 11)
 			{
 				flag = 1;
 				add_token(&(*node)->redir, new_token(*token));

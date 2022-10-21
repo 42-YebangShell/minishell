@@ -29,9 +29,9 @@ HEADERS			= includes
 
 MAIN			= main	
 ENV				= environ
-EXEC			= execution
+EXEC			= #execution
 PARSER			= tokenizer check_tokens set_btree
-UTILS			= welcome_screen utils util_perror util_redirection util_signal util_tiken util_tree
+UTILS			= util_error  util_signal util_token util_tree utils welcome_screen #util_redirection
 SRCS 			= $(addsuffix .c, $(addprefix srcs/, $(MAIN)))			\
 				$(addsuffix .c, $(addprefix srcs/env/, $(ENV)))			\
 				$(addsuffix .c, $(addprefix srcs/env/, $(EXEC)))		\
