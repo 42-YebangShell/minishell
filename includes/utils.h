@@ -1,16 +1,17 @@
 #ifndef UTILS_H
 # define UTILS_H
 
-int			run_builtin(t_info *info, t_tree_node *root)
+int			run_builtin(t_info *info, t_tree_node *root);
 
-int			check_status(int status)
-int			check_builtin(t_token *token)
+int			check_status(int status);
+int			check_builtin(t_token *token);
 
 void		ft_perror(char *str);
 int			check_syntax_error(t_token *token);
 
 void		sig_readline(int signo);
 void		sig_exec(int sig);
+void		sig_here_doc(int sig);
 
 t_token		*new_token(t_token token);
 void		add_token(t_token **token_list, t_token *new);

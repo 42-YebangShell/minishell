@@ -92,8 +92,6 @@ static int	exec_list_pipe_cmd(t_info *info, t_tree_node *root, t_pipe p)
 	return (check_status(status));
 }
 
-
-
 static void	exit_wait(int cnt)
 {
 	while (cnt > 0)

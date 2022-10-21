@@ -16,11 +16,12 @@
 # include "../lib/ft_printf/ft_printf.h"
 # include "../lib/get_next_line/get_next_line.h"
 
+# include "env.h"
+# include "exec.h"
+# include "parser.h"
+# include "redirection.h"
 # include "struct.h"
 # include "utils.h"
-# include "parser.h"
-# include "exec.h"
-# include "env.h"
 
 t_global	g_var;
 void		rl_replace_line (const char *text, int clear_undo);

@@ -29,14 +29,16 @@ HEADERS			= includes
 
 MAIN			= main	
 ENV				= environ
-EXEC			= #execution exec_and_or exec_cmd exec_pipe
+EXEC			= #execution exec_and_or exec_word exec_pipe
 PARSER			= tokenizer check_tokens set_btree
-UTILS			= util_builtin util_error util_exec util_signal util_token util_tree utils welcome_screen #util_redirection
+REDIRECTION		= #redirection
+UTILS			= util_builtin util_error util_exec util_signal util_token util_tree utils welcome_screen
 SRCS 			= $(addsuffix .c, $(addprefix srcs/, $(MAIN)))			\
 				$(addsuffix .c, $(addprefix srcs/env/, $(ENV)))			\
 				$(addsuffix .c, $(addprefix srcs/env/, $(EXEC)))		\
 				$(addsuffix .c, $(addprefix srcs/utils/, $(UTILS)))		\
-				$(addsuffix .c, $(addprefix srcs/parser/, $(PARSER)))
+				$(addsuffix .c, $(addprefix srcs/parser/, $(PARSER)))	\
+				$(addsuffix .c, $(addprefix srcs/parser/, $(REDIRECTION)))
 
 OBJS 			= $(SRCS:c=o)
 all: $(NAME)
