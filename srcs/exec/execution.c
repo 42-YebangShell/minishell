@@ -44,7 +44,7 @@ void	show_tree_data(t_tree_node *node, char *str)
 		show_tree_data(node->right, "right");
 	}
 }
-
+/*-------------------------------------------------------------------------------------------------*/
 void	set_excute(char *cmd_line)
 {
 	t_info	info;
