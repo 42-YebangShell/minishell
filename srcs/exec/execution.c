@@ -1,5 +1,23 @@
 #include "../../includes/minishell.h"
 
+void	set_excute(char *cmd_line)
+{
+	t_info	info;
+
+	info.h_token = NULL;
+	tokenizer(&(info.h_token), cmd_line);
+	if (check_syntax_error(info.h_token))
+	{
+		info.r_node = create_btree_node(info.h_token);
+		set_btree_node(&(info.r_node));
+		execution(&info);
+		free(cmd_line);
+		// show_tree_data(info.r_node, "root");
+	}
+	else
+		delete_token(info.h_token);
+}
+
 void execution(t_info *info)
 {
 	signal(SIGINT, &sig_exec);

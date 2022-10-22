@@ -1,7 +1,7 @@
 #include "../includes/minishell.h"
 
 static void	shell_loop();
-static char *set_read_line(t_info *info);
+static char *set_read_line();
 static void	ft_display_ctrlx_set(int flag);
 
 void	show_tokens_data(t_token *tokens, char *str)
@@ -50,35 +50,22 @@ int	main(int ac, char **av, char **envp)
 
 static void	shell_loop()
 {
-	t_info	info;
 	char	*cmd_line;
 
 	while(1)
 	{
-		cmd_line = set_read_line(&info);
+		cmd_line = set_read_line();
 		add_history(cmd_line);
-		info.h_token = NULL;
-		tokenizer(&(info.h_token), cmd_line);
-		if (check_syntax_error(info.h_token))
-		{
-			info.r_node = create_btree_node(info.h_token);
-			set_btree_node(&(info.r_node));
-			execution(&info);
-			free(cmd_line);
-			// show_tree_data(info.r_node, "root");
-		}
-		else
-			delete_token(info.h_token);
+		set_excute(cmd_line);
 	}
 }
 
-static char *set_read_line(t_info *info)
+static char *set_read_line()
 {
 	char *line;
 
 	signal(SIGINT, sig_readline);
 	signal(SIGQUIT, SIG_IGN);
-	info->h_token = NULL;
 	line = readline("minish$ ");
 	if (!line)
 	{
@@ -89,16 +76,4 @@ static char *set_read_line(t_info *info)
 		exit(g_var.status);
 	}
 	return (line);
-}
-
-static void	ft_display_ctrlx_set(int flag)
-{
-	if (tcgetattr(STDIN_FILENO, &g_var.settings) == ERROR)
-		ft_perror("minsh: tcgetattr");
-	if (flag)
-		g_var.settings.c_lflag &= ECHOCTL;
-	else
-		g_var.settings.c_lflag &= ~ECHOCTL;
-	if (tcsetattr(STDIN_FILENO, TCSANOW, &g_var.settings) == ERROR)
-		ft_perror("minsh: tcsetattr");
 }
