@@ -29,19 +29,21 @@ int	ft_export(t_token *command)
 	while (tmp)
 	{
 		i = 0;
+		flag = 0;
 		while (tmp->content[i] && tmp->content[i] != '=')
 		{
 			i++;
-			if (tmp->content[i] == '=' && tmp->content[i + 1] == '\0')
+			if (tmp->content[i] == '=')
 				flag = 1;
 		}
 		key = malloc(sizeof(char) * (i + 1));
-		val = malloc(sizeof(char) * ft_strlen(command->content) - i + 1);
+		val = NULL;
 		ft_strlcpy(key, tmp->content, i + 1);
 		if (flag)
-			ft_strlcpy(val, tmp->content + i + 1, ft_strlen(tmp->content) - i);
-		else
-			val = NULL;
+		{
+			val = malloc(sizeof(char) * (ft_strlen(tmp->content) + 1));
+			ft_strlcpy(val, (tmp->content + i + 1), (ft_strlen(tmp->content) - i));
+		}
 		if (already_exist(key))
 			update_env_var(key, val);
 		else
@@ -75,7 +77,7 @@ static int	already_exist(char *key)
 	res = 0;
 	while (tmp)
 	{
-		if (ft_strncmp(tmp->key, key, ft_strlen(key) + 1) == 0)
+		if (ft_strncmp(tmp->key, key, (ft_strlen(key) + 1)) == 0)
 			res = 1;
 		tmp = tmp->next;
 	}
@@ -89,7 +91,7 @@ static void	update_env_var(char *key, char *val)
 	tmp = g_var.env_list;
 	while (tmp)
 	{
-		if (ft_strncmp(tmp->key, key, ft_strlen(key) + 1) == 0)
+		if (ft_strncmp(tmp->key, key, (ft_strlen(key) + 1)) == 0)
 		{
 			free(tmp->value);
 			tmp->value = val;
@@ -153,4 +155,3 @@ static t_environ	*last_env_node(t_environ *env_list)
 		tmp = tmp->next;
 	return (tmp);
 }
-
