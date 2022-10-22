@@ -20,16 +20,19 @@ int	apply_redirection(t_info *info, t_tree_node *root)
 
 int	redir_open_fd(t_info *info, t_token *token)
 {
+	int		r_status;
 	char	*filename;
 
 	filename = NULL;
 	if (!token->next)
-		filename = token->next->content;
+		return (EXIT_FAILURE);
+	filename = token->next->content;
 	if (!filename)
 		return (EXIT_FAILURE);
-	if (redir_open_file(token, filename))
+	r_status = redir_open_file(filename, token);
+	if (r_status)
 		return (EXIT_FAILURE);
-	return (redir_open_file(filename, token));
+	return (r_status);
 }
 
 int redir_open_file(char *filename, t_token *token)
@@ -52,7 +55,7 @@ int redir_open_file(char *filename, t_token *token)
 	}
 	if (fd == -1)
 	{
-		ft_perror(filename);
+		ft_perror(filename, ": No such file or directory");
 		return (EXIT_FAILURE);
 	}
 	close(fd);

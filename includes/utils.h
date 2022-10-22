@@ -6,7 +6,7 @@ int			run_builtin(t_info *info, t_tree_node *root);
 int			check_status(int status);
 int			check_builtin(t_token *token);
 
-void		ft_perror(char *str);
+void		ft_perror(char *err_msg1, char *err_msg2);
 int			check_syntax_error(t_token *token);
 
 void		sig_readline(int signo);

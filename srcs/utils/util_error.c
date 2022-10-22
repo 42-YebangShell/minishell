@@ -1,8 +1,12 @@
 #include "../../includes/minishell.h"
 
-void	ft_perror(char *str)
+void	ft_perror(char *err_msg1, char *err_msg2)
 {
-	printf("%s %s\n", str, strerror(errno));
+	ft_putstr_fd("minish: ", STDOUT_FILENO);
+	ft_putstr_fd(err_msg1, STDOUT_FILENO);
+	ft_putstr_fd(err_msg2, STDOUT_FILENO);
+	ft_putstr_fd("\n", STDOUT_FILENO);
+	// ft_putstr_fd(strerror(errno), STDOUT_FILENO);
 }
 
 int	check_syntax_error(t_token *token)
@@ -11,7 +15,7 @@ int	check_syntax_error(t_token *token)
 		return (0);
 	if (token->type == AND || token->type == OR || token->type == PIPE)
 	{
-		printf("syntax error near unexpected token `%s`\n", token->content);
+		ft_perror("syntax error near unexpected token", token->content);
 		return (0);
 	}
 	return (1);

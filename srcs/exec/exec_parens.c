@@ -4,7 +4,7 @@ int	exec_paren(t_tree_node *root)
 {
 	char	*cmd_line;
 
-	cmd_line = rm_paren(root);
+	cmd_line = rm_paren(root->tokens);
 	set_excute(cmd_line);
 }
 
