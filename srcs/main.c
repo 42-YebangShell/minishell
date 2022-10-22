@@ -31,6 +31,18 @@ void	show_tree_data(t_tree_node *node, char *str)
 		printf("node type : %d\n", node->type);
 		show_tokens_data(node->tokens, "tokens");
 		show_tokens_data(node->command, "command");
+		//for echo cmd
+		if (node->command && ft_strncmp(node->command->content, "echo", 5) == 0)
+		{
+			ft_echo(node->command);
+		}
+		// if (node->command && ft_strncmp(node->command->content, "echo", 5) == 0)
+		// {
+		// 	if (node->command->next)
+		// 		ft_echo(node->command->next->content);
+		// 	else
+		// 		ft_echo("");
+		// }
 		show_tokens_data(node->redir, "redirection");
 		show_tree_data(node->left, "left");
 		show_tree_data(node->right, "right");
