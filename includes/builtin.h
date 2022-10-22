@@ -4,5 +4,6 @@
 int	ft_echo(t_token *command);
 int	ft_export(t_token *command);
 int	ft_unset(t_token *command);
+int	ft_env(t_token *command);
 
 #endif

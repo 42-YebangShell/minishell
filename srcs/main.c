@@ -63,6 +63,10 @@ void	show_tree_data(t_tree_node *node, char *str)
 		{
 			ft_unset(node->command);
 		}
+		if (node->command && ft_strncmp(node->command->content, "env", 4) == 0)
+		{
+			ft_env(node->command);
+		}
 		// if (node->command && ft_strncmp(node->command->content, "echo", 5) == 0)
 		// {
 		// 	if (node->command->next)
