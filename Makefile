@@ -32,7 +32,7 @@ ENV				= environ
 EXEC			= #execution
 PARSER			= tokenizer check_tokens set_btree
 UTILS			= util_error  util_signal util_token util_tree utils welcome_screen #util_redirection
-BUILTIN			= ft_echo #ft_cd ft_env ft_exit ft_pwd ft_export ft_unset
+BUILTIN			= ft_echo ft_export #ft_cd ft_env ft_exit ft_pwd ft_export ft_unset
 SRCS 			= $(addsuffix .c, $(addprefix srcs/, $(MAIN)))			\
 				$(addsuffix .c, $(addprefix srcs/env/, $(ENV)))			\
 				$(addsuffix .c, $(addprefix srcs/env/, $(EXEC)))		\

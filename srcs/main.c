@@ -53,6 +53,11 @@ void	show_tree_data(t_tree_node *node, char *str)
 		{
 			ft_echo(node->command);
 		}
+		//for export cmd
+		if (node->command && ft_strncmp(node->command->content, "export", 7) == 0)
+		{
+			ft_export(node->command);
+		}
 		// if (node->command && ft_strncmp(node->command->content, "echo", 5) == 0)
 		// {
 		// 	if (node->command->next)
