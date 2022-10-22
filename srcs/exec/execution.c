@@ -1,5 +1,50 @@
 #include "../../includes/minishell.h"
 
+void	show_tokens_data(t_token *tokens, char *str)
+{
+	t_token *tmp;
+
+	if (!tokens)
+		return;
+	tmp = tokens;
+	ft_putstr_fd("\033[0;33m", 1);
+	ft_putstr_fd("token", 1);
+	ft_putstr_fd("(", 1);
+	ft_putstr_fd(str, 1);
+	ft_putstr_fd(") : ", 1);
+	ft_putstr_fd("\n", 1);
+	while (tmp)
+	{
+		ft_putstr_fd("\033[0;33m", 1);
+		ft_putstr_fd(tmp->content, 1);
+		ft_putstr_fd("(", 1);
+		ft_putnbr_fd(tmp->type, 1);
+		ft_putstr_fd(")", 1);
+		tmp = tmp->next;
+	}
+	ft_putstr_fd("\n", 1);
+	ft_putstr_fd("\n\033[0;0m\x1b[1A\x1b[M", 1);
+}
+
+void	show_tree_data(t_tree_node *node, char *str)
+{
+	if (node)
+	{
+		ft_putstr_fd(str, 1);
+		ft_putstr_fd("\nnode type : ", 1);
+		ft_putnbr_fd(node->type, 1);
+		ft_putstr_fd("\n", 1);
+		show_tokens_data(node->tokens, "tokens");
+		show_tokens_data(node->command, "command");
+		//for echo cmd
+		if (node->command && ft_strncmp(node->command->content, "echo", 5) == 0)
+			ft_echo(node->command);
+		show_tokens_data(node->redir, "redirection");
+		show_tree_data(node->left, "left");
+		show_tree_data(node->right, "right");
+	}
+}
+
 void	set_excute(char *cmd_line)
 {
 	t_info	info;
@@ -23,27 +68,24 @@ void execution(t_info *info)
 	signal(SIGINT, &sig_exec);
 	signal(SIGQUIT, &sig_exec);
 	ft_display_ctrlx_set(DISPLAY);
-	g_var.status = execute_btree_node(info, info->r_node);
+	execute_btree_node(info, info->r_node);
 	delete_node(info->r_node);
 	info->r_node = NULL;
 }
 
-int	execute_btree_node(t_info *info, t_tree_node *root)
+void	execute_btree_node(t_info *info, t_tree_node *root)
 {
-	int status;
-
-	// subshell
 	if (root->type == TN_PARENS)
-		status = exec_paren(info, root);
+		exec_paren(info, root);
 	else if (root->type == TN_AND || root->type == TN_OR)
-		status = exec_and_or(info, root);
+		g_var.status = exec_and_or(info, root);
 	else if (root->type == TN_PIPE)
-		status = exec_pipe(info, root);
+		g_var.status = exec_pipe(info, root);
 	else
 	{
 		if (!root->right)
-			status = exec_single_word(info, root);
+			g_var.status = exec_single_word(info, root);
 		else
-			status = exec_word(info, root);
+			g_var.status = exec_word(info, root);
 	}
 }

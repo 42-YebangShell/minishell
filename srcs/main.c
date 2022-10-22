@@ -4,68 +4,6 @@ static void	shell_loop();
 static char *set_read_line();
 static void	ft_display_ctrlx_set(int flag);
 
-void	show_tokens_data(t_token *tokens, char *str)
-{
-	t_token *tmp;
-
-	if (!tokens)
-		return;
-	tmp = tokens;
-	// printf("\033[0;33m");
-	// printf("token(%s) : \n", str);
-	ft_putstr_fd("\033[0;33m", 1);
-	ft_putstr_fd("token", 1);
-	ft_putstr_fd("(", 1);
-	ft_putstr_fd(str, 1);
-	ft_putstr_fd(") : ", 1);
-	ft_putstr_fd("\n", 1);
-	while (tmp)
-	{
-		// printf("\033[0;33m");
-		// printf("[%s(%d)]", tmp->content, tmp->type);
-		ft_putstr_fd("\033[0;33m", 1);
-		ft_putstr_fd(tmp->content, 1);
-		ft_putstr_fd("(", 1);
-		ft_putnbr_fd(tmp->type, 1);
-		ft_putstr_fd(")", 1);
-		tmp = tmp->next;
-	}
-	ft_putstr_fd("\n", 1);
-	ft_putstr_fd("\n\033[0;0m\x1b[1A\x1b[M", 1);
-	// printf("\n");
-	// printf("\n\033[0;0m\x1b[1A\x1b[M");
-}
-
-void	show_tree_data(t_tree_node *node, char *str)
-{
-	if (node)
-	{
-		// printf("%s\n", str);
-		// printf("node type : %d\n", node->type);
-		ft_putstr_fd(str, 1);
-		ft_putstr_fd("\nnode type : ", 1);
-		ft_putnbr_fd(node->type, 1);
-		ft_putstr_fd("\n", 1);
-		show_tokens_data(node->tokens, "tokens");
-		show_tokens_data(node->command, "command");
-		//for echo cmd
-		if (node->command && ft_strncmp(node->command->content, "echo", 5) == 0)
-		{
-			ft_echo(node->command);
-		}
-		// if (node->command && ft_strncmp(node->command->content, "echo", 5) == 0)
-		// {
-		// 	if (node->command->next)
-		// 		ft_echo(node->command->next->content);
-		// 	else
-		// 		ft_echo("");
-		// }
-		show_tokens_data(node->redir, "redirection");
-		show_tree_data(node->left, "left");
-		show_tree_data(node->right, "right");
-	}
-}
-
 int	main(int ac, char **av, char **envp)
 {
 	(void)ac;
