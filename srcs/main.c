@@ -58,6 +58,11 @@ void	show_tree_data(t_tree_node *node, char *str)
 		{
 			ft_export(node->command);
 		}
+		//for unset cmd
+		if (node->command && ft_strncmp(node->command->content, "unset", 6) == 0)
+		{
+			ft_unset(node->command);
+		}
 		// if (node->command && ft_strncmp(node->command->content, "echo", 5) == 0)
 		// {
 		// 	if (node->command->next)
