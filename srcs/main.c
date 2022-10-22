@@ -11,24 +11,41 @@ void	show_tokens_data(t_token *tokens, char *str)
 	if (!tokens)
 		return;
 	tmp = tokens;
-	printf("\033[0;33m");
-	printf("token(%s) : \n", str);
+	// printf("\033[0;33m");
+	// printf("token(%s) : \n", str);
+	ft_putstr_fd("\033[0;33m", 1);
+	ft_putstr_fd("token", 1);
+	ft_putstr_fd("(", 1);
+	ft_putstr_fd(str, 1);
+	ft_putstr_fd(") : ", 1);
+	ft_putstr_fd("\n", 1);
 	while (tmp)
 	{
-		printf("\033[0;33m");
-		printf("[%s(%d)]", tmp->content, tmp->type);
+		// printf("\033[0;33m");
+		// printf("[%s(%d)]", tmp->content, tmp->type);
+		ft_putstr_fd("\033[0;33m", 1);
+		ft_putstr_fd(tmp->content, 1);
+		ft_putstr_fd("(", 1);
+		ft_putnbr_fd(tmp->type, 1);
+		ft_putstr_fd(")", 1);
 		tmp = tmp->next;
 	}
-	printf("\n");
-	printf("\n\033[0;0m\x1b[1A\x1b[M");
+	ft_putstr_fd("\n", 1);
+	ft_putstr_fd("\n\033[0;0m\x1b[1A\x1b[M", 1);
+	// printf("\n");
+	// printf("\n\033[0;0m\x1b[1A\x1b[M");
 }
 
 void	show_tree_data(t_tree_node *node, char *str)
 {
 	if (node)
 	{
-		printf("%s\n", str);
-		printf("node type : %d\n", node->type);
+		// printf("%s\n", str);
+		// printf("node type : %d\n", node->type);
+		ft_putstr_fd(str, 1);
+		ft_putstr_fd("\nnode type : ", 1);
+		ft_putnbr_fd(node->type, 1);
+		ft_putstr_fd("\n", 1);
 		show_tokens_data(node->tokens, "tokens");
 		show_tokens_data(node->command, "command");
 		//for echo cmd
