@@ -24,6 +24,8 @@ int			tree_node_type(int type);
 
 int			str_len(char *str, char c, int i, int type);
 int			str_parens(char *str, int i);
+void		ft_display_ctrlx_set(int flag);
+void		set_excute(char *cmd_line);
 
 void		welcome_screen(void);
 

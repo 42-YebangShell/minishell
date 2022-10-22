@@ -1,9 +1,6 @@
 #ifndef STRUCT_H
 # define STRUCT_H
 
-# include <termios.h>
-# include "define.h"
-
 typedef struct s_environ
 {
 	char				*key;
