@@ -11,7 +11,6 @@ int	ft_env(t_token *command)
 	return (0);
 }
 
-
 static void	show_env_list(t_environ *env_list)
 {
 	t_environ *tmp;
