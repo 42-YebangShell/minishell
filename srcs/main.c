@@ -72,6 +72,10 @@ void	show_tree_data(t_tree_node *node, char *str)
 		{
 			ft_pwd(node->command);
 		}
+		if (node->command && ft_strncmp(node->command->content, "cd", 3) == 0)
+		{
+			ft_cd(node->command);
+		}
 		//for pwd cmd
 		// if (node->command && ft_strncmp(node->command->content, "echo", 5) == 0)
 		// {
