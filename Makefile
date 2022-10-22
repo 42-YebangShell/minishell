@@ -27,16 +27,18 @@ GNL				= get_next_line/libgnl.a
 FTPRINT			= ft_printf/libftprintf.a
 HEADERS			= includes
 
-MAIN			= main	
+MAIN			= main
 ENV				= environ
 EXEC			= #execution
 PARSER			= tokenizer check_tokens set_btree
 UTILS			= util_error  util_signal util_token util_tree utils welcome_screen #util_redirection
+BUILTIN			= ft_echo #ft_cd ft_env ft_exit ft_pwd ft_export ft_unset
 SRCS 			= $(addsuffix .c, $(addprefix srcs/, $(MAIN)))			\
 				$(addsuffix .c, $(addprefix srcs/env/, $(ENV)))			\
 				$(addsuffix .c, $(addprefix srcs/env/, $(EXEC)))		\
 				$(addsuffix .c, $(addprefix srcs/utils/, $(UTILS)))		\
-				$(addsuffix .c, $(addprefix srcs/parser/, $(PARSER)))
+				$(addsuffix .c, $(addprefix srcs/parser/, $(PARSER)))	\
+				$(addsuffix .c, $(addprefix srcs/builtin/, $(BUILTIN)))
 
 OBJS 			= $(SRCS:c=o)
 all: $(NAME)
