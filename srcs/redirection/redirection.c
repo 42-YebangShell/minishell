@@ -84,10 +84,10 @@ int	apply_heredoc(t_info *info, t_token *token)
 
 	limiter = token->next->next;
 	if (pipe(fd) == -1)
-		ft_perror("pipe error\n");
+		ft_perror("pipe error", "\n");
 	pid = fork();
 	if (pid == -1)
-		ft_perror("fork error\n");
+		ft_perror("fork error", "\n");
 	if (pid == 0)
 		line_write(fd[WRITE_END], limiter);
 	else
