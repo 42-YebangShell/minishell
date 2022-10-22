@@ -22,6 +22,7 @@
 # include "env.h"
 # include "exec.h"
 # include "parser.h"
+# include "builtin.h"
 # include "redirection.h"
 # include "utils.h"
 

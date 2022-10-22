@@ -27,10 +27,11 @@ GNL				= get_next_line/libgnl.a
 FTPRINT			= ft_printf/libftprintf.a
 HEADERS			= includes
 
-MAIN			= main	
+MAIN			= main
 ENV				= environ
 EXEC			= #execution exec_and_or exec_word exec_pipe
 PARSER			= tokenizer check_tokens set_btree
+BUILTIN			= #
 REDIRECTION		= #redirection
 UTILS			= util_builtin util_error util_exec util_signal util_token util_tree utils welcome_screen
 SRCS 			= $(addsuffix .c, $(addprefix srcs/, $(MAIN)))			\
@@ -38,6 +39,7 @@ SRCS 			= $(addsuffix .c, $(addprefix srcs/, $(MAIN)))			\
 				$(addsuffix .c, $(addprefix srcs/env/, $(EXEC)))		\
 				$(addsuffix .c, $(addprefix srcs/utils/, $(UTILS)))		\
 				$(addsuffix .c, $(addprefix srcs/parser/, $(PARSER)))	\
+				$(addsuffix .c, $(addprefix srcs/builtin/, $(BUILTIN)))	\
 				$(addsuffix .c, $(addprefix srcs/parser/, $(REDIRECTION)))
 
 OBJS 			= $(SRCS:c=o)
