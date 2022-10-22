@@ -4,6 +4,7 @@
 *.zip
 *.o
 *.a
+test.c
 test
 tester
 minishell
