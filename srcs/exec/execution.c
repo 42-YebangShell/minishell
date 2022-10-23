@@ -7,7 +7,7 @@ void	exec_set(char *cmd_line)
 	info.h_token = NULL;
 	// replace_dollar
 	tokenizer(&(info.h_token), cmd_line);
-	if (check_syntax_error(info.h_token) == SUCCESS || redir_check_here_doc(&info) == SUCCESS)
+	if (check_syntax_error(info.h_token) == SUCCESS) //|| redir_check_here_doc(&info) == SUCCESS)
 	{
 		info.r_node = create_btree_node(info.h_token);
 		set_btree_node(&(info.r_node));
@@ -38,9 +38,10 @@ void	execute_btree_node(t_info *info, t_tree_node *root)
 		g_var.status = exec_pipe(info, root);
 	else
 	{
-		if (!root->right)
-			g_var.status = exec_single_word(info, root);
-		else
-			g_var.status = exec_word(info, root);
+		g_var.status = exec_word(info, root);
+		// if (!root->right)
+		// 	g_var.status = exec_single_word(info, root);
+		// else
+		// 	g_var.status = exec_word(info, root);
 	}
 }
