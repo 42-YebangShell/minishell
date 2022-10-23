@@ -12,6 +12,7 @@ typedef struct s_global
 {
 	int				status;
 	t_environ		*env_list;
+	char			*prev_path;
 	struct termios	 settings;
 } t_global;
 
@@ -46,4 +47,5 @@ typedef struct s_pipe
 	int		prev_fd;
 	int		status;
 }	t_pipe;
+
 #endif

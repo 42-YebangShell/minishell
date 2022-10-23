@@ -1,24 +1,19 @@
 #include "../../includes/minishell.h"
 
-int	ft_pwd(void);
-
-int	main()
-{
-	ft_pwd();
-	return (0);
-}
-
-int	ft_pwd(void)
+int	ft_pwd(t_token *command)
 {
 	char	*path;
 
+	if (command == NULL)
+		return (0);
 	path = getcwd(NULL, 0);
 	if (!path)
 	{
-		printf("path not found\n");
+		ft_putstr_fd("path not found\n", STDERR_FILENO);
 		return (1);
 	}
-	printf("%s\n", path);
+	ft_putstr_fd(path, STDOUT_FILENO);
+	ft_putstr_fd("\n", STDOUT_FILENO);
 	free(path);
 	return (0);
 }

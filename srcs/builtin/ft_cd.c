@@ -1,55 +1,35 @@
 #include "../../includes/minishell.h"
 
-char	*prev_path; //전역 구조체 변수에 저장..혹은 OLDPWD?
-//OLDPWD를 getenv()를 이용해 가져오면 될듯?
-
-int	ft_cd(char *path);
-
-int	main(int ac, char **av)
+int	ft_cd(t_token *command)
 {
-	if (ac == 1)
+	char	*path;
+
+	if (command == NULL)
+		return (0);
+	if (command->next == NULL)
 	{
-		chdir("~");
-		printf("%s\n", getcwd(NULL, 0));
+		chdir(getenv("HOME"));
+		return (0);
 	}
-	else
-		ft_cd(av[1]);
-	return (0);
-}
-
-
-int	ft_cd(char *path)
-{
-	if (strncmp(path, "-", 2) == 0)
+	path = command->next->content;
+	if (ft_strncmp(path, "-", 2) == 0)
 	{
-		if (chdir(prev_path) == -1)
+		if (chdir(g_var.prev_path) == -1)
 		{
-			printf("minsh: cd: OLDPWD not set\n");
+			ft_putstr_fd("minsh: cd: OLDPWD not set\n", STDERR_FILENO);
 			return (-1);
 		}
-		printf("%s\n", getcwd(NULL, 0));
-	}
-	if (strncmp(path, ".", 2) == 0 || strncmp(path, "./", 3) == 0)
-	{
-		if (chdir("./") == -1)
-			return (-1);
-		printf("%s\n", getcwd(NULL, 0));
-	}
-	else if (strncmp(path, "..", 3) == 0 || strncmp(path, "../", 4) == 0)
-	{
-		if (chdir("../") == -1)
-			return (-1);
-		printf("%s\n", getcwd(NULL, 0));
 	}
 	else
 	{
+		g_var.prev_path = getcwd(NULL, 0);
 		if (chdir(path) == -1)
 		{
-			printf("minsh: cd: %s: Not a directory\n", path);
+			ft_putstr_fd("minsh: cd:", STDERR_FILENO);
+			ft_putstr_fd(path, STDERR_FILENO);
+			ft_putstr_fd(": Not a directory\n", STDERR_FILENO);
 			return (-1);
 		}
-		printf("%s\n", getcwd(NULL, 0));
 	}
-	prev_path = getcwd(NULL, 0);
 	return (0);
 }

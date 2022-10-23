@@ -31,7 +31,7 @@ t_environ	*get_envp_list(char **env)
 static void	add_env_node(char *key, char *value, t_environ **env_list)
 {
 	t_environ	*new;
-	
+
 	new = new_env_node(key, value);
 	if (!new)
 	{

@@ -1,22 +1,27 @@
 #include "../../includes/minishell.h"
 
-//이렇게 하면 안 되고 env list를 만들어서 관리해야 할듯...getenv() 사용 못하기 때문
-int	ft_env(char **env);
+static void	show_env_list(t_environ *env_list);
 
-int	main(int ac, char **av, char **env)
+int	ft_env(t_token *command)
 {
-	ft_env(env);
+	ft_putstr_fd("hello\n", 1);
+	if (command == NULL)
+		return (0);
+	show_env_list(g_var.env_list);
+	return (0);
 }
 
-int	ft_env(char **env)
+static void	show_env_list(t_environ *env_list)
 {
-	int		i;
+	t_environ *tmp;
 
-	i = 0;
-	while (env[i])
+	tmp = env_list;
+	while (tmp)
 	{
-		printf("%s\n", env[i]);
-		i++;
+		ft_putstr_fd(tmp->key, STDOUT_FILENO);
+		ft_putstr_fd("=", STDOUT_FILENO);
+		ft_putstr_fd(tmp->value, STDOUT_FILENO);
+		ft_putstr_fd("\n", STDOUT_FILENO);
+		tmp = tmp->next;
 	}
-	return (0);
 }
