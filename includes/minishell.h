@@ -21,6 +21,7 @@
 # include "parser.h"
 # include "exec.h"
 # include "env.h"
+# include "redirection.h"
 # include "builtin.h"
 
 t_global	g_var;

@@ -49,3 +49,10 @@ void	ft_display_ctrlx_set(int flag)
 	if (tcsetattr(STDIN_FILENO, TCSANOW, &g_var.settings) == ERROR)
 		error_exit("minsh: tcsetattr");
 }
+
+int	check_status(int status)
+{
+	if (WIFEXITED(status))
+		return (WEXITSTATUS(status));
+	return (WCOREFLAG | WTERMSIG(status));
+}
