@@ -53,6 +53,30 @@ void	show_tree_data(t_tree_node *node, char *str)
 		{
 			ft_echo(node->command);
 		}
+		//for export cmd
+		if (node->command && ft_strncmp(node->command->content, "export", 7) == 0)
+		{
+			ft_export(node->command);
+		}
+		//for unset cmd
+		if (node->command && ft_strncmp(node->command->content, "unset", 6) == 0)
+		{
+			ft_unset(node->command);
+		}
+		//for env cmd
+		if (node->command && ft_strncmp(node->command->content, "env", 4) == 0)
+		{
+			ft_env(node->command);
+		}
+		if (node->command && ft_strncmp(node->command->content, "pwd", 4) == 0)
+		{
+			ft_pwd(node->command);
+		}
+		if (node->command && ft_strncmp(node->command->content, "cd", 3) == 0)
+		{
+			ft_cd(node->command);
+		}
+		//for pwd cmd
 		// if (node->command && ft_strncmp(node->command->content, "echo", 5) == 0)
 		// {
 		// 	if (node->command->next)
