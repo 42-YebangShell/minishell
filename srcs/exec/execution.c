@@ -45,13 +45,14 @@ void	show_tree_data(t_tree_node *node, char *str)
 	}
 }
 /*-------------------------------------------------------------------------------------------------*/
-void	set_excute(char *cmd_line)
+void	exec_set(char *cmd_line)
 {
 	t_info	info;
 
 	info.h_token = NULL;
+	// replace_dollar
 	tokenizer(&(info.h_token), cmd_line);
-	if (check_syntax_error(info.h_token))
+	if (check_syntax_error(info.h_token) || cehck_here_doc(info))
 	{
 		info.r_node = create_btree_node(info.h_token);
 		set_btree_node(&(info.r_node));

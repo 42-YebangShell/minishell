@@ -23,7 +23,7 @@ static void	shell_loop()
 	{
 		cmd_line = set_read_line();
 		add_history(cmd_line);
-		set_excute(cmd_line);
+		exec_set(cmd_line);
 	}
 }
 

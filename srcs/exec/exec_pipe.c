@@ -1,7 +1,7 @@
 #include "../../includes/minishell.h"
 
 static int	exec_list_pipe_cmd(t_info *info, t_tree_node *root, t_pipe p);
-static int	count_pipe(t_tree_node *root);
+static int	exec_count_pipe(t_tree_node *root);
 static void	exec_pipe_child(t_info *info, t_tree_node *root, t_pipe p);
 static void	exit_wait(int cnt);
 
@@ -12,7 +12,7 @@ int	exec_pipe(t_info *info, t_tree_node *root)
 
 	i = 0;
 	p.prev_fd = -1;
-	p.cnt = count_pipe(root);
+	p.cnt = exec_count_pipe(root);
 	while(i++ < p.cnt)
 	{
 		if (pipe(p.fd))
@@ -34,7 +34,7 @@ int	exec_pipe(t_info *info, t_tree_node *root)
 	return (exec_list_pipe_cmd(info, root, p));
 }
 
-static int	count_pipe(t_tree_node *root)
+static int	exec_count_pipe(t_tree_node *root)
 {
 	int	cnt;
 
