@@ -15,9 +15,9 @@ t_token	*check_quote(int *i, char *line)
 	if (!len)
 	{
 		if (buf.type == S_QUOTE)
-			ft_perror("syntax error near unexpected token `''");
+			error_exit("minish: syntax error near unexpected token `''");
 		else if (buf.type == D_QUOTE)
-			ft_perror("syntax error near unexpected token `\"'");
+			error_exit("minish: syntax error near unexpected token `\"'");
 		return (new);
 	}
 	buf.content = ft_substr(line, *i, len - *i + 1);
@@ -38,9 +38,9 @@ t_token	*check_parens(int *i, char *line)
 	if (len <= 0)
 	{
 		if (!len)
-			ft_perror("syntax error near unexpected token `('");
+			error_exit("minish: syntax error near unexpected token `('");
 		else if (len < 0)
-			ft_perror("syntax error near unexpected token `)'");
+			error_exit("minish: syntax error near unexpected token `)'");
 		return (new);
 	}
 	buf.content = ft_substr(line, *i, len - *i);
