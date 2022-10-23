@@ -32,12 +32,12 @@ char	*exec_rm_paren(t_token *tk_parens);
 
 // util_error.c
 void	error_exit(char *str);
-vvoid	ft_perror(char *err_msg1, char *err_msg2);
+void	ft_perror(char *err_msg1, char *err_msg2);
 int	check_syntax_error(t_token *token);
 
 // util_exec.c
 void	exec_make_env_str(char *env[]);
-char	**exec_env_str(void);
+char	**exec_env_str_list(void);
 char	**exec_token_str_list(t_token *token);
 char	*exec_find_path(char *cmd, char *envp[]);
 

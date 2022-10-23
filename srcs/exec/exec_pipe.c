@@ -64,7 +64,7 @@ static void	exec_pipe_child(t_info *info, t_tree_node *root, t_pipe p)
 		if (check_builtin(root->command))
 			p.status = run_builtin(info, root);
 		else
-			p.status = exec_cmd_child(info, root);
+			p.status = exec_word_child(info, root);
 	}
 	exit(p.status);
 }
@@ -80,7 +80,7 @@ static int	exec_list_pipe(t_info *info, t_tree_node *root, t_pipe p)
 		exit_wait(p.cnt);
 	else if (p.pid == 0)
 	{
-		status = exec_last_cmd_child(info, root, p);
+		status = exec_last_word_child(info, root, p);
 		exit(status);
 	}
 	close(p.prev_fd);

@@ -22,7 +22,7 @@ void	exec_make_env_str(char *env[])
 	}
 }
 
-char	**exec_env_str(void)
+char	**exec_env_str_list(void)
 {
 	int			i;
 	t_environ	*env_list;
@@ -57,7 +57,7 @@ char	**exec_token_str_list(t_token *token)
 	tmp = token;
 	while (tmp)
 	{
-		add_str(cmd_list, tmp->contnet);
+		add_str(cmd_list, tmp->content);
 		tmp = tmp->next;
 	}
 	return (cmd_list)
