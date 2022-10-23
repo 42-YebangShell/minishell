@@ -1,13 +1,18 @@
 #ifndef UTILS_H
 # define UTILS_H
 
+// builtin
+int	check_builtin(t_token *token);
+char	*exec_rm_char(t_token *token);
+
+int	run_builtin(t_info *info, t_tree_node *root);
 /*	perror.c	*/
 void	ft_perror(char *str);
 int	check_syntax_error(t_token *token);
 /*	redirection.c	*/
 /*	signal_handler.c	*/
 void	sig_readline(int signo);
-
+void	sig_exec(int sig);
 /*	token.c	*/
 t_token	*new_token(t_token token);
 void	add_token(t_token **token_list, t_token *new);

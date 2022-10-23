@@ -1,26 +1,28 @@
 #include "../../includes/minishell.h"
 
-void execution(t_tree_node	*r_node)
+void execution(t_info *info)
 {
-	t_tree_node	*tmp;
+	signal(SIGINT, &sig_exec);
+	signal(SIGQUIT, &sig_exec);
+	execute_btree_node(info, info->r_node);
+	delete_node(info->r_node);
+}
 
-	execution(r_node->left);
-	if (tmp->type == TN_AND)
-	{
-		if (!g_var.status)
-			return ;
-	}
-	else if (tmp->type == TN_OR)
-	{
-		if (g_var.status)
-			return ;
-	}
-	if (tmp->type == TN_PIPE)
-	{
-			//fd..
-			//while
-			//fork...
-	}
+void	execute_btree_node(t_info *info, t_tree_node *root)
+{
+	if (root->type == TN_PARENS)
+		exec_paren(root);
+	else if (root->type == TN_AND || root->type == TN_OR)
+		exec_and_or(info, root);
+	else if (root->type == TN_PIPE)
+		g_var.status = exec_pipe(info, root);
 	else
-		execution(r_node->right);
+	{
+		if (!root->right)
+			g_var.status = exec_single_word(info, root);
+		else
+			g_var.status = exec_word(info, root);
+	}
+	// if (check_builtin(root->command) == EXIT_SUCCESS)
+	// 	g_var.status = run_builtin(info, root);
 }

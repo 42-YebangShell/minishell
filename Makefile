@@ -29,13 +29,13 @@ HEADERS			= includes
 
 MAIN			= main
 ENV				= environ
-EXEC			= #execution
+EXEC			= execution exec_and_or exec_paren exec_pipe exec_word
 PARSER			= tokenizer check_tokens set_btree
-UTILS			= util_error  util_signal util_token util_tree utils welcome_screen #util_redirection
+UTILS			= util_error  util_signal util_token util_tree utils welcome_screen util_exec #util_redirection
 BUILTIN			= ft_echo ft_export ft_unset ft_env ft_pwd ft_cd #ft_exit
 SRCS 			= $(addsuffix .c, $(addprefix srcs/, $(MAIN)))			\
 				$(addsuffix .c, $(addprefix srcs/env/, $(ENV)))			\
-				$(addsuffix .c, $(addprefix srcs/env/, $(EXEC)))		\
+				$(addsuffix .c, $(addprefix srcs/exec/, $(EXEC)))		\
 				$(addsuffix .c, $(addprefix srcs/utils/, $(UTILS)))		\
 				$(addsuffix .c, $(addprefix srcs/parser/, $(PARSER)))	\
 				$(addsuffix .c, $(addprefix srcs/builtin/, $(BUILTIN)))

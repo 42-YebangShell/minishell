@@ -17,9 +17,12 @@ void	delete_node(t_tree_node *node)
 	{
 		delete_node(node->left);
 		delete_node(node->right);
-		delete_token(node->tokens);
-		delete_token(node->redir);
-		delete_token(node->command);
+		if (node->tokens)
+			delete_token(node->tokens);
+		if (node->redir)
+			delete_token(node->redir);
+		if (node->command)
+			delete_token(node->command);
 		free(node);
 		node = NULL;
 	}
