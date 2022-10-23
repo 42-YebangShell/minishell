@@ -1,8 +1,8 @@
 #include "../../includes/minishell.h"
 
-static int	exec_list_pipe_cmd(t_info *info, t_tree_node *root, t_pipe p);
 static int	exec_count_pipe(t_tree_node *root);
 static void	exec_pipe_child(t_info *info, t_tree_node *root, t_pipe p);
+static int	exec_list_pipe(t_info *info, t_tree_node *root, t_pipe p);
 static void	exit_wait(int cnt);
 
 int	exec_pipe(t_info *info, t_tree_node *root)
@@ -31,7 +31,7 @@ int	exec_pipe(t_info *info, t_tree_node *root)
 			root = root->right;
 		}
 	}
-	return (exec_list_pipe_cmd(info, root, p));
+	return (exec_list_pipe(info, root, p));
 }
 
 static int	exec_count_pipe(t_tree_node *root)
@@ -58,7 +58,7 @@ static void	exec_pipe_child(t_info *info, t_tree_node *root, t_pipe p)
 	dup2(p.fd[WRITE_END], STDOUT_FILENO);
 	close(p.fd[WRITE_END]);
 	if (root->type == TN_PARENS)
-		p.status = exec_pipe_paren(info, root);
+		exec_paren(root);
 	else
 	{
 		if (check_builtin(root->command))
@@ -69,7 +69,7 @@ static void	exec_pipe_child(t_info *info, t_tree_node *root, t_pipe p)
 	exit(p.status);
 }
 
-static int	exec_list_pipe_cmd(t_info *info, t_tree_node *root, t_pipe p)
+static int	exec_list_pipe(t_info *info, t_tree_node *root, t_pipe p)
 {
 	int	i;
 	int status;
@@ -80,6 +80,7 @@ static int	exec_list_pipe_cmd(t_info *info, t_tree_node *root, t_pipe p)
 		exit_wait(p.cnt);
 	else if (p.pid == 0)
 	{
+		// 
 		status = exec_last_cmd(info, root, p);
 		exit(status);
 	}

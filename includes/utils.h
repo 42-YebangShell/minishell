@@ -16,6 +16,7 @@ int	tree_node_type(int type);
 t_token	*new_token(t_token token);
 void	add_token(t_token **token_list, t_token *new);
 t_token	*get_last_token(t_token *tokens);
+int		get_token_length(t_token *tokens);
 void	*delete_token(t_token *tokens);
 
 // util_signal
@@ -30,10 +31,15 @@ int	check_here_doc(t_info *info);
 char	*exec_rm_paren(t_token *tk_parens);
 
 // util_error.c
-void	ft_perror(char *err_msg1, char *err_msg2);
+void	error_exit(char *str);
+vvoid	ft_perror(char *err_msg1, char *err_msg2);
 int	check_syntax_error(t_token *token);
-void	error_exit(char *str)
+
+// util_exec.c
+void	exec_make_env_str(char *env[]);
+char	**exec_env_str(void);
+char	**exec_token_str_list(t_token *token);
+char	*exec_find_path(char *cmd, char *envp[]);
 
 // util_builtin.c
-
 #endif

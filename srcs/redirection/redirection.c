@@ -5,7 +5,7 @@ int	apply_redirection(t_info *info, t_tree_node *root)
 	t_token	*token;
 	int		r_status;
 
-	r_status = 0;
+	r_status = EXIT_FAILURE;
 	token = root->redir;
 	while (token)
 	{
