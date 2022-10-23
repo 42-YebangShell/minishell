@@ -1,9 +1,6 @@
 #ifndef STRUCT_H
 # define STRUCT_H
 
-# include <termios.h>
-# include "define.h"
-
 typedef struct s_environ
 {
 	char				*key;
@@ -41,5 +38,14 @@ typedef struct s_info
 	t_tree_node	*r_node;
 	t_token		*h_token;
 }	t_info;
+
+typedef struct s_pipe
+{
+	pid_t	pid;
+	int		cnt;
+	int		fd[2];
+	int		prev_fd;
+	int		status;
+}	t_pipe;
 
 #endif

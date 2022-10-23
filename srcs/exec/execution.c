@@ -1,26 +1,46 @@
 #include "../../includes/minishell.h"
 
-void execution(t_tree_node	*r_node)
+void	exec_set(char *cmd_line)
 {
-	t_tree_node	*tmp;
+	t_info	info;
 
-	execution(r_node->left);
-	if (tmp->type == TN_AND)
+	info.h_token = NULL;
+	// replace_dollar
+	tokenizer(&(info.h_token), cmd_line);
+	if (check_syntax_error(info.h_token) || cehck_here_doc(info))
 	{
-		if (!g_var.status)
-			return ;
-	}
-	else if (tmp->type == TN_OR)
-	{
-		if (g_var.status)
-			return ;
-	}
-	if (tmp->type == TN_PIPE)
-	{
-			//fd..
-			//while
-			//fork...
+		info.r_node = create_btree_node(info.h_token);
+		set_btree_node(&(info.r_node));
+		execution(&info);
+		free(cmd_line);
 	}
 	else
-		execution(r_node->right);
+		delete_token(info.h_token);
+}
+
+void	execution(t_info *info)
+{
+	signal(SIGINT, &sig_exec);
+	signal(SIGQUIT, &sig_exec);
+	ft_display_ctrlx_set(DISPLAY);
+	execute_btree_node(info, info->r_node);
+	delete_node(info->r_node);
+	info->r_node = NULL;
+}
+
+void	execute_btree_node(t_info *info, t_tree_node *root)
+{
+	if (root->type == TN_PARENS)
+		exec_paren(root);
+	else if (root->type == TN_AND || root->type == TN_OR)
+		exec_and_or(info, root);
+	else if (root->type == TN_PIPE)
+		g_var.status = exec_pipe(info, root);
+	else
+	{
+		if (!root->right)
+			g_var.status = exec_single_word(info, root);
+		else
+			g_var.status = exec_word(info, root);
+	}
 }

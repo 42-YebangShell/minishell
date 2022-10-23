@@ -7,8 +7,27 @@ void	sig_readline(int signo)
 		g_var.status = 1;
 		write(1, "\n", 1);
 		rl_on_new_line();
-		rl_replace_line("", 1);
+		rl_replace_line("", 0);
 		rl_redisplay();
 	}
 	return;
+}
+
+void	sig_exec(int sig)
+{
+	if (sig == SIGINT)
+		printf("\n");
+	else if (sig == SIGQUIT)
+		printf("Quit: 3\n");
+}
+
+void	sig_here_doc(int sig)
+{
+	if (sig == SIGINT)
+	{
+		write(1, "\n", 1);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		exit(sig + 128);
+	}
 }

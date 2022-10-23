@@ -44,6 +44,20 @@ t_token	*get_last_token(t_token *tokens)
 	return (NULL);
 }
 
+int	get_token_length(t_token *tokens)
+{
+	int		len;
+	t_token	*tmp;
+
+	tmp = tokens;
+	while (tmp)
+	{
+		len++;
+		tmp = tmp->next;
+	}
+	return (len);
+}
+
 void	*delete_token(t_token *tokens)
 {
 	t_token	*next;

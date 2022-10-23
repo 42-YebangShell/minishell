@@ -8,6 +8,7 @@
 # include <errno.h>
 # include <signal.h>
 # include <fcntl.h>
+# include <termios.h>
 
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -16,12 +17,14 @@
 # include "../lib/ft_printf/ft_printf.h"
 # include "../lib/get_next_line/get_next_line.h"
 
+# include "define.h"
 # include "struct.h"
-# include "utils.h"
-# include "parser.h"
-# include "exec.h"
 # include "env.h"
+# include "exec.h"
+# include "parser.h"
 # include "builtin.h"
+# include "redirection.h"
+# include "utils.h"
 
 t_global	g_var;
 void		rl_replace_line (const char *text, int clear_undo);
