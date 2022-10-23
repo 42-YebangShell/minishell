@@ -2,7 +2,7 @@
 
 static void	pass_space(int *idx, char *line);
 
-void tokenizer(t_token **tokens, char *cmd_line)
+void	tokenizer(t_token **tokens, char *cmd_line)
 {
 	int		i;
 	char	*line;
@@ -18,21 +18,21 @@ void tokenizer(t_token **tokens, char *cmd_line)
 		else if (ft_strchr("|&", line[i]))
 			add_token(tokens, check_and_or_pipe(&i, line));
 		else if (ft_strchr("<>", line[i]))
-			add_token(tokens, check_redir(&i, line)); 
+			add_token(tokens, check_redir(&i, line));
 		else
 			add_token(tokens, check_cmd_or_option(&i, line));
 		pass_space(&i, line);
 		if (!*tokens)
 			break ;
 		if (i > ft_strlen(line))
-			break;
+			break ;
 	}
 }
 
 static void	pass_space(int *idx, char *line)
 {
-	int	i;
-	char *str;
+	int		i;
+	char	*str;
 
 	i = *idx;
 	while (line[i])
