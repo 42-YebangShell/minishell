@@ -4,20 +4,20 @@ t_token	*check_quote(int *i, char *line)
 {
 	int		len;
 	t_token	buf;
-	t_token *new;
+	t_token	*new;
 
 	new = NULL;
 	if (line[*i] == '\"')
 		buf.type = D_QUOTE;
 	else if (line[*i] == '\'')
 		buf.type = S_QUOTE;
-	len = str_len(line, line[*i], *i+1, NONE);
+	len = str_len(line, line[*i], *i + 1, NONE);
 	if (!len)
 	{
 		if (buf.type == S_QUOTE)
-			ft_perror("syntax error near unexpected token `''");
+			error_exit("minish: syntax error near unexpected token `''");
 		else if (buf.type == D_QUOTE)
-			ft_perror("syntax error near unexpected token `\"'");
+			error_exit("minish: syntax error near unexpected token `\"'");
 		return (new);
 	}
 	buf.content = ft_substr(line, *i, len - *i + 1);
@@ -30,7 +30,7 @@ t_token	*check_parens(int *i, char *line)
 {
 	int		len;
 	t_token	buf;
-	t_token *new;
+	t_token	*new;
 
 	new = NULL;
 	buf.type = PARENS;
@@ -38,9 +38,9 @@ t_token	*check_parens(int *i, char *line)
 	if (len <= 0)
 	{
 		if (!len)
-			ft_perror("syntax error near unexpected token `('");
+			error_exit("minish: syntax error near unexpected token `('");
 		else if (len < 0)
-			ft_perror("syntax error near unexpected token `)'");
+			error_exit("minish: syntax error near unexpected token `)'");
 		return (new);
 	}
 	buf.content = ft_substr(line, *i, len - *i);
@@ -53,7 +53,7 @@ t_token	*check_and_or_pipe(int *i, char *line)
 {
 	int		len;
 	t_token	buf;
-	t_token *new;
+	t_token	*new;
 
 	len = 2;
 	new = NULL;
@@ -64,8 +64,8 @@ t_token	*check_and_or_pipe(int *i, char *line)
 		len = 1;
 		buf.type = PIPE;
 	}
-	else if (line[*i + 1] && line[*i] == '&' && line[*i+1] == '&')
-		buf.type = AND;	
+	else if (line[*i + 1] && line[*i] == '&' && line[*i + 1] == '&')
+		buf.type = AND;
 	buf.content = ft_substr(line, *i, len);
 	*i += len;
 	new = new_token(buf);
