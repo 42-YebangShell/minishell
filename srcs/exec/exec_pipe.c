@@ -80,8 +80,7 @@ static int	exec_list_pipe(t_info *info, t_tree_node *root, t_pipe p)
 		exit_wait(p.cnt);
 	else if (p.pid == 0)
 	{
-		// 
-		status = exec_last_cmd(info, root, p);
+		status = exec_last_cmd_child(info, root, p);
 		exit(status);
 	}
 	close(p.prev_fd);
