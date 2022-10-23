@@ -1,6 +1,6 @@
 #include "../../includes/minishell.h"
 
-int	check_here_doc(t_info *info)
+int	redir_check_here_doc(t_info *info)
 {
 	t_token	*token;
 

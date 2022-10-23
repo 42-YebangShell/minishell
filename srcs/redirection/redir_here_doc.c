@@ -1,10 +1,19 @@
 #include "../../includes/minishell.h"
 
-int	redir_here_doc(char *limiter)
+static void	redir_here_doc_child(int fd, char *limiter);
+
+int	redir_here_doc(t_token *token)
 {
 	pid_t	pid;
 	int		fd[2];
+	char	*limiter;
 
+	if (!token->next)
+		return (EXIT_FAILURE);
+	if (token->next->content[0] == (char)'\'' || token->next->content[0] == (char)'\"' )
+		limiter = exec_rm_char(token->next);
+	else
+		limiter = token->next->content;
 	if (pipe(fd) == -1)
 		exit(EXIT_FAILURE);
 	pid = fork();
@@ -20,11 +29,11 @@ int	redir_here_doc(char *limiter)
 		waitpid(pid, &g_var.status, WNOHANG);
 	}
 	if (check_status(g_var.status) == EXIT_SUCCESS)
-		return (TRUE);
-	return (FALSE);
+		return (EXIT_SUCCESS);
+	return (EXIT_FAILURE);
 }
 
-void	redir_here_doc_child(int fd, char *limiter)
+static void	redir_here_doc_child(int fd, char *limiter)
 {
 	char	*line;
 

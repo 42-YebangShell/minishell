@@ -25,7 +25,7 @@ void	sig_exec(int sig);
 void	sig_here_doc(int sig);
 
 // util_redirection.c 
-int	check_here_doc(t_info *info);
+int	redir_check_here_doc(t_info *info);
 
 // util_exec.c
 char	*exec_rm_paren(t_token *tk_parens);

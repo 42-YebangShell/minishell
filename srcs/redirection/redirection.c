@@ -1,6 +1,9 @@
 #include "../../includes/minishell.h"
 
-int	apply_redirection(t_info *info, t_tree_node *root)
+static int	redir_open_fd(t_info *info, t_token *token);
+static int	redir_open_file(char *filename, t_token *token);
+
+int	redirection(t_info *info, t_tree_node *root)
 {
 	t_token	*token;
 	int		r_status;
@@ -10,7 +13,7 @@ int	apply_redirection(t_info *info, t_tree_node *root)
 	while (token)
 	{
 		if (token->type == HERE_DOC)
-			apply_here_doc(info, token);
+			redir_here_doc(token);
 		else
 			r_status = redir_open_fd(info, token);
 		token = token->next;
@@ -18,7 +21,7 @@ int	apply_redirection(t_info *info, t_tree_node *root)
 	return (r_status);
 }
 
-int	redir_open_fd(t_info *info, t_token *token)
+static int	redir_open_fd(t_info *info, t_token *token)
 {
 	int		r_status;
 	char	*filename;
@@ -30,12 +33,12 @@ int	redir_open_fd(t_info *info, t_token *token)
 	if (!filename)
 		return (EXIT_FAILURE);
 	r_status = redir_open_file(filename, token);
-	if (r_status)
+	if (r_status == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	return (r_status);
 }
 
-int redir_open_file(char *filename, t_token *token)
+static int	redir_open_file(char *filename, t_token *token)
 {
 	int	fd;
 

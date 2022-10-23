@@ -15,7 +15,7 @@ int	exec_single_word(t_info *info, t_tree_node *root)
 		if (fd[READ_END] == -1 || fd[WRITE_END] == -1)
 			exit(EXIT_FAILURE);
 		r_status = redirection(info, root);
-		if (r_status)
+		if (r_status == EXIT_FAILURE)
 		{
 			exec_restore_fd(fd);
 			return (r_status);
@@ -60,7 +60,7 @@ int	exec_word_child(t_info *info, t_tree_node *root)
 	int		r_status;
 
 	r_status = redirection(info, root);
-	if (r_status)
+	if (r_status == EXIT_FAILURE)
 		return (r_status);
 	if (root->command)
 	{
