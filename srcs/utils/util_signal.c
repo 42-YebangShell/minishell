@@ -10,7 +10,7 @@ void	sig_readline(int signo)
 		rl_replace_line("", 1);
 		rl_redisplay();
 	}
-	return;
+	return ;
 }
 
 void	sig_exec(int sig)
@@ -19,4 +19,15 @@ void	sig_exec(int sig)
 		printf("\n");
 	else if (sig == SIGQUIT)
 		printf("Quit: 3\n");
+}
+
+void	sig_here_doc(int sig)
+{
+	if (sig == SIGINT)
+	{
+		write(1, "\n", 1);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		exit(sig + 128);
+	}
 }

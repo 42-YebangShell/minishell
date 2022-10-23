@@ -1,9 +1,9 @@
 #include "../includes/minishell.h"
 
-static void	shell_loop();
-static char *set_read_line(t_info *info);
-static void	ft_display_ctrlx_set(int flag);
+static void	shell_loop(void);
+static char	*set_read_line(t_info *info);
 
+/*
 void	show_tokens_data(t_token *tokens, char *str)
 {
 	t_token *tmp;
@@ -89,6 +89,7 @@ void	show_tree_data(t_tree_node *node, char *str)
 		show_tree_data(node->right, "right");
 	}
 }
+*/
 
 int	main(int ac, char **av, char **envp)
 {
@@ -101,30 +102,22 @@ int	main(int ac, char **av, char **envp)
 	shell_loop();
 }
 
-static void	shell_loop()
+static void	shell_loop(void)
 {
 	t_info	info;
 	char	*cmd_line;
 
-	while(1)
+	while (1)
 	{
 		cmd_line = set_read_line(&info);
 		add_history(cmd_line);
-		info.h_token = NULL;
-		tokenizer(&(info.h_token), cmd_line);
-		if (check_syntax_error(info.h_token))
-		{
-			info.r_node = create_btree_node(info.h_token);
-			set_btree_node(&(info.r_node));
-			execution(&info);
-			// show_tree_data(info.r_node, "root");
-		}
+		exec_set(cmd_line);
 	}
 }
 
-static char *set_read_line(t_info *info)
+static char	*set_read_line(t_info *info)
 {
-	char *line;
+	char	*line;
 
 	signal(SIGINT, sig_readline);
 	signal(SIGQUIT, SIG_IGN);
@@ -139,16 +132,4 @@ static char *set_read_line(t_info *info)
 		exit(g_var.status);
 	}
 	return (line);
-}
-
-static void	ft_display_ctrlx_set(int flag)
-{
-	if (tcgetattr(STDIN_FILENO, &g_var.settings) == ERROR)
-		ft_perror("minsh: tcgetattr");
-	if (flag)
-		g_var.settings.c_lflag &= ECHOCTL;
-	else
-		g_var.settings.c_lflag &= ~ECHOCTL;
-	if (tcsetattr(STDIN_FILENO, TCSANOW, &g_var.settings) == ERROR)
-		ft_perror("minsh: tcsetattr");
 }
