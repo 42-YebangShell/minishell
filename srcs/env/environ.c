@@ -35,7 +35,7 @@ static void	add_env_node(char *key, char *value, t_environ **env_list)
 	new = new_env_node(key, value);
 	if (!new)
 	{
-		printf("Error\n");
+		error_exit("Error");
 		exit(1);
 	}
 	lstadd_env_node(env_list, new);

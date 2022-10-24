@@ -125,9 +125,9 @@ static char	*set_read_line(t_info *info)
 	line = readline("minish$ ");
 	if (!line)
 	{
-		printf("\033[1A");
-		printf("\033[7C");
-		printf(" exit\n");
+		ft_putstr_fd("\033[1A", STDOUT_FILENO);
+		ft_putstr_fd("\033[7C", STDOUT_FILENO);
+		ft_putstr_fd(" exit\n", STDOUT_FILENO);
 		ft_display_ctrlx_set(DISPLAY);
 		exit(g_var.status);
 	}

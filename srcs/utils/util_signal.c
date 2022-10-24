@@ -16,9 +16,9 @@ void	sig_readline(int signo)
 void	sig_exec(int sig)
 {
 	if (sig == SIGINT)
-		printf("\n");
+		ft_putstr_fd("\n", STDOUT_FILENO);
 	else if (sig == SIGQUIT)
-		printf("Quit: 3\n");
+		ft_putstr_fd("Quit: 3\n", STDOUT_FILENO);
 }
 
 void	sig_here_doc(int sig)
