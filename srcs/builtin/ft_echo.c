@@ -33,7 +33,7 @@ int	ft_echo(t_token *command)
 	}
 	if (!option)
 		ft_putstr_fd("\n", STDOUT_FILENO);
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 static int	check_option(char *content)

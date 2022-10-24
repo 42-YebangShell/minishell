@@ -1,6 +1,6 @@
 #include "../../includes/minishell.h"
 
-void	exec_make_env_str(char *env[])
+void	exec_make_env_str(char **env)
 {
 	int			i;
 	char		*tmp;
@@ -16,8 +16,8 @@ void	exec_make_env_str(char *env[])
 			tmp = ft_strjoin(env_list->key, (char *)"=");
 			str_env = ft_strjoin(tmp, env_list->value);
 			free(tmp);
+			env[i++] = str_env;
 		}
-		env[i++] = str_env;
 		env_list = env_list->next;
 	}
 	env[i] = NULL;
@@ -37,7 +37,7 @@ char	**exec_env_str_list(void)
 			i++;
 		env_list = env_list->next;
 	}
-	env = malloc(sizeof(char *) * (i + 2));
+	env = malloc(sizeof(char *) * (i + 1));
 	if (env == NULL)
 		g_var.status = EXIT_FAILURE;
 	exec_make_env_str(env);
@@ -49,10 +49,13 @@ char	**exec_token_str_list(t_token *token)
 	int		i;
 	int		len;
 	t_token	*tmp;
-	char **cmd_list;
+	char	**cmd_list;
 
 	i = 0;
+	if (!token)
+		return (NULL);
 	len = get_token_length(token) + 1;
+	cmd_list = NULL;
 	cmd_list = malloc(sizeof(char *) * (len + 1));
 	if (!cmd_list)
 		exit(EXIT_FAILURE);
@@ -94,6 +97,10 @@ char	*exec_rm_char(t_token *token)
 	char	*content;
 
 	content = token->content;
+	if (content[0] != (char)'\'' \
+		|| content[0] != (char)'\"' \
+		|| content[0] != (char)'(' )
+		return (content);
 	result = malloc(sizeof(char) * (ft_strlen(content) + 2));
 	if (!result)
 		return (NULL);
