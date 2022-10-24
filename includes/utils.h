@@ -18,7 +18,7 @@ char		*exec_find_path(char *cmd, char *envp[]);
 char		*exec_rm_char(t_token *token);
 
 // redirection
-int			redir_check_here_doc(t_info *info);
+int			redir_here_doc_check(t_info *info);
 
 // signal
 void		sig_readline(int signo);

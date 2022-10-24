@@ -49,7 +49,7 @@ char	**exec_token_str_list(t_token *token)
 	int		i;
 	int		len;
 	t_token	*tmp;
-	char **cmd_list;
+	char	**cmd_list;
 
 	i = 0;
 	if (!token)
@@ -97,6 +97,10 @@ char	*exec_rm_char(t_token *token)
 	char	*content;
 
 	content = token->content;
+	if (content[0] != (char)'\'' \
+		|| content[0] != (char)'\"' \
+		|| content[0] != (char)'(' )
+		return (content);
 	result = malloc(sizeof(char) * (ft_strlen(content) + 2));
 	if (!result)
 		return (NULL);

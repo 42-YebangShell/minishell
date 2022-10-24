@@ -14,7 +14,7 @@ void	welcome_screen(void)
 	{
 		line = get_next_line(fd);
 		if (!line)
-			break;
+			break ;
 		if (++i % 8 == 0)
 			color++;
 		printf("\033[0;%dm%s", color, line);

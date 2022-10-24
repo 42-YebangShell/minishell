@@ -13,7 +13,7 @@ int	exec_pipe(t_info *info, t_tree_node *root)
 	i = 0;
 	p.prev_fd = -1;
 	p.cnt = exec_count_pipe(root);
-	while(i++ < p.cnt)
+	while (i++ < p.cnt)
 	{
 		if (pipe(p.fd) == -1)
 			exit_wait(i - 1);
@@ -72,7 +72,7 @@ static void	exec_pipe_child(t_info *info, t_tree_node *root, t_pipe p)
 static int	exec_last_pipe(t_info *info, t_tree_node *root, t_pipe p)
 {
 	int	i;
-	int status;
+	int	status;
 
 	i = 0;
 	p.pid = fork();

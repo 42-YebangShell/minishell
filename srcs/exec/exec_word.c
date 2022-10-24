@@ -24,7 +24,7 @@ int	exec_single_word(t_info *info, t_tree_node *root)
 	}
 }
 
-int exec_word(t_info *info, t_tree_node *root)
+int	exec_word(t_info *info, t_tree_node *root)
 {
 	pid_t	pid;
 	int		status;
@@ -33,8 +33,6 @@ int exec_word(t_info *info, t_tree_node *root)
 	signal(SIGQUIT, &sig_exec);
 	if (root->type == TN_PARENS)
 		return (exec_parens(root));
-	// else if (check_builtin(root->command) == EXIT_SUCCESS)
-	// 	return (run_builtin(info, root));
 	else
 	{
 		pid = fork();
@@ -78,7 +76,7 @@ int	exec_word_child(t_info *info, t_tree_node *root)
 	{
 		r_status = redirection(info, root);
 		if (r_status != EXIT_FAILURE)
-			return (r_status); 
+			return (r_status);
 	}
 	if (root->command)
 	{
