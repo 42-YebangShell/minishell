@@ -86,7 +86,7 @@ static int	exec_list_pipe(t_info *info, t_tree_node *root, t_pipe p)
 	close(p.prev_fd);
 	while (i++ < p.cnt)
 	{
-		if (watipid(-1, &p.status, 0) == p.pid)
+		if (waitpid(-1, &p.status, 0) == p.pid)
 			status = p.status;
 	}
 	return (check_status(status));

@@ -27,6 +27,6 @@
 # include "utils.h"
 
 t_global	g_var;
-void		rl_replace_line (const char *text, int clear_undo);
+void		rl_replace_line(const char *text, int clear_undo);
 
 #endif

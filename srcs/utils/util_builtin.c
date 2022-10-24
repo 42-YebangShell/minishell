@@ -12,14 +12,14 @@ int	check_builtin(t_token *token)
 		!ft_strcmpi(cmd, "unset") || \
 		!ft_strcmpi(cmd, "env") || \
 		!ft_strcmpi(cmd, "exit"))
-	return (EXIT_FAILURE);
+		return (EXIT_SUCCESS);
 }
 
 int	run_builtin(t_info *info, t_tree_node *root)
 {
 	char	*cmd;
 
-	cmd = root->command;
+	cmd = root->command->content;
 	if (!ft_strcmpi(cmd, "echo"))
 		return (ft_echo(root->command));
 	if (!ft_strcmpi(cmd, "cd"))
@@ -32,7 +32,7 @@ int	run_builtin(t_info *info, t_tree_node *root)
 		return (ft_unset(root->command));
 	if (!ft_strcmpi(cmd, "env"))
 		return (ft_env(root->command));
-	if (!ft_strcmpi(cmd, "exit"))
-		return (ft_exit(root->command));
+	// if (!ft_strcmpi(cmd, "exit"))
+	// 	return (ft_exit(root->command));
 	return (EXIT_FAILURE);
 }

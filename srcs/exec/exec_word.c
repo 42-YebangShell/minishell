@@ -5,6 +5,10 @@ static void	exec_restore_fd(int *prev_fd);
 int	exec_single_word(t_info *info, t_tree_node *root)
 {
 	int	fd[2];
+	char	*cmd;
+	char	*path;
+	char	**env;
+	char	**cmd_list;
 	int	r_status;
 
 	r_status = EXIT_FAILURE;
@@ -21,9 +25,19 @@ int	exec_single_word(t_info *info, t_tree_node *root)
 			return (r_status);
 		}
 	}
-	g_var.status = execute_bt_node(info, root->right);
-	if (root->redir)
-		exec_restore_fd(fd);
+	if (root->command)
+	{
+		cmd_list = exec_token_str_list(root->command);
+		cmd = ft_strjoin("/", cmd_list[0]);
+		env = exec_env_str_list();
+		path = exec_find_path(cmd, env);
+		free(cmd);
+		if (execve(path, cmd_list, env) == -1)
+		{
+			error_exit("command not found\n");
+			g_var.status = 127;
+		}
+	}
 	return (g_var.status);
 }
 
@@ -34,8 +48,8 @@ int exec_word(t_info *info, t_tree_node *root)
 
 	signal(SIGINT, &sig_exec);
 	signal(SIGQUIT, &sig_exec);
-	if (check_builtin(root))
-		return (builtin(info, root));
+	if (check_builtin(root->command))
+		return (run_builtin(info, root));
 	else
 	{
 		pid = fork();
@@ -49,6 +63,22 @@ int exec_word(t_info *info, t_tree_node *root)
 		waitpid(pid, &g_var.status, 0);
 		return (check_status(g_var.status));
 	}
+}
+
+int	exec_last_word_child(t_info *info, t_tree_node *root, t_pipe p)
+{
+	dup2(p.prev_fd, STDIN_FILENO);
+	close(p.prev_fd);
+	if (root->type == TN_PARENS)
+		exec_paren(root);
+	else
+	{
+		if (check_builtin(root->command))
+			p.status = run_builtin(info, root);
+		else
+			p.status = exec_word_child(info, root);
+	}
+	return (p.status);
 }
 
 int	exec_word_child(t_info *info, t_tree_node *root)
@@ -70,24 +100,13 @@ int	exec_word_child(t_info *info, t_tree_node *root)
 		path = exec_find_path(cmd, env);
 		free(cmd);
 		if (execve(path, cmd_list, env) == -1)
-			exit_msg("command not found\n", 127);
+		{
+			error_exit("command not found\n");
+			g_var.status = 127;
+			return (g_var.status);
+		}
 	}
-}
-
-int	exec_last_word_child(t_info *info, t_tree_node *root, t_pipe p)
-{
-	dup2(p.prev_fd, STDIN_FILENO);
-	close(p.prev_fd);
-	if (root->type == TN_PARENS)
-		exec_paren(root);
-	else
-	{
-		if (check_builtin(root->command))
-			p.status = run_builtin(info, root);
-		else
-			p.status = exec_word_child(info, root);
-	}
-	return (p.status);
+	return (EXIT_SUCCESS);
 }
 
 static void	exec_restore_fd(int *prev_fd)

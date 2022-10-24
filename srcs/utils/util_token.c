@@ -65,7 +65,6 @@ void	*delete_token(t_token *tokens)
 	while (tokens)
 	{
 		next = tokens->next;
-		free(tokens->content);
 		free(tokens);
 		tokens = next;
 	}

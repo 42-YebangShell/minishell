@@ -4,7 +4,7 @@ void	exec_and_or(t_info *info, t_tree_node *root)
 {
 	int status;
 
-	if (root->left->type == TN_WORD)
+  if (root->left->type == TN_WORD)
 		status = exec_word(info, root->left);
 	else
 		status = exec_pipe(info, root->left);

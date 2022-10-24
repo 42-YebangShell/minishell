@@ -41,13 +41,13 @@ int	str_parens(char *str, int i)
 void	ft_display_ctrlx_set(int flag)
 {
 	if (tcgetattr(STDIN_FILENO, &g_var.settings) == ERROR)
-		ft_perror("minsh: tcgetattr");
+		error_exit("minsh: tcgetattr");
 	if (flag)
 		g_var.settings.c_lflag &= ECHOCTL;
 	else
 		g_var.settings.c_lflag &= ~ECHOCTL;
 	if (tcsetattr(STDIN_FILENO, TCSANOW, &g_var.settings) == ERROR)
-		ft_perror("minsh: tcsetattr");
+		error_exit("minsh: tcsetattr");
 }
 
 int	check_status(int status)

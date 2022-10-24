@@ -3,7 +3,8 @@
 void	error_exit(char *str)
 {
 	ft_putendl_fd(str, STDERR_FILENO);
-	exit(EXIT_FAILURE);
+	ft_putstr_fd("\n", STDERR_FILENO);
+	exit(g_var.status);
 }
 
 void	ft_perror(char *err_msg1, char *err_msg2)
@@ -12,7 +13,7 @@ void	ft_perror(char *err_msg1, char *err_msg2)
 	ft_putstr_fd(err_msg1, STDERR_FILENO);
 	ft_putstr_fd(err_msg2, STDERR_FILENO);
 	ft_putstr_fd("\n", STDERR_FILENO);
-	exit(EXIT_FAILURE);
+	exit(g_var.status);
 }
 
 int	check_syntax_error(t_token *token)

@@ -48,7 +48,7 @@ static int	redir_open_file(char *filename, t_token *token)
 		fd = open(filename, O_RDONLY | O_CLOEXEC, 0777);
 		dup2(fd, STDIN_FILENO);
 	}
-	else if (!token->type == INP_RDIR)
+	else if (!(token->type == INP_RDIR))
 	{
 		if (token->type == OUT_RDIR)
 			fd = open(filename, O_TRUNC | O_CREAT | O_RDWR, 0644);

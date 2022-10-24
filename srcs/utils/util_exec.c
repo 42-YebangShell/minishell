@@ -3,21 +3,21 @@
 void	exec_make_env_str(char *env[])
 {
 	int			i;
-	char		*env;
+	char		*tmp;
+	char		*str_env;
 	t_environ	*env_list;
 
 	i = 0;
 	env_list = g_var.env_list;
 	while (env_list)
 	{
-		env = NULL;
 		if (env_list->value)
 		{
-			add_str(env, env_list->key);
-			add_str(env, "=");
-			add_str(env, env_list->value);
-			env[i++] = env;
+			tmp = ft_strjoin(env_list->key, (char *)"=");
+			str_env = ft_strjoin(tmp, env_list->value);
+			free(tmp);
 		}
+		env[i++] = str_env;
 		env_list = env_list->next;
 	}
 }
@@ -36,7 +36,7 @@ char	**exec_env_str_list(void)
 			i++;
 		env_list = env_list->next;
 	}
-	env = malloc(sizeof(char *) * (i + 1));
+	env = malloc(sizeof(char *) * (i + 2));
 	if (env == NULL)
 		exit(EXIT_FAILURE);
 	exec_make_env_str(env);
@@ -45,10 +45,12 @@ char	**exec_env_str_list(void)
 
 char	**exec_token_str_list(t_token *token)
 {
+	int		i;
 	int		len;
 	t_token	*tmp;
 	char **cmd_list;
 
+	i = 0;
 	len = get_token_length(token);
 	cmd_list = malloc(sizeof(char *) * (len + 1));
 	cmd_list[len] = '\0';
@@ -57,10 +59,10 @@ char	**exec_token_str_list(t_token *token)
 	tmp = token;
 	while (tmp)
 	{
-		add_str(cmd_list, tmp->content);
+		cmd_list[i++] = tmp->content;
 		tmp = tmp->next;
 	}
-	return (cmd_list)
+	return (cmd_list);
 }
 
 char	*exec_find_path(char *cmd, char *envp[])
@@ -93,7 +95,7 @@ char	*exec_rm_char(t_token *token)
 	content = token->content;
 	result = malloc(sizeof(char) * (ft_strlen(content) + 2));
 	if (!result)
-		reutnr (NULL);
+		return (NULL);
 	ft_strlcpy(result, content + 1, ft_strlen(content) - 1);
 	return (result);
 }

@@ -37,11 +37,11 @@ static void	redir_here_doc_child(int fd, char *limiter)
 {
 	char	*line;
 
-	signal(SIGINT, sig_here_doc);
+	signal(SIGINT, &sig_here_doc);
 	while (1)
 	{
-		line = readline("> ");
-		// line = get_next_line(STDIN_FILENO);
+		// line = readline("> ");
+		line = get_next_line(STDIN_FILENO);
 		if (ft_strncmp(line, limiter, ft_strlen(limiter)) == 0)
 			exit(EXIT_SUCCESS);
 		write(fd, line, ft_strlen(line));

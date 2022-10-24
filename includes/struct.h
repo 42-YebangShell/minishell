@@ -13,8 +13,8 @@ typedef struct s_global
 	int				status;
 	t_environ		*env_list;
 	char			*prev_path;
-	struct termios	 settings;
-} t_global;
+	struct termios	settings;
+}	t_global;
 
 typedef struct s_token
 {

@@ -1,13 +1,13 @@
 #include "../../includes/minishell.h"
 
 static t_token	*check_root_node(t_token *tokens);
-static void	cut_btree_node(t_token	*token, t_token *root);
-static void set_btree_word(t_tree_node **node);
+static void		cut_btree_node(t_token *token, t_token *root);
+static void		set_btree_word(t_tree_node **node);
 
 void	set_btree_node(t_tree_node **node)
 {
 	t_token	*root;
-	
+
 	if (*node && !((*node)->type))
 	{
 		root = check_root_node((*node)->tokens);
@@ -26,17 +26,16 @@ void	set_btree_node(t_tree_node **node)
 		else
 			set_btree_word(node);
 	}
-	
 }
 
 static t_token	*check_root_node(t_token *tokens)
 {
 	t_token	*root_and_or;
-	t_token *root_pipe;
+	t_token	*root_pipe;
 
 	root_and_or = tokens;
 	root_pipe = NULL;
-	while(root_and_or)
+	while (root_and_or)
 	{
 		if (root_and_or->type == AND || root_and_or->type == OR)
 			return (root_and_or);
@@ -60,10 +59,10 @@ static void	cut_btree_node(t_token	*token, t_token *root)
 	token->next = NULL;
 }
 
-static void set_btree_word(t_tree_node **node)
+static void	set_btree_word(t_tree_node **node)
 {
 	int		flag;
-	t_token *token;
+	t_token	*token;
 
 	flag = 0;
 	token = (*node)->tokens;
