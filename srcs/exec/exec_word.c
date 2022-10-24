@@ -1,6 +1,5 @@
 #include "../../includes/minishell.h"
 
-static int	exec_word_child(t_info *info, t_tree_node *root);
 static void	exec_restore_fd(int *prev_fd);
 
 int	exec_single_word(t_info *info, t_tree_node *root)
@@ -82,7 +81,7 @@ int	exec_last_word_child(t_info *info, t_tree_node *root, t_pipe p)
 	return (p.status);
 }
 
-static int	exec_word_child(t_info *info, t_tree_node *root)
+int	exec_word_child(t_info *info, t_tree_node *root)
 {
 	char	*cmd;
 	char	*path;

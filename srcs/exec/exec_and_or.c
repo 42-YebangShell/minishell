@@ -3,7 +3,7 @@
 void	exec_and_or(t_info *info, t_tree_node *root)
 {
 	int status;
-	ft_putstr_fd("exec_and_or\n", STDOUT_FILENO);
+	
 	if (root->left->type == TN_WORD)
 		status = exec_word(info, root->left);
 	else
