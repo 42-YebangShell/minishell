@@ -1,6 +1,6 @@
 #include "../../includes/minishell.h"
 
-void	exec_make_env_str(char *env[])
+void	exec_make_env_str(char **env)
 {
 	int			i;
 	char		*tmp;
@@ -16,8 +16,8 @@ void	exec_make_env_str(char *env[])
 			tmp = ft_strjoin(env_list->key, (char *)"=");
 			str_env = ft_strjoin(tmp, env_list->value);
 			free(tmp);
+			env[i++] = str_env;
 		}
-		env[i++] = str_env;
 		env_list = env_list->next;
 	}
 	env[i] = NULL;
@@ -37,7 +37,7 @@ char	**exec_env_str_list(void)
 			i++;
 		env_list = env_list->next;
 	}
-	env = malloc(sizeof(char *) * (i + 2));
+	env = malloc(sizeof(char *) * (i + 1));
 	if (env == NULL)
 		g_var.status = EXIT_FAILURE;
 	exec_make_env_str(env);
