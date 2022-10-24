@@ -34,6 +34,7 @@ PARSER			= tokenizer check_tokens set_btree
 REDIRECTION		= redirection redir_here_doc
 UTILS			= util_builtin util_error util_exec util_redirection util_signal util_token util_tree utils welcome_screen utils
 MAIN			= main
+
 SRCS 			= $(addsuffix .c, $(addprefix srcs/, $(MAIN)))			\
 				$(addsuffix .c, $(addprefix srcs/env/, $(ENV)))			\
 				$(addsuffix .c, $(addprefix srcs/exec/, $(EXEC)))		\

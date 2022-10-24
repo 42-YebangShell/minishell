@@ -53,6 +53,7 @@ char	**exec_token_str_list(t_token *token)
 	i = 0;
 	len = get_token_length(token);
 	cmd_list = malloc(sizeof(char *) * (len + 1));
+	cmd_list[len] = '\0';
 	if (!cmd_list)
 		exit(EXIT_FAILURE);
 	tmp = token;

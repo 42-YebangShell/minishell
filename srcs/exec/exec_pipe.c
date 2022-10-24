@@ -32,7 +32,6 @@ int	exec_pipe(t_info *info, t_tree_node *root)
 		}
 	}
 	return (exec_list_pipe(info, root, p));
-	return (p.cnt);
 }
 
 static int	exec_count_pipe(t_tree_node *root)
