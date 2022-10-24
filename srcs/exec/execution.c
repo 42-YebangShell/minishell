@@ -31,7 +31,7 @@ void	execute_btree_node(t_info *info, t_tree_node *root)
 	if (!root)
 		return ;
 	if (root->type == TN_PARENS)
-		exec_paren(root);
+		exec_parens(root);
 	else if (root->type == TN_AND || root->type == TN_OR)
 		exec_and_or(info, root);
 	else if (root->type == TN_PIPE)

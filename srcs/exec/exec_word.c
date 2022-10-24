@@ -27,6 +27,8 @@ int	exec_single_word(t_info *info, t_tree_node *root)
 	}
 	if (root->command)
 	{
+		if (check_builtin(root->command) == EXIT_SUCCESS)
+			return (run_builtin(info, root));
 		cmd_list = exec_token_str_list(root->command);
 		cmd = ft_strjoin("/", cmd_list[0]);
 		env = exec_env_str_list();
@@ -70,7 +72,7 @@ int	exec_last_word_child(t_info *info, t_tree_node *root, t_pipe p)
 	dup2(p.prev_fd, STDIN_FILENO);
 	close(p.prev_fd);
 	if (root->type == TN_PARENS)
-		exec_paren(root);
+		exec_parens(root);
 	else
 	{
 		if (check_builtin(root->command))

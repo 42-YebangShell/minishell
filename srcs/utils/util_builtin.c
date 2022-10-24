@@ -13,6 +13,7 @@ int	check_builtin(t_token *token)
 		!ft_strcmpi(cmd, "env") || \
 		!ft_strcmpi(cmd, "exit"))
 		return (EXIT_SUCCESS);
+	return (EXIT_FAILURE);
 }
 
 int	run_builtin(t_info *info, t_tree_node *root)
