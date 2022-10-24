@@ -6,6 +6,10 @@ static void	exec_restore_fd(int *prev_fd);
 int	exec_single_word(t_info *info, t_tree_node *root)
 {
 	int	fd[2];
+	char	*cmd;
+	char	*path;
+	char	**env;
+	char	**cmd_list;
 	int	r_status;
 
 	r_status = EXIT_FAILURE;
@@ -22,9 +26,19 @@ int	exec_single_word(t_info *info, t_tree_node *root)
 			return (r_status);
 		}
 	}
-	execute_btree_node(info, root->right);
-	if (root->redir)
-		exec_restore_fd(fd);
+	if (root->command)
+	{
+		cmd_list = exec_token_str_list(root->command);
+		cmd = ft_strjoin("/", cmd_list[0]);
+		env = exec_env_str_list();
+		path = exec_find_path(cmd, env);
+		free(cmd);
+		if (execve(path, cmd_list, env) == -1)
+		{
+			error_exit("command not found\n");
+			g_var.status = 127;
+		}
+	}
 	return (g_var.status);
 }
 

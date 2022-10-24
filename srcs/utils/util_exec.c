@@ -11,17 +11,13 @@ void	exec_make_env_str(char *env[])
 	env_list = g_var.env_list;
 	while (env_list)
 	{
-		str_env = NULL;
 		if (env_list->value)
 		{
-			tmp = ft_strjoin(str_env, env_list->key);
-			str_env = tmp;
-			tmp = ft_strjoin(str_env, (char *)"=");
-			str_env = tmp;
-			tmp = ft_strjoin(str_env, env_list->value);
-			str_env = tmp;
-			tmp = NULL;
+			tmp = ft_strjoin(env_list->key, (char *)"=");
+			str_env = ft_strjoin(tmp, env_list->value);
+			free(tmp);
 		}
+		env[i++] = str_env;
 		env_list = env_list->next;
 	}
 }
@@ -40,7 +36,7 @@ char	**exec_env_str_list(void)
 			i++;
 		env_list = env_list->next;
 	}
-	env = malloc(sizeof(char *) * (i + 1));
+	env = malloc(sizeof(char *) * (i + 2));
 	if (env == NULL)
 		exit(EXIT_FAILURE);
 	exec_make_env_str(env);
@@ -62,7 +58,7 @@ char	**exec_token_str_list(t_token *token)
 	tmp = token;
 	while (tmp)
 	{
-		cmd_list[i++] = ft_strjoin(*cmd_list, tmp->content);
+		cmd_list[i++] = tmp->content;
 		tmp = tmp->next;
 	}
 	return (cmd_list);

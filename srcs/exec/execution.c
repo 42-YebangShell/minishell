@@ -38,10 +38,10 @@ void	execute_btree_node(t_info *info, t_tree_node *root)
 		g_var.status = exec_pipe(info, root);
 	else
 	{
-		g_var.status = exec_word(info, root);
-		// if (!root->right)
-		// 	g_var.status = exec_single_word(info, root);
-		// else
-		// 	g_var.status = exec_word(info, root);
+		// g_var.status = exec_word(info, root);
+		if (!root->right)
+			g_var.status = exec_single_word(info, root);
+		else
+			g_var.status = exec_word(info, root);
 	}
 }
