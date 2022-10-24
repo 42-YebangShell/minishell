@@ -9,7 +9,7 @@ int	redir_check_here_doc(t_info *info)
 	while (token)
 	{
 		if (token->type == HERE_DOC)
-			if (!redir_here_doc(token->next->content))
+			if (!redir_here_doc(token->next))
 				return (FALSE);
 		token = token->next;
 	}
