@@ -6,8 +6,8 @@ void	exec_set(char *cmd_line);
 void	execution(t_info	*info);
 void	execute_btree_node(t_info *info, t_tree_node *root);
 
-// exec_paren
-void	exec_paren(t_tree_node *root);
+// exec_parens
+void	exec_parens(t_tree_node *root);
 
 // exec_and_or
 void	exec_and_or(t_info *info, t_tree_node *root);

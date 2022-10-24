@@ -58,7 +58,7 @@ static void	exec_pipe_child(t_info *info, t_tree_node *root, t_pipe p)
 	dup2(p.fd[WRITE_END], STDOUT_FILENO);
 	close(p.fd[WRITE_END]);
 	if (root->type == TN_PARENS)
-		exec_paren(root);
+		exec_parens(root);
 	else
 	{
 		if (check_builtin(root->command))
