@@ -50,7 +50,9 @@ int exec_word(t_info *info, t_tree_node *root)
 
 	signal(SIGINT, &sig_exec);
 	signal(SIGQUIT, &sig_exec);
-	if (check_builtin(root->command) == EXIT_SUCCESS)
+	if (root->type == TN_PARENS)
+		return (exec_parens(root));
+	else if (check_builtin(root->command) == EXIT_SUCCESS)
 		return (run_builtin(info, root));
 	else
 	{
@@ -91,7 +93,7 @@ int	exec_word_child(t_info *info, t_tree_node *root)
 	char	**cmd_list;
 	int		r_status;
 	r_status = redirection(info, root);
-	if (r_status == EXIT_FAILURE)
+	if (r_status != EXIT_FAILURE)
 		return (r_status);
 	if (root->command)
 	{

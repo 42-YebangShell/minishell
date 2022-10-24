@@ -111,7 +111,7 @@ static void	shell_loop(void)
 	{
 		cmd_line = set_read_line(&info);
 		add_history(cmd_line);
-		exec_set(cmd_line);
+		g_var.status = exec_set(cmd_line);
 	}
 }
 
