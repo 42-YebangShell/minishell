@@ -11,6 +11,7 @@ typedef struct s_environ
 typedef struct s_global
 {
 	int				status;
+	int				hd_cnt;
 	t_environ		*env_list;
 	char			*prev_path;
 	struct termios	settings;

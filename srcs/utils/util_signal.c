@@ -28,6 +28,6 @@ void	sig_here_doc(int sig)
 		rl_replace_line("", 0);
 		write(1, "\n", 1);
 		rl_on_new_line();
-		// exit(sig + 128);
+		exit(sig + 128);
 	}
 }

@@ -13,7 +13,8 @@ int	redirection(t_info *info, t_tree_node *root)
 	while (token)
 	{
 		if (token->type == HERE_DOC)
-			redir_here_doc(token);
+			continue;
+			//redir_here_doc(token);
 		else
 			r_status = redir_open_fd(info, token);
 		token = token->next;
