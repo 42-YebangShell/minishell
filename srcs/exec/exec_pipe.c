@@ -2,7 +2,7 @@
 
 static int	exec_count_pipe(t_tree_node *root);
 static void	exec_pipe_child(t_info *info, t_tree_node *root, t_pipe p);
-static int	exec_list_pipe(t_info *info, t_tree_node *root, t_pipe p);
+static int	exec_last_pipe(t_info *info, t_tree_node *root, t_pipe p);
 static void	exit_wait(int cnt);
 
 int	exec_pipe(t_info *info, t_tree_node *root)
@@ -31,7 +31,7 @@ int	exec_pipe(t_info *info, t_tree_node *root)
 			root = root->right;
 		}
 	}
-	return (exec_list_pipe(info, root, p));
+	return (exec_last_pipe(info, root, p));
 }
 
 static int	exec_count_pipe(t_tree_node *root)
@@ -69,7 +69,7 @@ static void	exec_pipe_child(t_info *info, t_tree_node *root, t_pipe p)
 	g_var.status = p.status;
 }
 
-static int	exec_list_pipe(t_info *info, t_tree_node *root, t_pipe p)
+static int	exec_last_pipe(t_info *info, t_tree_node *root, t_pipe p)
 {
 	int	i;
 	int status;
