@@ -4,6 +4,8 @@ int	check_builtin(t_token *token)
 {
 	char	*cmd;
 
+	if (!token)
+		return (EXIT_FAILURE);
 	cmd = token->content;
 	if (!ft_strcmpi(cmd, "echo") || \
 		!ft_strcmpi(cmd, "cd") || \
@@ -20,20 +22,23 @@ int	run_builtin(t_info *info, t_tree_node *root)
 {
 	char	*cmd;
 
-	cmd = root->command->content;
-	if (!ft_strcmpi(cmd, "echo"))
-		return (ft_echo(root->command));
-	if (!ft_strcmpi(cmd, "cd"))
-		return (ft_cd(root->command));
-	if (!ft_strcmpi(cmd, "pwd"))
-		return (ft_pwd(root->command));
-	if (!ft_strcmpi(cmd, "export"))
-		return (ft_export(root->command));
-	if (!ft_strcmpi(cmd, "unset"))
-		return (ft_unset(root->command));
-	if (!ft_strcmpi(cmd, "env"))
-		return (ft_env(root->command));
-	// if (!ft_strcmpi(cmd, "exit"))
-	// 	return (ft_exit(root->command));
+	if (root && root->command && root->command->content)
+	{
+		cmd = root->command->content;
+		if (!ft_strcmpi(cmd, "echo"))
+			return (ft_echo(root->command));
+		if (!ft_strcmpi(cmd, "cd"))
+			return (ft_cd(root->command));
+		if (!ft_strcmpi(cmd, "pwd"))
+			return (ft_pwd(root->command));
+		if (!ft_strcmpi(cmd, "export"))
+			return (ft_export(root->command));
+		if (!ft_strcmpi(cmd, "unset"))
+			return (ft_unset(root->command));
+		if (!ft_strcmpi(cmd, "env"))
+			return (ft_env(root->command));
+		// if (!ft_strcmpi(cmd, "exit"))
+		// 	return (ft_exit(root->command));
+	}
 	return (EXIT_FAILURE);
 }

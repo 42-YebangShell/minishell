@@ -20,6 +20,7 @@ void	exec_make_env_str(char *env[])
 		env[i++] = str_env;
 		env_list = env_list->next;
 	}
+	env[i] = NULL;
 }
 
 char	**exec_env_str_list(void)
@@ -38,7 +39,7 @@ char	**exec_env_str_list(void)
 	}
 	env = malloc(sizeof(char *) * (i + 2));
 	if (env == NULL)
-		exit(EXIT_FAILURE);
+		g_var.status = EXIT_FAILURE;
 	exec_make_env_str(env);
 	return (env);
 }
@@ -61,7 +62,7 @@ char	**exec_token_str_list(t_token *token)
 		cmd_list[i++] = tmp->content;
 		tmp = tmp->next;
 	}
-	cmd_list[i] = "\0";
+	cmd_list[i] = NULL;
 	return (cmd_list);
 }
 

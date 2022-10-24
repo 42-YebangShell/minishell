@@ -15,7 +15,7 @@ int	exec_pipe(t_info *info, t_tree_node *root)
 	p.cnt = exec_count_pipe(root);
 	while(i++ < p.cnt)
 	{
-		if (pipe(p.fd))
+		if (pipe(p.fd) == -1)
 			exit_wait(i - 1);
 		p.pid = fork();
 		if (p.pid == -1)
@@ -66,7 +66,7 @@ static void	exec_pipe_child(t_info *info, t_tree_node *root, t_pipe p)
 		else
 			p.status = exec_word_child(info, root);
 	}
-	exit(p.status);
+	g_var.status = p.status;
 }
 
 static int	exec_list_pipe(t_info *info, t_tree_node *root, t_pipe p)
