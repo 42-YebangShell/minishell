@@ -49,6 +49,8 @@ static int	exec_count_pipe(t_tree_node *root)
 
 static void	exec_pipe_child(t_info *info, t_tree_node *root, t_pipe p)
 {
+	if (root->type == TN_PARENS)
+		exec_parens(root);
 	if (p.prev_fd != -1)
 	{
 		dup2(p.prev_fd, STDIN_FILENO);
@@ -57,11 +59,9 @@ static void	exec_pipe_child(t_info *info, t_tree_node *root, t_pipe p)
 	close(p.fd[READ_END]);
 	dup2(p.fd[WRITE_END], STDOUT_FILENO);
 	close(p.fd[WRITE_END]);
-	if (root->type == TN_PARENS)
-		exec_parens(root);
-	else
+	if (root->type != TN_PARENS)
 	{
-		if (check_builtin(root->command))
+		if (check_builtin(root->command) == EXIT_SUCCESS)
 			p.status = run_builtin(info, root);
 		else
 			p.status = exec_word_child(info, root);

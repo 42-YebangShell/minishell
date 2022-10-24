@@ -50,7 +50,7 @@ int exec_word(t_info *info, t_tree_node *root)
 
 	signal(SIGINT, &sig_exec);
 	signal(SIGQUIT, &sig_exec);
-	if (check_builtin(root->command))
+	if (check_builtin(root->command) == EXIT_SUCCESS)
 		return (run_builtin(info, root));
 	else
 	{
@@ -75,7 +75,7 @@ int	exec_last_word_child(t_info *info, t_tree_node *root, t_pipe p)
 		exec_parens(root);
 	else
 	{
-		if (check_builtin(root->command))
+		if (check_builtin(root->command) == EXIT_SUCCESS)
 			p.status = run_builtin(info, root);
 		else
 			p.status = exec_word_child(info, root);
@@ -90,7 +90,6 @@ int	exec_word_child(t_info *info, t_tree_node *root)
 	char	**env;
 	char	**cmd_list;
 	int		r_status;
-
 	r_status = redirection(info, root);
 	if (r_status == EXIT_FAILURE)
 		return (r_status);
