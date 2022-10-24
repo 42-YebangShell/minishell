@@ -7,7 +7,7 @@ int	exec_set(char *cmd_line)
 	info.h_token = NULL;
 	// replace_dollar
 	tokenizer(&(info.h_token), cmd_line);
-	if (check_syntax_error(info.h_token) == SUCCESS || redir_check_here_doc(&info) == SUCCESS)
+	if (check_syntax_error(info.h_token) == SUCCESS && redir_check_here_doc(&info) == SUCCESS)
 	{
 		info.r_node = create_btree_node(info.h_token);
 		set_btree_node(&(info.r_node));

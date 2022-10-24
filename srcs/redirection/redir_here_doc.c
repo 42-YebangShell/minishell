@@ -43,17 +43,15 @@ static void	redir_here_doc_child(int fd, char *limiter)
 	fd = open(hd_filename, O_CREAT | O_WRONLY | O_TRUNC, 0744);
 	if (fd == -1)
 		error_exit("heredoc failed");
-	ft_putstr_fd("why??\n", 2);////
-	while (1)
+	ft_putstr_fd("> ", STDIN_FILENO);
+	line = get_next_line(STDIN_FILENO);
+	while (ft_strncmp(line, limiter, ft_strlen(limiter)) == 0)
 	{
-		signal(SIGINT, &sig_here_doc);
-		// line = readline("> ");
 		ft_putstr_fd("> ", STDIN_FILENO);
 		line = get_next_line(STDIN_FILENO);
-		if (ft_strncmp(line, limiter, ft_strlen(limiter) + 1) == 0)
-			exit(EXIT_SUCCESS);
 		write(fd, line, ft_strlen(line));
 		free(line);
 	}
+	free(line);
 	close(fd);
 }

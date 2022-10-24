@@ -5,6 +5,7 @@ int	redir_check_here_doc(t_info *info)
 	int		status;
 	t_token	*here_doc;
 
+	status = SUCCESS;
 	here_doc = info->h_token;
 	while (here_doc)
 	{
