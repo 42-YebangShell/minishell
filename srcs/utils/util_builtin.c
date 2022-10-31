@@ -37,8 +37,8 @@ int	run_builtin(t_info *info, t_tree_node *root)
 			return (ft_unset(root->command));
 		if (!ft_strcmpi(cmd, "env"))
 			return (ft_env(root->command));
-		// if (!ft_strcmpi(cmd, "exit"))
-		// 	return (ft_exit(root->command));
+		if (!ft_strcmpi(cmd, "exit"))
+			return (ft_exit(root->command));
 	}
 	return (EXIT_FAILURE);
 }
