@@ -27,7 +27,7 @@ GNL				= get_next_line/libgnl.a
 FTPRINT			= ft_printf/libftprintf.a
 HEADERS			= includes
 
-BUILTIN			= ft_echo ft_export ft_unset ft_env ft_pwd ft_cd #ft_exit
+BUILTIN			= ft_echo ft_export ft_unset ft_env ft_pwd ft_cd ft_exit
 ENV				= environ
 EXEC			= execution exec_and_or exec_parens exec_pipe exec_word
 PARSER			= tokenizer check_tokens set_btree
