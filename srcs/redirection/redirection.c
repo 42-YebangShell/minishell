@@ -42,10 +42,13 @@ int	redir_open_file(char *filename, int type)
 	int	fd;
 
 	fd = -1;
-	if (type == INP_RDIR && access(filename, F_OK))
+	if (type == INP_RDIR)
 	{
-		fd = open(filename, O_RDONLY | O_CLOEXEC, 0777);
-		dup2(fd, STDIN_FILENO);
+		if (access(filename, F_OK) == 0)
+		{
+			fd = open(filename, O_RDONLY);
+			dup2(fd, STDIN_FILENO);
+		}
 	}
 	else if (!(type == INP_RDIR))
 	{

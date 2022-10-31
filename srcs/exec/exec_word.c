@@ -11,6 +11,12 @@ int	exec_single_word(t_info *info, t_tree_node *root)
 		return (exec_parens(root));
 	else
 	{
+		if (root->redir)
+		{
+			status = redirection(info, root);
+			if (status != EXIT_FAILURE)
+				return (status);
+		}
 		if (check_builtin(root->command) == EXIT_SUCCESS)
 			return (run_builtin(info, root));
 		pid = fork();
@@ -93,12 +99,12 @@ int	exec_word_child(t_info *info, t_tree_node *root)
 	char	**cmd_list;
 	int		r_status;
 
-	if (root->redir)
-	{
-		r_status = redirection(info, root);
-		if (r_status != EXIT_FAILURE)
-			return (r_status);
-	}
+	// if (root->redir)
+	// {
+	// 	r_status = redirection(info, root);
+	// 	if (r_status != EXIT_FAILURE)
+	// 		return (r_status);
+	// }
 	if (root->command)
 	{
 		cmd_list = exec_token_str_list(root->command);
