@@ -24,29 +24,72 @@ int	exec_single_word(t_info *info, t_tree_node *root)
 	}
 }
 
-int	exec_word(t_info *info, t_tree_node *root)
+// int	exec_word(t_info *info, t_tree_node *root)
+// {
+// 	pid_t	pid;
+// 	int		status;
+
+// 	signal(SIGINT, &sig_exec);
+// 	signal(SIGQUIT, &sig_exec);
+// 	if (root->type == TN_PARENS)
+// 		return (exec_parens(root));
+// 	else
+// 	{
+// 		pid = fork();
+// 		if (pid == -1)
+// 			exit(0);
+// 		else
+// 		{
+// 			status = exec_word_child(info, root);
+// 			exit(status);
+// 		}
+// 		waitpid(pid, &g_var.status, 0);
+// 		return (check_status(g_var.status));
+// 	}
+// }
+
+int	exec_word(t_info *info, t_tree_node *root) //왜 && || 반대로 나오냐..이유는 부모프로세스로 실패했다는 사실을 전달해야 함
 {
 	pid_t	pid;
 	int		status;
+	int		pid_status;
+	int fds[2];
+	char buf[3];
 
+	buf[0] = 'o';
+	buf[1] = 'k';
+	buf[2] = '\0';
+	status = EXIT_SUCCESS;//
+	pipe(fds);
 	signal(SIGINT, &sig_exec);
 	signal(SIGQUIT, &sig_exec);
-	if (root->type == TN_PARENS)
-		return (exec_parens(root));
-	else
+	pid = fork();
+	if (pid == -1)
+		exit(0);
+	if (pid == 0)
 	{
-		pid = fork();
-		if (pid == -1)
-			exit(0);
-		else
+		if (root->type == TN_PARENS)
+			return (exec_parens(root));
+
+		status = exec_word_child(info, root);
+		if (status == EXIT_FAILURE)
 		{
-			status = exec_word_child(info, root);
-			exit(status);
+			buf[0] = 'e';
+			buf[1] = 'r';
+			buf[2] = '\0';
+			close(fds[0]);
+			write(fds[1], buf, 3);
 		}
-		waitpid(pid, &g_var.status, 0);
-		return (check_status(g_var.status));
+		exit(status);
 	}
+	waitpid(pid, &pid_status, 0);
+	close(fds[1]);
+	read(fds[0], buf, 3);
+	if (ft_strncmp(buf, "er", 2) == 0)
+		status = EXIT_FAILURE;
+	return (check_status(status));
 }
+
 
 int	exec_last_word_child(t_info *info, t_tree_node *root, t_pipe p)
 {

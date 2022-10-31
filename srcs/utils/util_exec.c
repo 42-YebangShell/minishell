@@ -98,8 +98,8 @@ char	*exec_rm_char(t_token *token)
 
 	content = token->content;
 	if (content[0] != (char)'\'' \
-		|| content[0] != (char)'\"' \
-		|| content[0] != (char)'(' )
+		&& content[0] != (char)'\"' \
+		&& content[0] != (char)'(' ) //|| -> &&
 		return (content);
 	result = malloc(sizeof(char) * (ft_strlen(content) + 2));
 	if (!result)
