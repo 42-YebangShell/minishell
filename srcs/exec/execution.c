@@ -43,6 +43,6 @@ void	execute_btree_node(t_info *info, t_tree_node *root)
 		exec_and_or(info, root);
 	else if (root->type == TN_PIPE)
 		g_var.status = exec_pipe(info, root);
-	else
-		g_var.status = exec_word(info, root);
+	// else
+	// 	g_var.status = exec_word(info, root);
 }
