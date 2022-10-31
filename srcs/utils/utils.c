@@ -42,13 +42,15 @@ void	ft_display_ctrlx_set(int flag)
 {
 	if (flag == DISPLAY)
 	{
-		if (tcsetattr(STDIN_FILENO, TCSANOW, &g_var.display_set) == ERROR)
-			error_exit("minsh: display tcsetattr error");
+		tcsetattr(STDIN_FILENO, TCSANOW, &g_var.display_set);
+		// if (tcsetattr(STDIN_FILENO, TCSANOW, &g_var.display_set) == ERROR)
+		// 	error_exit("minsh: display tcsetattr error");
 	}
 	else if (flag == NODISPLAY)
 	{
-		if (tcsetattr(STDOUT_FILENO, TCSANOW, &g_var.nodisplay_set) == ERROR)  //리다이렉션 하면서 STDIN_FILNO변경되므로 저장됐던 값을 넣어줌
-			error_exit("minsh: no display tcsetattr error");
+		tcsetattr(STDOUT_FILENO, TCSANOW, &g_var.nodisplay_set);
+		// if (tcsetattr(STDOUT_FILENO, TCSANOW, &g_var.nodisplay_set) == ERROR)  //리다이렉션 하면서 STDIN_FILNO변경되므로 저장됐던 값을 넣어줌
+		// 	error_exit("minsh: no display tcsetattr error");
 	}
 }
 
