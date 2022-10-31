@@ -3,18 +3,27 @@
 int	ft_cd(t_token *command)
 {
 	char	*path;
+	int		res;
+	static char	*cwd;
+	char		*tmp;
 
+	cwd = getcwd(NULL, 0);
 	if (command == NULL)
 		return (0);
 	if (command->next == NULL)
 	{
+		g_var.prev_path = cwd;
 		chdir(getenv("HOME"));
+		cwd = getcwd(NULL, 0);
 		return (0);
 	}
 	path = command->next->content;
 	if (ft_strncmp(path, "-", 2) == 0)
 	{
-		if (chdir(g_var.prev_path) == -1)
+		tmp = cwd;
+		res = chdir(g_var.prev_path);
+		g_var.prev_path = tmp;
+		if (res == -1)
 		{
 			ft_putstr_fd("minsh: cd: OLDPWD not set\n", STDERR_FILENO);
 			return (-1);
@@ -22,8 +31,9 @@ int	ft_cd(t_token *command)
 	}
 	else
 	{
-		g_var.prev_path = getcwd(NULL, 0);
-		if (chdir(path) == -1)
+		g_var.prev_path = cwd;
+		res = chdir(path);
+		if (res == -1)
 		{
 			ft_putstr_fd("minsh: cd:", STDERR_FILENO);
 			ft_putstr_fd(path, STDERR_FILENO);

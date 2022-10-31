@@ -40,14 +40,18 @@ int	str_parens(char *str, int i)
 
 void	ft_display_ctrlx_set(int flag)
 {
-	if (tcgetattr(STDIN_FILENO, &g_var.settings) == ERROR)
-		error_exit("minsh: tcgetattr");
-	if (flag)
-		g_var.settings.c_lflag &= ECHOCTL;
-	else
-		g_var.settings.c_lflag &= ~ECHOCTL;
-	if (tcsetattr(STDIN_FILENO, TCSANOW, &g_var.settings) == ERROR)
-		error_exit("minsh: tcsetattr");
+	if (flag == DISPLAY)
+	{
+		tcsetattr(STDIN_FILENO, TCSANOW, &g_var.display_set);
+		// if (tcsetattr(STDIN_FILENO, TCSANOW, &g_var.display_set) == ERROR)
+		// 	error_exit("minsh: display tcsetattr error");
+	}
+	else if (flag == NODISPLAY)
+	{
+		tcsetattr(STDOUT_FILENO, TCSANOW, &g_var.nodisplay_set);
+		// if (tcsetattr(STDOUT_FILENO, TCSANOW, &g_var.nodisplay_set) == ERROR)  //리다이렉션 하면서 STDIN_FILNO변경되므로 저장됐던 값을 넣어줌
+		// 	error_exit("minsh: no display tcsetattr error");
+	}
 }
 
 int	check_status(int status)

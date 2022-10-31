@@ -56,7 +56,7 @@ char	**exec_token_str_list(t_token *token)
 		return (NULL);
 	len = get_token_length(token) + 1;
 	cmd_list = NULL;
-	cmd_list = malloc(sizeof(char *) * (len + 1));
+	cmd_list = malloc(sizeof(char *) * (len + 2));
 	if (!cmd_list)
 		exit(EXIT_FAILURE);
 	tmp = token;
@@ -98,8 +98,8 @@ char	*exec_rm_char(t_token *token)
 
 	content = token->content;
 	if (content[0] != (char)'\'' \
-		|| content[0] != (char)'\"' \
-		|| content[0] != (char)'(' )
+		&& content[0] != (char)'\"' \
+		&& content[0] != (char)'(' ) //|| -> &&
 		return (content);
 	result = malloc(sizeof(char) * (ft_strlen(content) + 2));
 	if (!result)

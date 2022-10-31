@@ -14,7 +14,10 @@ typedef struct s_global
 	int				hd_cnt;
 	t_environ		*env_list;
 	char			*prev_path;
-	struct termios	settings;
+	int				old_std_fdin;
+	int				old_std_fdout;
+	struct termios	nodisplay_set;
+	struct termios	display_set;
 }	t_global;
 
 typedef struct s_token

@@ -1,15 +1,15 @@
 #include "../../includes/minishell.h"
-
-int	ft_exit();
-
-int	main(int ac, char **av)
-{
-	ft_exit(av[1]);
-}
-
-int	ft_exit(char *exit_code)
+//status 받아와야 함...
+int	ft_exit(t_token *command)
 {
 	int		code;
-	code = atoi(exit_code);
+
+	if (command == NULL)
+		return (0);
+	if (command->next == NULL)
+	{
+		exit(0);
+	}
+	code = ft_atoi(command->next->content);
 	exit(code);
 }

@@ -1,6 +1,5 @@
 #include "../../includes/minishell.h"
-//스페이스 여러번 출력되는 문제..
-//토큰에서 스페이스를 워드타입 토큰으로 인정해버리는 것때문
+
 static int	check_option(char *content);
 static void	put_quote(char *str, int fd);
 
@@ -20,7 +19,10 @@ int	ft_echo(t_token *command)
 	while (tmp)
 	{
 		if (tmp->type == D_QUOTE || tmp->type == S_QUOTE)
+		{
 			put_quote(tmp->content, STDOUT_FILENO);
+			ft_putstr_fd(" ", STDOUT_FILENO);
+		}
 		else
 		{
 			if (ft_strncmp(tmp->content, " ", 2) != 0)
