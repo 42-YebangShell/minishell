@@ -12,7 +12,9 @@ int	exec_set(char *cmd_line)
 	{
 		info.r_node = create_btree_node(info.h_token);
 		set_btree_node(&(info.r_node));
+		ft_display_ctrlx_set(DISPLAY); //DISPLAY ctrl + x .. 자식프로세스 때는 보여야 하기 때문
 		execution(&info);
+		ft_display_ctrlx_set(NODISPLAY); 
 		free(cmd_line);
 		return (EXIT_SUCCESS);
 	}

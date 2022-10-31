@@ -11,6 +11,11 @@ int	main(int ac, char **av, char **envp)
 	g_var.status = 0;
 	g_var.env_list = get_envp_list(envp);
 	welcome_screen();
+	if (tcgetattr(STDIN_FILENO, &g_var.display_set) == ERROR)
+		error_exit("minsh: tcgetattr");
+	if (tcgetattr(STDIN_FILENO, &g_var.nodisplay_set) == ERROR)
+		error_exit("minsh: tcgetattr");
+	g_var.nodisplay_set.c_lflag &= ~ECHOCTL;
 	ft_display_ctrlx_set(NODISPLAY);
 	shell_loop();
 }
