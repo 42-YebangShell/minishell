@@ -96,6 +96,10 @@ char	*exec_rm_char(t_token *token)
 	char	*result;
 	char	*content;
 
+	if (!token)
+		return (NULL);
+	if (!token->content)
+		return (NULL);
 	content = token->content;
 	if (content[0] != (char)'\'' \
 		|| content[0] != (char)'\"' \

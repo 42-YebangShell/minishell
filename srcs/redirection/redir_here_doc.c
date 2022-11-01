@@ -9,6 +9,8 @@ int	redir_here_doc_file(t_token *token)
 	char	*limiter;
 
 	limiter = exec_rm_char(token->next);
+	if (!limiter)
+		return (FALSE);
 	pid = fork();
 	if (pid == -1)
 		exit(EXIT_FAILURE);
@@ -23,7 +25,7 @@ int	redir_here_doc_file(t_token *token)
 		signal(SIGINT, SIG_IGN);
 		waitpid(pid, &pid, 0);
 		if (check_status(pid) == 130)
-			return (EXIT_FAILURE);
+			return (FALSE);
 	}
 	return (SUCCESS);
 }

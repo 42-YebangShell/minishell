@@ -77,7 +77,7 @@ int	exec_word_child(t_info *info, t_tree_node *root)
 	if (root->redir)
 	{
 		r_status = redirection(info, root);
-		if (r_status == EXIT_FAILURE)
+		if (r_status != EXIT_SUCCESS)
 			return (r_status);
 	}
 	if (root->command)

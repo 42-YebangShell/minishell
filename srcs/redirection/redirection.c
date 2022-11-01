@@ -9,10 +9,12 @@ int	redirection(t_info *info, t_tree_node *root)
 
 	r_status = EXIT_SUCCESS;
 	token = root->redir;
-	while (token && (r_status == EXIT_SUCCESS))
+	while (token)
 	{
 		if (token->type >= INP_RDIR && token->type <= HERE_DOC)
 			r_status = redir_open_fd(info, token);
+		if (r_status != EXIT_SUCCESS)
+			break ;
 		token = token->next->next;
 	}
  	return (r_status);
