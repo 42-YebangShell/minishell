@@ -49,6 +49,7 @@ int	get_token_length(t_token *tokens)
 	int		len;
 	t_token	*tmp;
 
+	len = 0;
 	tmp = tokens;
 	while (tmp)
 	{

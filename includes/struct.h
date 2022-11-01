@@ -46,7 +46,7 @@ typedef struct s_pipe
 	pid_t	pid;
 	int		cnt;
 	int		fd[2];
-	int		prev_fd;
+	int		prev;
 	int		status;
 }	t_pipe;
 

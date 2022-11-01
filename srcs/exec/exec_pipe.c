@@ -11,7 +11,7 @@ int	exec_pipe(t_info *info, t_tree_node *root)
 	int		i;
 
 	i = 0;
-	p.prev_fd = -1;
+	p.prev = -1;
 	p.cnt = exec_count_pipe(root);
 	while (i++ < p.cnt)
 	{
@@ -25,9 +25,9 @@ int	exec_pipe(t_info *info, t_tree_node *root)
 		else
 		{
 			close(p.fd[WRITE_END]);
-			if (p.prev_fd != -1)
-				close(p.prev_fd);
-			p.prev_fd = p.fd[READ_END];
+			if (p.prev != -1)
+				close(p.prev);
+			p.prev = p.fd[READ_END];
 			root = root->right;
 		}
 	}
@@ -51,21 +51,18 @@ static void	exec_pipe_child(t_info *info, t_tree_node *root, t_pipe p)
 {
 	if (root->type == TN_PARENS)
 		exec_parens(root);
-	if (p.prev_fd != -1)
+	if (p.prev != -1)
 	{
-		dup2(p.prev_fd, STDIN_FILENO);
-		close(p.prev_fd);
+		dup2(p.prev, STDIN_FILENO);
+		close(p.prev);
 	}
 	close(p.fd[READ_END]);
 	dup2(p.fd[WRITE_END], STDOUT_FILENO);
 	close(p.fd[WRITE_END]);
-	if (root->type != TN_PARENS)
-	{
-		if (check_builtin(root->command) == EXIT_SUCCESS)
-			p.status = run_builtin(info, root);
-		else
-			p.status = exec_word_child(info, root);
-	}
+	if (check_builtin(root->command) == EXIT_SUCCESS)
+		p.status = run_builtin(info, root);
+	else
+		p.status = exec_word_child(info, root);
 	exit(p.status);
 }
 
@@ -83,11 +80,12 @@ static int	exec_last_pipe(t_info *info, t_tree_node *root, t_pipe p)
 		status = exec_last_word_child(info, root, p);
 		exit(status);
 	}
-	close(p.prev_fd);
-	while (i++ < p.cnt + 1)
+	close(p.prev);
+	while (i < p.cnt + 1)
 	{
 		if (waitpid(-1, &p.status, 0) == p.pid)
 			status = p.status;
+		i++;
 	}
 	return (check_status(status));
 }
