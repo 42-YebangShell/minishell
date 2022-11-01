@@ -66,7 +66,7 @@ static void	exec_pipe_child(t_info *info, t_tree_node *root, t_pipe p)
 		else
 			p.status = exec_word_child(info, root);
 	}
-	g_var.status = p.status;
+	exit(p.status);
 }
 
 static int	exec_last_pipe(t_info *info, t_tree_node *root, t_pipe p)

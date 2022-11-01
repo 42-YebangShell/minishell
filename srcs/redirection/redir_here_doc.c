@@ -2,20 +2,22 @@
 
 static void	redir_here_doc_child(char *limiter);
 
-int	redir_here_doc(void)
+int	redir_here_doc(t_info *info, t_token *token)
 {
+	int		file_cnt;
 	int		hd_fd;
 	char	*hd_filename;
 
-	// 파일 명 찾는 함수 ?? 로직 추가 필요합니다.. 
-	hd_filename = ft_strjoin(".here_doc", ft_itoa(0));
-	hd_fd = redir_open_file(hd_filename, INP_RDIR);
+	file_cnt = redir_here_doc_file_number(info, token);
+	hd_filename = ft_strjoin(".here_doc", ft_itoa(file_cnt));
+	hd_fd = redir_open_file(hd_filename, O_RDONLY);
 	if (hd_fd == -1)
 	{
 		error_exit("ERR) HEREDOC: File creation failed!");
 		return (hd_fd);
 	}
 	dup2(hd_fd, STDIN_FILENO);
+	close(hd_fd);
 	return (hd_fd);
 }
 

@@ -19,6 +19,7 @@ char		*exec_rm_char(t_token *token);
 
 // redirection
 int			redir_here_doc_check(t_info *info);
+int			redir_here_doc_file_number(t_info *info, t_token *token);
 
 // signal
 void		sig_readline(int signo);

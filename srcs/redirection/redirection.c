@@ -7,17 +7,17 @@ int	redirection(t_info *info, t_tree_node *root)
 	t_token	*token;
 	int		r_status;
 
-	r_status = EXIT_FAILURE;
+	r_status = EXIT_SUCCESS;
 	token = root->redir;
-	while (token)
+	while (token && (r_status == EXIT_SUCCESS))
 	{
 		if (token->type == HERE_DOC)
-			redir_here_doc();
+			r_status = redir_here_doc(info, token);
 		else
 			r_status = redir_open_fd(info, token);
-		token = token->next;
+		token = token->next->next;
 	}
-	return (r_status);
+ 	return (r_status);
 }
 
 static int	redir_open_fd(t_info *info, t_token *token)
@@ -42,12 +42,15 @@ int	redir_open_file(char *filename, int type)
 	int	fd;
 
 	fd = -1;
-	if (type == INP_RDIR && access(filename, F_OK) == 0)
+	if (type == INP_RDIR)
 	{
-		fd = open(filename, O_RDONLY | O_CLOEXEC, 0777);
-		dup2(fd, STDIN_FILENO);
+		if (access(filename, F_OK) == 0)
+		{
+			fd = open(filename, O_RDONLY | O_CLOEXEC, 0777);
+			dup2(fd, STDIN_FILENO);
+		}
 	}
-	else if (!(type == INP_RDIR))
+	else
 	{
 		if (type == OUT_RDIR)
 			fd = open(filename, O_TRUNC | O_CREAT | O_RDWR, 0644);

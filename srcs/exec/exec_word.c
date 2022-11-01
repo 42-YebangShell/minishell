@@ -33,6 +33,11 @@ int	exec_word(t_info *info, t_tree_node *root)
 	signal(SIGQUIT, &sig_exec);
 	if (root->type == TN_PARENS)
 		return (exec_parens(root));
+	else if(root->command)
+	{
+		if (check_builtin(root->command) == EXIT_SUCCESS)
+			return (run_builtin(info, root));
+	}
 	else
 	{
 		pid = fork();
@@ -80,8 +85,7 @@ int	exec_word_child(t_info *info, t_tree_node *root)
 	}
 	if (root->command)
 	{
-		if (check_builtin(root->command) == EXIT_SUCCESS)
-			return (run_builtin(info, root));
+		
 		cmd_list = exec_token_str_list(root->command);
 		cmd = ft_strjoin("/", cmd_list[0]);
 		env = exec_env_str_list();
