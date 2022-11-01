@@ -84,7 +84,7 @@ static int	exec_last_pipe(t_info *info, t_tree_node *root, t_pipe p)
 		exit(status);
 	}
 	close(p.prev_fd);
-	while (i++ < p.cnt)
+	while (i++ < p.cnt + 1)
 	{
 		if (waitpid(-1, &p.status, 0) == p.pid)
 			status = p.status;

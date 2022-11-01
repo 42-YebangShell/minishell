@@ -11,6 +11,6 @@ void	exec_and_or(t_info *info, t_tree_node *root)
 	if (root->left->type == TN_PIPE)
 		status = exec_pipe(info, root->left);
 	if ((root->type == TN_AND && status == EXIT_SUCCESS) || \
-		(root->type == TN_OR && status == EXIT_FAILURE))
+		(root->type == TN_OR && status != EXIT_FAILURE))
 		execute_btree_node(info, root->right);
 }

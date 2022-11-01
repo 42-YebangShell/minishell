@@ -12,7 +12,9 @@ int	exec_set(char *cmd_line)
 	{
 		info.r_node = create_btree_node(info.h_token);
 		set_btree_node(&(info.r_node));
+		ft_display_ctrlx_set(DISPLAY);
 		execution(&info);
+		ft_display_ctrlx_set(NODISPLAY);
 		free(cmd_line);
 		return (EXIT_SUCCESS);
 	}
@@ -43,6 +45,4 @@ void	execute_btree_node(t_info *info, t_tree_node *root)
 		exec_and_or(info, root);
 	else if (root->type == TN_PIPE)
 		g_var.status = exec_pipe(info, root);
-	else
-		g_var.status = exec_word(info, root);
 }
