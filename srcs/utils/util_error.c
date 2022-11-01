@@ -22,7 +22,7 @@ int	check_syntax_error(t_token *token)
 		return (0);
 	if (token->type == AND || token->type == OR || token->type == PIPE)
 	{
-		ft_perror("syntax error near unexpected token", token->content);
+		ft_perror("syntax error near unexpected token ", token->content);
 		return (FALSE);
 	}
 	return (SUCCESS);
