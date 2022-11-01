@@ -35,5 +35,5 @@ int	redir_here_doc_file_number(t_info *info, t_token *token)
 			return (cnt);
 		here_doc = here_doc->next;
 	}
-	return (cnt);
+	return (0);
 }

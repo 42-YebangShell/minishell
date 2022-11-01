@@ -2,25 +2,6 @@
 
 static void	redir_here_doc_child(char *limiter);
 
-int	redir_here_doc(t_info *info, t_token *token)
-{
-	int		file_cnt;
-	int		hd_fd;
-	char	*hd_filename;
-
-	file_cnt = redir_here_doc_file_number(info, token);
-	hd_filename = ft_strjoin(".here_doc", ft_itoa(file_cnt));
-	hd_fd = redir_open_file(hd_filename, O_RDONLY);
-	if (hd_fd == -1)
-	{
-		error_exit("ERR) HEREDOC: File creation failed!");
-		return (hd_fd);
-	}
-	dup2(hd_fd, STDIN_FILENO);
-	close(hd_fd);
-	return (hd_fd);
-}
-
 int	redir_here_doc_file(t_token *token)
 {
 	pid_t	pid;
@@ -44,7 +25,7 @@ int	redir_here_doc_file(t_token *token)
 		if (check_status(pid) == 130)
 			return (EXIT_FAILURE);
 	}
-	return (EXIT_SUCCESS);
+	return (SUCCESS);
 }
 
 static void	redir_here_doc_child(char *limiter)
@@ -57,7 +38,10 @@ static void	redir_here_doc_child(char *limiter)
 	hd_filename = ft_strjoin(".here_doc", ft_itoa(g_var.hd_cnt));
 	hd_fd = open(hd_filename, O_CREAT | O_RDWR | O_TRUNC, 0744);
 	if (hd_fd == -1)
+	{
 		error_exit("ERR) HEREDOC: File creation failed!");
+		exit(EXIT_FAILURE);
+	}
 	line = readline("> ");
 	while (line && ft_strncmp(line, limiter, ft_strlen(limiter)) != 0)
 	{
@@ -67,5 +51,5 @@ static void	redir_here_doc_child(char *limiter)
 		line = readline("> ");
 	}
 	close(hd_fd);
-	exit(EXIT_FAILURE);
+	exit(EXIT_SUCCESS);
 }
