@@ -32,6 +32,7 @@
 # include "builtin.h"
 # include "redirection.h"
 # include "utils.h"
+# include "expans.h"
 
 t_global	g_var;
 void		rl_replace_line(const char *text, int clear_undo);
