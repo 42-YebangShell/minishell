@@ -1,12 +1,78 @@
 #include "../../includes/minishell.h"
 
+//for expansion dir
+
+// static int	ft_dollar_len(char *cmd_line, int i);
+
+// char	*replace_dollar(char *cmd_line)
+// {
+// 	int		i;
+// 	int		tot_doll_num;
+// 	char	*dollar_wd;
+// 	int		dollar_len;
+
+// 	tot_doll_num = cnt_dollar(cmd_line);
+
+// 	i = 0;
+// 	while (cmd_line[i])
+// 	{./
+// 		if (cmd_line[i] == '$' && cmd_line[i + 1] != ' ')
+// 		{
+// 			dollar_len = ft_dollar_len(cmd_line, i);
+
+// 			ft_strlcpy();
+// 		}
+// 		i++;
+// 	}
+// }
+
+// static int	ft_dollar_len(char *cmd_line, int i)
+// {
+// 	int		len;
+
+// 	len = 0;
+// 	while (cmd_line[i] != ' ')
+// 	{
+// 		len++;
+// 		i++;
+// 	}
+// 	return (len);
+// }
+
+// static char	*rm_brace(t_token *token)
+// {
+// 	char	*result;
+// 	char	*content;
+
+// 	content = token->content;
+// 	if (content[0] != (char)'{' )
+// 		return (content);
+// 	result = malloc(sizeof(char) * (ft_strlen(content) + 2));
+// 	if (!result)
+// 		return (NULL);
+// 	ft_strlcpy(result, content + 1, ft_strlen(content) - 1);
+// 	return (result);
+// }
+
+
+
+
+//end
+static void get_expans_list(t_token *token, t_token **expan_token);
+static void	aster_replace(t_token **tokens);
+static int	is_aster_token(t_token token);
+static char	*get_prefix(char *str);
+static char	*get_suffix(char *str);
+
+
+
 int	exec_set(char *cmd_line)
 {
 	t_info	info;
 
 	info.h_token = NULL;
-	// replace_dollar
 	tokenizer(&(info.h_token), cmd_line);
+	aster_replace(&(info.h_token));/// added
 	if (check_syntax_error(info.h_token) == SUCCESS && \
 		redir_here_doc_check(&info) == SUCCESS)
 	{
@@ -45,4 +111,186 @@ void	execute_btree_node(t_info *info, t_tree_node *root)
 		exec_and_or(info, root);
 	else if (root->type == TN_PIPE)
 		g_var.status = exec_pipe(info, root);
+}
+
+//////////////////////////////////////////////////
+static void	show_list(t_token *list)
+{
+	t_token *tmp;
+
+	if (!list)
+		return ;
+	tmp = list;
+	while (tmp)
+	{
+		printf("%s\n", tmp->content);
+		// ft_putstr_fd(tmp->content, STDOUT_FILENO);
+		// ft_putstr_fd("\n", STDOUT_FILENO);
+		tmp = tmp->next;
+	}
+}
+////////////////////////////////////////////////////
+static void	aster_replace(t_token **tokens)
+{
+	t_token	*tmp;
+	t_token *itr;
+	t_token			*expan_tokens;
+
+	tmp = *tokens;
+	expan_tokens = NULL;
+	while (tmp)
+	{
+		printf("tmp content :: :: %s\n", tmp->content);
+		if (is_aster_token(*tmp))
+		{
+			get_expans_list(tmp, &expan_tokens);
+
+			// show_list(expan_tokens);
+			// if (!expan_tokens)
+			// 	continue ;
+			// itr = expan_tokens;
+			// while (itr->content) //왜 ....??
+			// {
+			// 	printf("\n\ncont :: %s\n", itr->content);
+			// 	itr = itr->next;
+			// }
+			// if (expan_tokens && expan_tokens->content)
+			// {
+			// 	printf("cont :: %s\n", expan_tokens->content);
+			// }
+			// token_replace(tokens, tmp, expan_tokens);
+		}
+		tmp = tmp->next;
+	}
+
+}
+
+
+static int	is_aster_token(t_token token)
+{
+	int		result;
+
+	result = 0;
+	if (ft_strchr(token.content, '*'))
+	{
+		result = 1;
+	}
+	return (result);
+}
+
+static void	get_expans_list(t_token *token, t_token **expan_token)
+{
+	struct dirent	*dirent;
+	DIR				*dir;
+	// t_token			*replace_tokens;
+	t_token			*new;
+	t_token			input;
+	char			*prefix;
+	char			*suffix;
+	int				pos;
+
+
+	printf("before pre/suffix ::::: %s\n", token->content);
+	prefix = get_prefix(token->content);
+	suffix = get_suffix(token->content);
+	printf("   prefix :: %s \n   suffix :: %s \n", prefix, suffix);///
+	dir = opendir(".");
+	while (1)
+	{
+		dirent = readdir(dir);
+		if (!dirent)
+			break ;
+		else
+		{
+			if (!prefix && !suffix)
+				continue ;
+			else if (prefix && !suffix)
+			{
+				if (ft_strncmp(dirent->d_name, prefix, ft_strlen(prefix)) == 0)
+				{
+					input.content = dirent->d_name;
+					input.type = token->type;
+					printf("1.input :: %s\n", input.content);////
+				}
+			}
+			else if (!prefix && suffix)
+			{
+				pos = ft_strlen(dirent->d_name) - ft_strlen(suffix);
+				if (pos < 0)
+					continue ;
+				if (strncmp(dirent->d_name + pos, suffix, ft_strlen(suffix)) == 0)
+				{
+					input.content = dirent->d_name;
+					input.type = token->type;
+					printf("2. input :: %s\n", input.content);////
+				}
+			}
+			else if (prefix && suffix)
+			{
+				if (ft_strncmp(dirent->d_name, prefix, ft_strlen(prefix)) == 0)
+				{
+					pos = ft_strlen(dirent->d_name) - ft_strlen(suffix);
+					if (pos < 0)
+						continue;
+					if (strncmp(dirent->d_name + pos, suffix, ft_strlen(suffix)) == 0)
+					{
+						input.content = dirent->d_name;
+						input.type = token->type;
+						printf("3. input :: %s\n", input.content);////
+					}
+				}
+			}
+			// printf("input :: %s\n", input.content);
+			new = new_token(input);
+			// printf("new :: %s\n", new->content);///
+			if (new->content)
+				add_token(expan_token, new);
+		}
+	}
+	closedir(dir);
+	free(prefix);
+	free(suffix);
+}
+
+static char	*get_prefix(char *str)
+{
+	char	*prefix;
+	int		len;
+
+	if (!str)
+		return (NULL);
+	// printf("str[0] == %c\n", str[0]);
+	len = 0;
+	while (str[len] && str[len] != '*')
+		len++;
+	if (len == 0)
+		return (NULL);
+	printf("prefix len :: %d\n", len);//
+	prefix = (char *)malloc(sizeof(char) * (len + 1 + 1));
+	if (!prefix)
+		return (NULL);
+	ft_strlcpy(prefix, str, len + 1);
+	return (prefix);
+}
+
+static char	*get_suffix(char *str)
+{
+	char	*suffix;
+	int		pre_len;
+	int		suf_len;
+
+	if (!str)
+		return (NULL);
+	pre_len = 0;
+	while (str[pre_len] && str[pre_len] != '*')
+		pre_len++;
+	suf_len = ft_strlen(str) - pre_len - 1;
+	if (suf_len == 0)
+		return (NULL);
+	printf("suffix len :: %d\n", suf_len);//
+	suffix = (char *)malloc(sizeof(char) * (suf_len + 1 + 1));
+	if (!suffix)
+		return (NULL);
+	ft_strlcpy(suffix, str + pre_len + 1, suf_len + 1);
+	return (suffix);
 }

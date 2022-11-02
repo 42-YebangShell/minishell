@@ -82,7 +82,6 @@ int	exec_word_child(t_info *info, t_tree_node *root)
 	}
 	if (root->command)
 	{
-		
 		cmd_list = exec_token_str_list(root->command);
 		cmd = ft_strjoin("/", cmd_list[0]);
 		env = exec_env_str_list();
