@@ -1,12 +1,29 @@
 #include "../../includes/minishell.h"
 
+// static void show_token_list(t_token *list)
+// {
+//     t_token *tmp;
+//     if (!list)
+//         return ;
+//     tmp = list;
+//     while (tmp)
+//     {
+//         printf(":: NOW :: %s\n", tmp->content);
+//         // ft_putstr_fd(tmp->content, STDOUT_FILENO);
+//         // ft_putstr_fd("\n", STDOUT_FILENO);
+//         tmp = tmp->next;
+//     }
+// }
+// /////////////////////
 int	exec_set(char *cmd_line)
 {
 	t_info	info;
 
 	info.h_token = NULL;
-	// replace_dollar
 	tokenizer(&(info.h_token), cmd_line);
+	show_token_list(info.h_token);
+	expand(&(info.h_token));
+	show_token_list(info.h_token);
 	if (check_syntax_error(info.h_token) == SUCCESS && \
 		redir_here_doc_check(&info) == SUCCESS)
 	{

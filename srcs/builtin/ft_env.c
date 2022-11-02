@@ -4,7 +4,6 @@ static void	show_env_list(t_environ *env_list);
 
 int	ft_env(t_token *command)
 {
-	ft_putstr_fd("hello\n", 1);
 	if (command == NULL)
 		return (0);
 	show_env_list(g_var.env_list);

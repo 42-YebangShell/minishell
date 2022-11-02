@@ -1,0 +1,87 @@
+#include "../../includes/minishell.h"
+
+static char *check_expand(char *str);
+static void	expand_replace(char **buff, char *str, int *idx);
+static char	*get_str_env(char *str, int *idx);
+static	int	expand_key_len(char *str);
+
+void	expand(t_token **h_token)
+{
+	t_token	*token;
+
+	token = *h_token;
+	while (token)
+	{
+		if (token->type >= CMD && token->type <= D_QUOTE)
+			token->content = check_expand(token->content);
+		token = token->next;
+	}
+}
+
+static char	*check_expand(char *str)
+{
+	int		i;
+	int		len;
+	char	*buff;
+	char	*env_value;
+
+	i = 0;
+	buff = NULL;
+	while (str[i])
+	{
+		if (str[i] == '$')
+			expand_replace(&buff, &str[i], &i);
+		else
+		{
+			add_char_buff(&buff, str[i]);
+			i++;
+		}
+	}
+	return (buff);
+}
+
+static void	expand_replace(char **buff, char *str, int *idx)
+{
+	char	*value;
+
+	if (str[1] && str[1] == '?')
+	{
+		*idx += 1;
+		add_str_buff(buff, ft_itoa(g_var.status));
+		return ;
+	}
+	if ((str[1] && str[1] == '$') || !str[1])
+	{
+		add_char_buff(buff, str[1]);
+		return ;
+	}
+	value = get_str_env(str, idx);
+	if (value)
+		add_str_buff(buff, value);
+}
+
+static char	*get_str_env(char *str, int *idx)
+{
+	int			len;
+	char		*env_key;
+	t_environ	*env_list;
+
+	len = expand_key_len(&str[1]);
+	*idx += len;
+	env_key = ft_substr(str, 1, len );
+	t_environ	*env_node = get_env_node(env_key);
+	if (!env_node)
+		return (ft_strdup(""));
+	return(ft_strdup(env_node->value));
+}
+
+static	int	expand_key_len(char *str)
+{
+	int	i;
+
+	i = 0;
+	// while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
+	while (str[i] && str[i] != '$')
+		i++;
+	return (i);
+}

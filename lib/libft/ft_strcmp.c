@@ -1,31 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yeblee <yeblee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/24 00:26:18 by marvin            #+#    #+#             */
-/*   Updated: 2022/11/02 16:14:24 by yeblee           ###   ########.fr       */
+/*   Created: 2022/11/02 16:07:15 by yeblee            #+#    #+#             */
+/*   Updated: 2022/11/02 16:11:23 by yeblee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+int	ft_strcmp(char *str1, char *str2)
 {
-	char	*str;
+	int	i;
+	unsigned char	*u1;
+	unsigned char	*u2;
 
-	if (!s1 && !s2)
-		return (NULL);
-	else if (!s1 && s2)
-		return (ft_strdup(s2));
-	else if (s1 && !s2)
-		return (ft_strdup(s1));
-	str = (char *)malloc(sizeof(char) * ((ft_strlen(s1) + ft_strlen(s2)) + 1));
-	if (!str)
-		return (NULL);
-	ft_strlcpy(str, s1, ft_strlen(s1) + 1);
-	ft_strlcat(str, s2, ft_strlen(s1) + ft_strlen(s2) + 1);
-	return (str);
+	i = 0;
+	u1 = (unsigned char *)str1;
+	u2 = (unsigned char *)str2;
+	if (!str1 || !str2)
+		return (1);
+	while (u1[i] || u2[i])
+	{
+		if (u1[i] != u2[i])
+			return ((int)(u1[i] - u2[i]));
+		i++;
+	}
+	return (0);
 }

@@ -27,12 +27,12 @@ GNL				= get_next_line/libgnl.a
 FTPRINT			= ft_printf/libftprintf.a
 HEADERS			= includes
 
-BUILTIN			= ft_echo ft_export ft_unset ft_env ft_pwd ft_cd #ft_exit
+BUILTIN			= ft_echo ft_export ft_unset ft_env ft_pwd ft_cd ft_exit
 ENV				= environ
 EXEC			= execution exec_and_or exec_parens exec_pipe exec_word
 PARSER			= tokenizer check_tokens set_btree
 REDIRECTION		= redirection redir_here_doc
-UTILS			= util_builtin util_error util_exec util_redirection util_signal util_token util_tree utils welcome_screen utils
+UTILS			= util_buff util_builtin util_error util_exec util_expand util_redirection util_signal util_token util_tree utils welcome_screen
 MAIN			= main
 
 SRCS 			= $(addsuffix .c, $(addprefix srcs/, $(MAIN)))			\

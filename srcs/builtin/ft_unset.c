@@ -5,7 +5,6 @@ static void			add_env_node(char *key, char *value, t_environ **env_list);
 static t_environ	*new_env_node(char *key, char *value);
 static int	already_exist(char *key);
 static void	delete_env_node(t_environ **env_list, char *key);
-static t_environ	*get_env_node(char *key);
 
 int	ft_unset(t_token *command)
 {
@@ -66,7 +65,7 @@ static void	delete_env_node(t_environ **env_list, char *key)
 	free(target);
 }
 
-static t_environ	*get_env_node(char *key)
+t_environ	*get_env_node(char *key)
 {
 	t_environ	*tmp;
 

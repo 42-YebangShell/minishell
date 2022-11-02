@@ -9,6 +9,8 @@ int	exec_single_word(t_info *info, t_tree_node *root)
 
 	if (root->type == TN_PARENS)
 		return (exec_parens(root));
+	else if(root->command && (check_builtin(root->command) == EXIT_SUCCESS))
+			return (run_builtin(info, root));
 	else
 	{
 		pid = fork();
@@ -90,7 +92,7 @@ int	exec_word_child(t_info *info, t_tree_node *root)
 		free(cmd);
 		if (execve(path, cmd_list, env) == -1)
 		{
-			error_exit("command not found\n");
+			error_exit("command not found");
 			g_var.status = 127;
 			return (g_var.status);
 		}

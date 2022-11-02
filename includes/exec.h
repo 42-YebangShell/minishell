@@ -5,6 +5,7 @@
 int		exec_set(char *cmd_line);
 void	execution(t_info	*info);
 void	execute_btree_node(t_info *info, t_tree_node *root);
+void	expand(t_token **token);
 
 // exec_parens
 int		exec_parens(t_tree_node *root);
