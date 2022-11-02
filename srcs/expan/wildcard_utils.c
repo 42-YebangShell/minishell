@@ -9,7 +9,6 @@ int	is_aster_token(t_token token)
 	{
 		result = 1;
 	}
-
 	return (result);
 }
 
