@@ -22,13 +22,11 @@ char	*get_prefix(char *str)
 
 	if (!str)
 		return (NULL);
-	// printf("str[0] == %c\n", str[0]);
 	len = 0;
 	while (str[len] && str[len] != '*')
 		len++;
 	if (len == 0)
 		return (NULL);
-	printf("prefix len :: %d\n", len);//
 	prefix = (char *)malloc(sizeof(char) * (len + 1 + 1));
 	if (!prefix)
 		return (NULL);
@@ -50,7 +48,6 @@ char	*get_suffix(char *str)
 	suf_len = ft_strlen(str) - pre_len - 1;
 	if (suf_len == 0)
 		return (NULL);
-	printf("suffix len :: %d\n", suf_len);//
 	suffix = (char *)malloc(sizeof(char) * (suf_len + 1 + 1));
 	if (!suffix)
 		return (NULL);
@@ -74,7 +71,6 @@ void	token_replace(t_token **tokens_list, t_token *target, t_token *expan_tokens
 	}
 	while (tmp)
 	{
-
 		if (tmp->next == target)
 		{
 			tmp2 = tmp->next->next;
