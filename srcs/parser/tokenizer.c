@@ -37,7 +37,7 @@ static void	pass_space(int *idx, char *line)
 	i = *idx;
 	while (line[i])
 	{
-		if (line[i] != (char)' ')
+		if (line[i] != ' ')
 			break ;
 		i++;
 	}

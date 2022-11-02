@@ -101,9 +101,9 @@ char	*exec_rm_char(t_token *token)
 	if (!token->content)
 		return (NULL);
 	content = token->content;
-	if (content[0] != (char)'\'' && \
-		content[0] != (char)'\"' && \
-		content[0] != (char)'(' )
+	if (content[0] != '\'' && \
+		content[0] != '\"' && \
+		content[0] != '(' )
 		return (content);
 	result = malloc(sizeof(char) * (ft_strlen(content) + 2));
 	if (!result)

@@ -19,15 +19,15 @@ int	str_parens(char *str, int i)
 {
 	int	cnt;
 
-	if (str[i] == (char)')')
+	if (str[i] == ')')
 		return (-1);
 	i += 1;
 	cnt = 1;
 	while (cnt && str[i])
 	{
-		if (str[i] == (char)'(')
+		if (str[i] == '(')
 			cnt += 1;
-		else if (str[i] == (char)')')
+		else if (str[i] == ')')
 			cnt -= 1;
 		i++;
 	}

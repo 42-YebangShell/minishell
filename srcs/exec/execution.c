@@ -38,8 +38,8 @@ void	execute_btree_node(t_info *info, t_tree_node *root)
 {
 	if (!root)
 		return ;
-	if (root->type == TN_WORD && root->right == NULL)
-		g_var.status = exec_single_word(info, root);
+	if (root->type == TN_WORD)
+		g_var.status = exec_word(info, root);
 	else if (root->type == TN_PARENS)
 		g_var.status = exec_parens(root);
 	else if (root->type == TN_AND || root->type == TN_OR)

@@ -32,10 +32,8 @@ static char	*check_expand(char *str)
 		if (str[i] == '$')
 			expand_replace(&buff, &str[i], &i);
 		else
-		{
 			add_char_buff(&buff, str[i]);
-			i++;
-		}
+		i++;
 	}
 	return (buff);
 }
@@ -52,7 +50,7 @@ static void	expand_replace(char **buff, char *str, int *idx)
 	}
 	if ((str[1] && str[1] == '$') || !str[1])
 	{
-		add_char_buff(buff, str[1]);
+		add_char_buff(buff, '$');
 		return ;
 	}
 	value = get_str_env(str, idx);

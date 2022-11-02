@@ -6,7 +6,7 @@
 /*   By: yeblee <yeblee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 16:07:15 by yeblee            #+#    #+#             */
-/*   Updated: 2022/11/02 16:11:23 by yeblee           ###   ########.fr       */
+/*   Updated: 2022/11/03 02:38:39 by yeblee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_strcmp(char *str1, char *str2)
 {
-	int	i;
+	int				i;
 	unsigned char	*u1;
 	unsigned char	*u2;
 

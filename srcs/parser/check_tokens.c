@@ -109,7 +109,7 @@ t_token	*check_cmd_or_option(int *i, char *line)
 	buf.type = CMD;
 	if (line[*i] == '-')
 		buf.type = OPTION;
-	len = str_len(line, (char)' ', *i, CMD);
+	len = str_len(line, ' ', *i, CMD);
 	buf.content = ft_substr(line, *i, len - *i);
 	*i = len;
 	new = new_token(buf);
