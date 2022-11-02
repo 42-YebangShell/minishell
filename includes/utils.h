@@ -43,7 +43,6 @@ int			str_len(char *str, char c, int i, int type);
 int			str_parens(char *str, int i);
 void		ft_display_ctrlx_set(int flag);
 int			check_status(int status);
-void		add_str();
 
 void		welcome_screen(void);
 void		add_str_buff(char **buff, char *str);

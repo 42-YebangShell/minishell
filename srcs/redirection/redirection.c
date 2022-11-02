@@ -17,7 +17,7 @@ int	redirection(t_info *info, t_tree_node *root)
 			break ;
 		token = token->next->next;
 	}
- 	return (r_status);
+	return (r_status);
 }
 
 static int	redir_open_fd(t_info *info, t_token *token)
@@ -47,13 +47,10 @@ int	redir_open_file(char *filename, int type)
 	int	fd;
 
 	fd = -1;
-	if (type == INP_RDIR || type == HERE_DOC)
+	if ((type == INP_RDIR || type == HERE_DOC) && (access(filename, F_OK) == 0))
 	{
-		if (access(filename, F_OK) == 0)
-		{
-			fd = open(filename, O_RDONLY | O_CLOEXEC, 0777);
-			dup2(fd, STDIN_FILENO);
-		}
+		fd = open(filename, O_RDONLY | O_CLOEXEC, 0777);
+		dup2(fd, STDIN_FILENO);
 	}
 	else
 	{

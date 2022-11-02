@@ -41,7 +41,7 @@ static void	redir_here_doc_child(char *limiter)
 	hd_fd = open(hd_filename, O_CREAT | O_RDWR | O_TRUNC, 0744);
 	if (hd_fd == -1)
 	{
-		error_exit("ERR) HEREDOC: File creation failed!");
+		ft_perror(hd_filename, ": No such file or directory");
 		exit(EXIT_FAILURE);
 	}
 	line = readline("> ");

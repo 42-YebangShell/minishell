@@ -38,7 +38,7 @@ static int	check_valid_token(t_token *token)
 	{
 		prev = tmp;
 		tmp = tmp->next;
-		if (check_valid_token(prev->type, tmp->type) == FALSE)
+		if (check_valid_next_token(prev->type, tmp->type) == FALSE)
 		{
 			if (prev >= INP_RDIR && prev <= HERE_DOC)
 				ft_perror("syntax error near unexpected token ", tmp->content);
@@ -58,7 +58,9 @@ static int	check_valid_token(t_token *token)
 static int	check_valid_next_token(int prev_type, int cur_type)
 {
 	if (prev_type == CMD && cur_type == PARENS || \
-		prev_type == PARENS && cur_type == CMD)
+		prev_type == PARENS && cur_type == CMD || \
+		prev_type == CMD && cur_type == CMD || \
+		prev_type == PARENS && cur_type == PARENS)
 		return (FALSE);
 	if ((prev_type >= INP_RDIR && prev_type <= HERE_DOC) && \
 		!(cur_type >= CMD && cur_type <= S_QUOTE))

@@ -9,14 +9,11 @@
 # include <signal.h>
 # include <fcntl.h>
 # include <termios.h>
-
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <sys/stat.h>
 # include <dirent.h>
 # include <fcntl.h>
-
-
 # include <readline/readline.h>
 # include <readline/history.h>
 

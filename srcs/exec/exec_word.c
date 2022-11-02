@@ -9,8 +9,8 @@ int	exec_single_word(t_info *info, t_tree_node *root)
 
 	if (root->type == TN_PARENS)
 		return (exec_parens(root));
-	else if(root->command && (check_builtin(root->command) == EXIT_SUCCESS))
-			return (run_builtin(info, root));
+	else if (root->command && (check_builtin(root->command) == EXIT_SUCCESS))
+		return (run_builtin(info, root));
 	else
 	{
 		pid = fork();
@@ -35,8 +35,8 @@ int	exec_word(t_info *info, t_tree_node *root)
 	signal(SIGQUIT, &sig_exec);
 	if (root->type == TN_PARENS)
 		return (exec_parens(root));
-	else if(root->command && (check_builtin(root->command) == EXIT_SUCCESS))
-			return (run_builtin(info, root));
+	else if (root->command && (check_builtin(root->command) == EXIT_SUCCESS))
+		return (run_builtin(info, root));
 	else
 	{
 		pid = fork();
@@ -76,15 +76,10 @@ int	exec_word_child(t_info *info, t_tree_node *root)
 	char	**cmd_list;
 	int		r_status;
 
-	if (root->redir)
-	{
-		r_status = redirection(info, root);
-		if (r_status != EXIT_SUCCESS)
-			return (r_status);
-	}
+	if (redirection(info, root) != EXIT_SUCCESS)
+		return (EXIT_SUCCESS);
 	if (root->command)
 	{
-		
 		cmd_list = exec_token_str_list(root->command);
 		cmd = ft_strjoin("/", cmd_list[0]);
 		env = exec_env_str_list();
@@ -92,9 +87,8 @@ int	exec_word_child(t_info *info, t_tree_node *root)
 		free(cmd);
 		if (execve(path, cmd_list, env) == -1)
 		{
-			error_exit("command not found");
-			g_var.status = 127;
-			return (g_var.status);
+			ft_perror(cmd_list, ": command not found");
+			return (127);
 		}
 	}
 	return (EXIT_SUCCESS);
