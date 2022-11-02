@@ -114,7 +114,8 @@ void	execute_btree_node(t_info *info, t_tree_node *root)
 }
 
 //////////////////////////////////////////////////
-static void	show_list(t_token *list)
+
+static void	show_token_list(t_token *list)
 {
 	t_token *tmp;
 
@@ -123,7 +124,7 @@ static void	show_list(t_token *list)
 	tmp = list;
 	while (tmp)
 	{
-		printf("%s\n", tmp->content);
+		printf(":: NOW :: %s\n", tmp->content);
 		// ft_putstr_fd(tmp->content, STDOUT_FILENO);
 		// ft_putstr_fd("\n", STDOUT_FILENO);
 		tmp = tmp->next;
@@ -144,20 +145,7 @@ static void	aster_replace(t_token **tokens)
 		if (is_aster_token(*tmp))
 		{
 			get_expans_list(tmp, &expan_tokens);
-
-			// show_list(expan_tokens);
-			// if (!expan_tokens)
-			// 	continue ;
-			// itr = expan_tokens;
-			// while (itr->content) //왜 ....??
-			// {
-			// 	printf("\n\ncont :: %s\n", itr->content);
-			// 	itr = itr->next;
-			// }
-			// if (expan_tokens && expan_tokens->content)
-			// {
-			// 	printf("cont :: %s\n", expan_tokens->content);
-			// }
+			show_token_list(expan_tokens);
 			// token_replace(tokens, tmp, expan_tokens);
 		}
 		tmp = tmp->next;
@@ -208,9 +196,14 @@ static void	get_expans_list(t_token *token, t_token **expan_token)
 			{
 				if (ft_strncmp(dirent->d_name, prefix, ft_strlen(prefix)) == 0)
 				{
-					input.content = dirent->d_name;
+					input.content = ft_strdup(dirent->d_name);
 					input.type = token->type;
-					printf("1.input :: %s\n", input.content);////
+					printf("1.input :: %s\n", input.content); ////
+					new = new_token(input);
+					printf("new :: %s\n", new->content); ///
+					if (new->content)
+						add_token(expan_token, new);
+					// show_token_list(*expan_token);
 				}
 			}
 			else if (!prefix && suffix)
@@ -220,9 +213,14 @@ static void	get_expans_list(t_token *token, t_token **expan_token)
 					continue ;
 				if (strncmp(dirent->d_name + pos, suffix, ft_strlen(suffix)) == 0)
 				{
-					input.content = dirent->d_name;
+					input.content = ft_strdup(dirent->d_name);
 					input.type = token->type;
-					printf("2. input :: %s\n", input.content);////
+					printf("2. input :: %s\n", input.content); ////
+					new = new_token(input);
+					printf("new :: %s\n", new->content); ///
+					if (new->content)
+						add_token(expan_token, new);
+					// show_token_list(*expan_token);
 				}
 			}
 			else if (prefix && suffix)
@@ -234,22 +232,23 @@ static void	get_expans_list(t_token *token, t_token **expan_token)
 						continue;
 					if (strncmp(dirent->d_name + pos, suffix, ft_strlen(suffix)) == 0)
 					{
-						input.content = dirent->d_name;
+						input.content = ft_strdup(dirent->d_name);
 						input.type = token->type;
 						printf("3. input :: %s\n", input.content);////
+						new = new_token(input);
+						printf("new :: %s\n", new->content); ///
+						if (new->content)
+							add_token(expan_token, new);
+						// show_token_list(*expan_token);
 					}
 				}
 			}
-			// printf("input :: %s\n", input.content);
-			new = new_token(input);
-			// printf("new :: %s\n", new->content);///
-			if (new->content)
-				add_token(expan_token, new);
 		}
 	}
+	printf("\n\n");
+	// show_token_list(*expan_token);
 	closedir(dir);
-	free(prefix);
-	free(suffix);
+	// show_token_list(*expan_token); //왜 클로즈한다음에는 에러나지..? 이유는 dirent->d_name을 dup 안하고 그대로 썼기 때문
 }
 
 static char	*get_prefix(char *str)

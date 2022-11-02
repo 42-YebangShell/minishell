@@ -36,7 +36,7 @@ void	add_token(t_token **token_list, t_token *new)
 t_token	*get_last_token(t_token *tokens)
 {
 	if (!tokens)
-		return (NULL);
+		return (NULL); //추가
 	while (tokens)
 	{
 		if (!tokens->next)
