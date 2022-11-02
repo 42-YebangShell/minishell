@@ -54,8 +54,24 @@
 // 	return (result);
 // }
 
+//////////////////////////////////////////////////
 
+static void	show_token_list(t_token *list)
+{
+	t_token *tmp;
 
+	if (!list)
+		return ;
+	tmp = list;
+	while (tmp)
+	{
+		printf(":: NOW :: %s\n", tmp->content);
+		// ft_putstr_fd(tmp->content, STDOUT_FILENO);
+		// ft_putstr_fd("\n", STDOUT_FILENO);
+		tmp = tmp->next;
+	}
+}
+///////////////////////////////////////////////////////
 
 //end
 static void get_expans_list(t_token *token, t_token **expan_token);
@@ -63,8 +79,8 @@ static void	aster_replace(t_token **tokens);
 static int	is_aster_token(t_token token);
 static char	*get_prefix(char *str);
 static char	*get_suffix(char *str);
-
-
+static void	token_replace(t_token **tokens_list, t_token *target, t_token *expan_tokens);
+static t_token	*ft_tokenlast(t_token *lst);
 
 int	exec_set(char *cmd_line)
 {
@@ -73,6 +89,7 @@ int	exec_set(char *cmd_line)
 	info.h_token = NULL;
 	tokenizer(&(info.h_token), cmd_line);
 	aster_replace(&(info.h_token));/// added
+	show_token_list(info.h_token);
 	if (check_syntax_error(info.h_token) == SUCCESS && \
 		redir_here_doc_check(&info) == SUCCESS)
 	{
@@ -113,31 +130,15 @@ void	execute_btree_node(t_info *info, t_tree_node *root)
 		g_var.status = exec_pipe(info, root);
 }
 
-//////////////////////////////////////////////////
 
-static void	show_token_list(t_token *list)
-{
-	t_token *tmp;
-
-	if (!list)
-		return ;
-	tmp = list;
-	while (tmp)
-	{
-		printf(":: NOW :: %s\n", tmp->content);
-		// ft_putstr_fd(tmp->content, STDOUT_FILENO);
-		// ft_putstr_fd("\n", STDOUT_FILENO);
-		tmp = tmp->next;
-	}
-}
 ////////////////////////////////////////////////////
-static void	aster_replace(t_token **tokens)
+static void	aster_replace(t_token **tokens_list)
 {
 	t_token	*tmp;
 	t_token *itr;
 	t_token			*expan_tokens;
 
-	tmp = *tokens;
+	tmp = *tokens_list;
 	expan_tokens = NULL;
 	while (tmp)
 	{
@@ -145,8 +146,8 @@ static void	aster_replace(t_token **tokens)
 		if (is_aster_token(*tmp))
 		{
 			get_expans_list(tmp, &expan_tokens);
-			show_token_list(expan_tokens);
-			// token_replace(tokens, tmp, expan_tokens);
+			// show_token_list(expan_tokens);
+			token_replace(tokens_list, tmp, expan_tokens);
 		}
 		tmp = tmp->next;
 	}
@@ -292,4 +293,39 @@ static char	*get_suffix(char *str)
 		return (NULL);
 	ft_strlcpy(suffix, str + pre_len + 1, suf_len + 1);
 	return (suffix);
+}
+
+
+static void	token_replace(t_token **tokens_list, t_token *target, t_token *expan_tokens)
+{
+	t_token	*tmp;
+	t_token *tmp2;
+	t_token *tmp3;
+
+	tmp = *tokens_list;
+	if (tmp == target && tmp->next == NULL)
+	{
+		*tokens_list = expan_tokens;
+	}
+	while (tmp)
+	{
+
+		if (tmp->next == target)
+		{
+			tmp2 = tmp->next->next;
+			tmp->next = expan_tokens;
+			tmp3 = ft_tokenlast(expan_tokens);
+			tmp3->next = tmp2;
+		}
+		tmp = tmp->next;
+	}
+}
+
+static t_token	*ft_tokenlast(t_token *lst)
+{
+	if (lst == NULL)
+		return (NULL);
+	while (lst->next != NULL)
+		lst = lst->next;
+	return (lst);
 }
