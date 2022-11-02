@@ -305,6 +305,8 @@ static void	token_replace(t_token **tokens_list, t_token *target, t_token *expan
 	t_token *tmp2;
 	t_token *tmp3;
 
+	if (expan_tokens == NULL)
+		return ;
 	tmp = *tokens_list;
 	if (tmp == target && tmp->next == NULL)
 	{
