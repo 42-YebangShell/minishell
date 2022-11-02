@@ -9,6 +9,8 @@ int	main(int ac, char **av, char **envp)
 	(void)av;
 	g_var.hd_cnt = 0;
 	g_var.status = 0;
+	g_var.old_std_fdin = dup(STDIN_FILENO);
+	g_var.old_std_fdout = dup(STDOUT_FILENO);
 	g_var.env_list = get_envp_list(envp);
 	welcome_screen();
 	if (tcgetattr(STDIN_FILENO, &g_var.display_set) == ERROR)
@@ -27,6 +29,8 @@ static void	shell_loop(void)
 
 	while (1)
 	{
+		dup2(g_var.old_std_fdin, STDIN_FILENO);
+		dup2(g_var.old_std_fdout, STDOUT_FILENO);
 		cmd_line = set_read_line(&info);
 		add_history(cmd_line);
 		g_var.status = exec_set(cmd_line);

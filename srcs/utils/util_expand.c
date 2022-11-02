@@ -1,6 +1,6 @@
 #include "../../includes/minishell.h"
 
-static char *check_expand(char *str);
+static char	*check_expand(char *str);
 static void	expand_replace(char **buff, char *str, int *idx);
 static char	*get_str_env(char *str, int *idx);
 static	int	expand_key_len(char *str);
@@ -65,22 +65,22 @@ static char	*get_str_env(char *str, int *idx)
 	int			len;
 	char		*env_key;
 	t_environ	*env_list;
+	t_environ	*env_node;
 
 	len = expand_key_len(&str[1]);
 	*idx += len;
-	env_key = ft_substr(str, 1, len );
-	t_environ	*env_node = get_env_node(env_key);
+	env_key = ft_substr(str, 1, len);
+	env_node = get_env_node(env_key);
 	if (!env_node)
 		return (ft_strdup(""));
-	return(ft_strdup(env_node->value));
+	return (ft_strdup(env_node->value));
 }
 
-static	int	expand_key_len(char *str)
+static int	expand_key_len(char *str)
 {
 	int	i;
 
 	i = 0;
-	// while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
 	while (str[i] && str[i] != '$')
 		i++;
 	return (i);
