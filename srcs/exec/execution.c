@@ -15,15 +15,17 @@
 //     }
 // }
 // /////////////////////
+
 int	exec_set(char *cmd_line)
 {
 	t_info	info;
 
 	info.h_token = NULL;
 	tokenizer(&(info.h_token), cmd_line);
-	show_token_list(info.h_token);
+	// show_token_list(info.h_token);
 	expand(&(info.h_token));
-	show_token_list(info.h_token);
+	// show_token_list(info.h_token);
+	aster_replace(&(info.h_token));
 	if (check_syntax_error(info.h_token) == SUCCESS && \
 		redir_here_doc_check(&info) == SUCCESS)
 	{

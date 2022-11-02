@@ -30,6 +30,7 @@ HEADERS			= includes
 BUILTIN			= ft_echo ft_export ft_unset ft_env ft_pwd ft_cd ft_exit
 ENV				= environ
 EXEC			= execution exec_and_or exec_parens exec_pipe exec_word
+EXPAN			= wildcard wildcard_utils wildcard_caseby
 PARSER			= tokenizer check_tokens set_btree
 REDIRECTION		= redirection redir_here_doc
 UTILS			= util_buff util_builtin util_error util_exec util_expand util_redirection util_signal util_token util_tree utils welcome_screen
@@ -38,6 +39,7 @@ MAIN			= main
 SRCS 			= $(addsuffix .c, $(addprefix srcs/, $(MAIN)))			\
 				$(addsuffix .c, $(addprefix srcs/env/, $(ENV)))			\
 				$(addsuffix .c, $(addprefix srcs/exec/, $(EXEC)))		\
+				$(addsuffix .c, $(addprefix srcs/expan/, $(EXPAN)))		\
 				$(addsuffix .c, $(addprefix srcs/utils/, $(UTILS)))		\
 				$(addsuffix .c, $(addprefix srcs/parser/, $(PARSER)))	\
 				$(addsuffix .c, $(addprefix srcs/builtin/, $(BUILTIN)))	\
