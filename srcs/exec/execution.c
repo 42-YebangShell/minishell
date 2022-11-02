@@ -89,7 +89,7 @@ int	exec_set(char *cmd_line)
 	info.h_token = NULL;
 	tokenizer(&(info.h_token), cmd_line);
 	aster_replace(&(info.h_token));/// added
-	show_token_list(info.h_token);
+	// show_token_list(info.h_token);
 	if (check_syntax_error(info.h_token) == SUCCESS && \
 		redir_here_doc_check(&info) == SUCCESS)
 	{

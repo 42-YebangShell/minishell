@@ -1,6 +1,7 @@
 #include "../../includes/minishell.h"
 
 static void	get_expans_list(t_token *token, t_token **expan_token);
+static int case_zero(char *d_name, t_token *token, t_token **expan_token);
 static int case_one(char *d_name, char *prefix, t_token *token, t_token **expan_token);
 static int	case_two(char *d_name, char *suffix, t_token *token, t_token **expan_token);
 static int case_three(char *d_name, char *prefix, char *suffix, t_token *token, t_token **expan_token);
@@ -15,7 +16,7 @@ void	aster_replace(t_token **tokens_list)
 	expan_tokens = NULL;
 	while (tmp)
 	{
-		printf("tmp content :: :: %s\n", tmp->content);
+		// printf("tmp content :: :: %s\n", tmp->content);
 		if (is_aster_token(*tmp))
 		{
 			get_expans_list(tmp, &expan_tokens);
@@ -49,7 +50,8 @@ static void	get_expans_list(t_token *token, t_token **expan_token)
 		else
 		{
 			if (!prefix && !suffix)
-				continue ;
+				case_zero(dirent->d_name, token, expan_token);
+				// continue ;
 			else if (prefix && !suffix)
 			{
 				case_one(dirent->d_name, prefix, token, expan_token);
@@ -102,8 +104,24 @@ static void	get_expans_list(t_token *token, t_token **expan_token)
 			}
 		}
 	}
-	printf("\n\n");
+	// printf("\n\n");
 	closedir(dir);
+}
+
+static int case_zero(char *d_name, t_token *token, t_token **expan_token)
+{
+		int		pos;
+		t_token *new;
+		t_token input;
+		int res;
+
+		input.content = ft_strdup(d_name);
+		input.type = token->type;
+		new = new_token(input);
+		if (new->content)
+			add_token(expan_token, new);
+		return (res);
+
 }
 
 static int case_one(char *d_name, char *prefix, t_token *token, t_token **expan_token)

@@ -5,13 +5,11 @@ int	is_aster_token(t_token token)
 	int		result;
 
 	result = 0;
-	if (ft_strncmp(token.content, "*", 2) != 0)
+	if (ft_strchr(token.content, '*'))
 	{
-		if (ft_strchr(token.content, '*'))
-		{
-			result = 1;
-		}
+		result = 1;
 	}
+
 	return (result);
 }
 
