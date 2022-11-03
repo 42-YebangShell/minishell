@@ -12,7 +12,7 @@ int	ft_env(t_token *command)
 
 static void	show_env_list(t_environ *env_list)
 {
-	t_environ *tmp;
+	t_environ	*tmp;
 
 	tmp = env_list;
 	while (tmp)
