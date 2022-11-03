@@ -4,9 +4,11 @@ int	exec_word(t_info *info, t_tree_node *root)
 {
 	pid_t	pid;
 	int		status;
+	int		p_status;
 
 	signal(SIGINT, &sig_exec);
 	signal(SIGQUIT, &sig_exec);
+	p_status = EXIT_SUCCESS;
 	if (root->type == TN_PARENS)
 		return (exec_parens(root));
 	else if (root->command && (check_builtin(root->command) == EXIT_SUCCESS))
@@ -21,8 +23,8 @@ int	exec_word(t_info *info, t_tree_node *root)
 			status = exec_word_child(info, root);
 			exit(status);
 		}
-		waitpid(pid, &g_var.status, 0);
-		return (check_status(g_var.status));
+		waitpid(pid, &p_status, 0);
+		return (check_status(p_status));
 	}
 }
 
