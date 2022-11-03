@@ -1,5 +1,5 @@
 #include "../../includes/minishell.h"
-//status 받아와야 함...
+
 int	ft_exit(t_token *command)
 {
 	int		code;

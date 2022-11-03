@@ -1,10 +1,5 @@
 #include "../../includes/minishell.h"
 
-static void			add_env_node(char *key, char *value, t_environ **env_list);
-static t_environ	*new_env_node(char *key, char *value);
-static void			lstadd_env_node(t_environ **env_list, t_environ *new);
-static t_environ	*last_env_node(t_environ *env_list);
-
 t_environ	*get_envp_list(char **env)
 {
 	int			i;
@@ -28,7 +23,7 @@ t_environ	*get_envp_list(char **env)
 	return (env_list);
 }
 
-static void	add_env_node(char *key, char *value, t_environ **env_list)
+void	add_env_node(char *key, char *value, t_environ **env_list)
 {
 	t_environ	*new;
 
@@ -41,7 +36,7 @@ static void	add_env_node(char *key, char *value, t_environ **env_list)
 	lstadd_env_node(env_list, new);
 }
 
-static t_environ	*new_env_node(char *key, char *value)
+t_environ	*new_env_node(char *key, char *value)
 {
 	t_environ	*new_lst;
 
@@ -54,7 +49,7 @@ static t_environ	*new_env_node(char *key, char *value)
 	return (new_lst);
 }
 
-static void	lstadd_env_node(t_environ **env_list, t_environ *new)
+void	lstadd_env_node(t_environ **env_list, t_environ *new)
 {
 	t_environ	*tmp;
 	t_environ	*tmp2;
@@ -72,7 +67,7 @@ static void	lstadd_env_node(t_environ **env_list, t_environ *new)
 	tmp->next = new;
 }
 
-static t_environ	*last_env_node(t_environ *env_list)
+t_environ	*last_env_node(t_environ *env_list)
 {
 	t_environ	*tmp;
 

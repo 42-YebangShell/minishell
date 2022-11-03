@@ -1,8 +1,5 @@
 #include "../../includes/minishell.h"
 
-// static void	set_env_var(t_token *key_val);
-static void			add_env_node(char *key, char *value, t_environ **env_list);
-static t_environ	*new_env_node(char *key, char *value);
 static int	already_exist(char *key);
 static void	delete_env_node(t_environ **env_list, char *key);
 
