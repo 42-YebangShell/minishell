@@ -5,6 +5,7 @@ int	exec_parens(t_tree_node *root)
 	pid_t	pid;
 	int		status;
 	char	*cmd_line;
+	pid_t	pid;
 
 	status = 0;
 	cmd_line = exec_rm_char(root->tokens);
