@@ -39,7 +39,7 @@ char	**exec_env_str_list(void)
 	}
 	env = malloc(sizeof(char *) * (i + 1));
 	if (env == NULL)
-		g_var.status = EXIT_FAILURE;
+		exit(EXIT_FAILURE);
 	exec_make_env_str(env);
 	return (env);
 }
