@@ -6,7 +6,7 @@ int	exec_parens(t_tree_node *root)
 	int		status;
 	char	*cmd_line;
 
-	status = 0;
+	status = EXIT_SUCCESS;
 	cmd_line = exec_rm_char(root->tokens);
 	pid = fork();
 	if (pid == -1)
@@ -14,8 +14,8 @@ int	exec_parens(t_tree_node *root)
 	if (pid == 0)
 	{
 		if (cmd_line)
-			status = exec_set(cmd_line);
-		exit(0);
+			exec_set(cmd_line);
+		exit(EXIT_FAILURE);
 	}
 	waitpid(pid, &status, 0);
 	return (status);
