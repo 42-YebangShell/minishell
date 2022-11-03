@@ -15,6 +15,6 @@ t_token	*ft_tokenlast(t_token *lst);
 int		case_zero(char *d_name, t_token *token, t_token **expan_token);
 int		case_one(char *d_name, char *prefix, t_token *token, t_token **expan_token);
 int		case_two(char *d_name, char *suffix, t_token *token, t_token **expan_token);
-int		case_three(char *d_name, char *prefix, char *suffix, t_token *token, t_token **expan_token);
+int		case_three(char *d_name, t_aster *ast, t_token *token, t_token **expan_token);
 
 #endif

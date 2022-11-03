@@ -52,27 +52,26 @@ char	*get_suffix(char *str)
 	return (suffix);
 }
 
-
-void	token_replace(t_token **tokens_list, t_token *target, t_token *expan_tokens)
+void	token_replace(t_token **toklst, t_token *target, t_token *expans)
 {
 	t_token	*tmp;
-	t_token *tmp2;
-	t_token *tmp3;
+	t_token	*tmp2;
+	t_token	*tmp3;
 
-	if (expan_tokens == NULL)
+	if (expans == NULL)
 		return ;
-	tmp = *tokens_list;
+	tmp = *toklst;
 	if (tmp == target && tmp->next == NULL)
 	{
-		*tokens_list = expan_tokens;
+		*toklst = expans;
 	}
 	while (tmp)
 	{
 		if (tmp->next == target)
 		{
 			tmp2 = tmp->next->next;
-			tmp->next = expan_tokens;
-			tmp3 = ft_tokenlast(expan_tokens);
+			tmp->next = expans;
+			tmp3 = ft_tokenlast(expans);
 			tmp3->next = tmp2;
 		}
 		tmp = tmp->next;

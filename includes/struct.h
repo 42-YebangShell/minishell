@@ -52,4 +52,10 @@ typedef struct s_pipe
 	int		status;
 }	t_pipe;
 
+typedef struct s_aster
+{
+	char	*prefix;
+	char	*suffix;
+}	t_aster;
+
 #endif
