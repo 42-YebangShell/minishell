@@ -1,6 +1,6 @@
 #include "../../includes/minishell.h"
 
-void	exec_and_or(t_info *info, t_tree_node *root)
+int	exec_and_or(t_info *info, t_tree_node *root)
 {
 	int	status;
 
@@ -13,4 +13,5 @@ void	exec_and_or(t_info *info, t_tree_node *root)
 	if ((root->type == TN_AND && status == EXIT_SUCCESS) || \
 		(root->type == TN_OR && status != EXIT_SUCCESS))
 		execute_btree_node(info, root->right);
+	return (status);
 }

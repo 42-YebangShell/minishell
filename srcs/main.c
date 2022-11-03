@@ -33,7 +33,7 @@ static void	shell_loop(void)
 		dup2(g_var.old_std_fdout, STDOUT_FILENO);
 		cmd_line = set_read_line(&info);
 		add_history(cmd_line);
-		g_var.status = exec_set(cmd_line);
+		exec_set(cmd_line);
 	}
 }
 

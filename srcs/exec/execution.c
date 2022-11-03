@@ -1,6 +1,6 @@
 #include "../../includes/minishell.h"
 
-int	exec_set(char *cmd_line)
+void	exec_set(char *cmd_line)
 {
 	t_info	info;
 
@@ -17,13 +17,9 @@ int	exec_set(char *cmd_line)
 		execution(&info);
 		ft_display_ctrlx_set(NODISPLAY);
 		free(cmd_line);
-		return (EXIT_SUCCESS);
 	}
 	else
-	{
 		delete_token(info.h_token);
-		return (EXIT_FAILURE);
-	}
 }
 
 void	execution(t_info *info)
@@ -43,7 +39,7 @@ void	execute_btree_node(t_info *info, t_tree_node *root)
 	else if (root->type == TN_PARENS)
 		g_var.status = exec_parens(root);
 	else if (root->type == TN_AND || root->type == TN_OR)
-		exec_and_or(info, root);
+		g_var.status = exec_and_or(info, root);
 	else if (root->type == TN_PIPE)
 		g_var.status = exec_pipe(info, root);
 }

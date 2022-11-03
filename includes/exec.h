@@ -2,7 +2,7 @@
 # define EXEC_H
 
 // execution
-int		exec_set(char *cmd_line);
+void	exec_set(char *cmd_line);
 void	execution(t_info	*info);
 void	execute_btree_node(t_info *info, t_tree_node *root);
 
@@ -10,7 +10,7 @@ void	execute_btree_node(t_info *info, t_tree_node *root);
 int		exec_parens(t_tree_node *root);
 
 // exec_and_or
-void	exec_and_or(t_info *info, t_tree_node *root);
+int		exec_and_or(t_info *info, t_tree_node *root);
 
 // exec_pipe
 int		exec_pipe(t_info *info, t_tree_node *root);
