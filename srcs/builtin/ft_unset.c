@@ -71,33 +71,28 @@ static int	is_inside_bad(char *key)
 
 t_environ	*get_env_node(char *key)
 {
-	t_environ	*tmp;
-	char		*new_key;
 	int			i;
 	int			len;
-
-	len = 0;
-	len = ft_strlen(key);
-	if (key[0] == '{' && key[len - 1] == '}')
-	{
-
-		new_key = malloc(sizeof(char) * len - 2 + 1);
-		ft_strlcpy(new_key, key + 1, len - 1);
-		key = new_key;
-		if (is_inside_bad(key))
-		{
-			ft_putstr_fd("bad substitution", STDERR_FILENO);
-			return (NULL);
-		}
-	}
+	t_environ	*tmp;
+	char		*new_key;
 
 	tmp = g_var.env_list;
+	if (key[0] == '{' && key[ft_strlen(key) - 1] == '}')
+	{
+		new_key = malloc(sizeof(char) * (ft_strlen(key) - 1));
+		ft_strlcpy(new_key, key + 1, ft_strlen(key) - 1);
+		if (is_inside_bad(new_key))
+		{
+			ft_perror(ft_strjoin("$", key), ": bad substitution");
+			free(new_key);
+			tmp->value = "-n";
+			return (tmp);
+		}
+	}
 	while (tmp)
 	{
 		if (ft_strncmp(tmp->key, key, ft_strlen(key) + 1) == 0)
-		{
 			return (tmp);
-		}
 		tmp = tmp->next;
 	}
 	return (NULL);

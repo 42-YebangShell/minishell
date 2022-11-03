@@ -48,7 +48,8 @@ static void	expand_replace(char **buff, char *str, int *idx)
 		add_str_buff(buff, ft_itoa(g_var.status));
 		return ;
 	}
-	if ((str[1] && str[1] == '$') || !str[1])
+	if ((str[1] && str[1] == '$') || (str[1] != '{' && \
+		ft_isalnum(str[1]) == 0) || !str[1])
 	{
 		add_char_buff(buff, '$');
 		return ;
@@ -78,40 +79,8 @@ static int	expand_key_len(char *str)
 {
 	int	i;
 
-	// int		len;
-	// char	*new_str;
-	// int		j;
-	// int		k;
-
-	// len = 0;
-	// len = ft_strlen(str);
-	// // if (*str == '{')
-	// // 	flag = 1;
-	// // if (flag)
-	// if (str[1] && str[1] == '{')
-	// {
-	// 	new_str = malloc(sizeof(char) * (len));
-	// 	j = 0;
-	// 	k = 1;
-	// 	while (str[j])
-	// 	{
-	// 		new_str[j] = str[k];
-	// 		i++;
-	// 		j++;
-	// 		if (str[j] == '}')
-	// 			break ;
-	// 	}
-	// 	new_str[i] = '\0';
-	// 	printf("what: %s\n", new_str);
-	// 	*buff = ft_strjoin(*buff, new_str);
-	// }
-	// else
-
 	i = 0;
 	while (str[i] && str[i] != '$')
-	{
-
 		i++;
-	}
 	return (i);
 }
