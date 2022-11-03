@@ -16,7 +16,6 @@ void	exec_and_or(t_info *info, t_tree_node *root);
 int		exec_pipe(t_info *info, t_tree_node *root);
 
 // exec_word
-int		exec_single_word(t_info *info, t_tree_node *root);
 int		exec_word(t_info *info, t_tree_node *root);
 int		exec_word_child(t_info *info, t_tree_node *root);
 int		exec_last_word_child(t_info *info, t_tree_node *root, t_pipe p);

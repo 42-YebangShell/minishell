@@ -35,6 +35,8 @@ void	add_token(t_token **token_list, t_token *new)
 
 t_token	*get_last_token(t_token *tokens)
 {
+	if (!tokens)
+		return (NULL);
 	while (tokens)
 	{
 		if (!tokens->next)
@@ -49,6 +51,7 @@ int	get_token_length(t_token *tokens)
 	int		len;
 	t_token	*tmp;
 
+	len = 0;
 	tmp = tokens;
 	while (tmp)
 	{

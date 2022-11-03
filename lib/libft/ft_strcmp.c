@@ -1,28 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcmpi.c                                       :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yeblee <yeblee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/22 15:10:33 by yeblee            #+#    #+#             */
-/*   Updated: 2022/11/03 02:38:06 by yeblee           ###   ########.fr       */
+/*   Created: 2022/11/02 16:07:15 by yeblee            #+#    #+#             */
+/*   Updated: 2022/11/03 02:38:39 by yeblee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_strcmpi(char *str1, char *str2)
+int	ft_strcmp(char *str1, char *str2)
 {
-	int	i;
+	int				i;
+	unsigned char	*u1;
+	unsigned char	*u2;
 
 	i = 0;
+	u1 = (unsigned char *)str1;
+	u2 = (unsigned char *)str2;
 	if (!str1 || !str2)
 		return (1);
-	while (str1[i] || str2[i])
+	while (u1[i] || u2[i])
 	{
-		if (ft_tolower(str1[i]) != ft_tolower(str2[i]))
-			return (1);
+		if (u1[i] != u2[i])
+			return ((int)(u1[i] - u2[i]));
 		i++;
 	}
 	return (0);

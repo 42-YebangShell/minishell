@@ -6,7 +6,7 @@
 /*   By: yeblee <yeblee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 12:08:56 by yeblee            #+#    #+#             */
-/*   Updated: 2022/08/19 01:20:41 by yeblee           ###   ########.fr       */
+/*   Updated: 2022/11/03 02:38:56 by yeblee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ char	*get_next_line(int fd)
 {
 	static t_gnl_list	head;
 	t_gnl_list			*node;
-	char			*line;
+	char				*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);

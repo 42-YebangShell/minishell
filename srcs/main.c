@@ -9,8 +9,8 @@ int	main(int ac, char **av, char **envp)
 	(void)av;
 	g_var.hd_cnt = 0;
 	g_var.status = 0;
-	g_var.old_std_fdin = dup(STDIN_FILENO);	  //추가
-	g_var.old_std_fdout = dup(STDOUT_FILENO); //추가
+	g_var.old_std_fdin = dup(STDIN_FILENO);
+	g_var.old_std_fdout = dup(STDOUT_FILENO);
 	g_var.env_list = get_envp_list(envp);
 	welcome_screen();
 	if (tcgetattr(STDIN_FILENO, &g_var.display_set) == ERROR)

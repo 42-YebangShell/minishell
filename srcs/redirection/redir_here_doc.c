@@ -2,23 +2,6 @@
 
 static void	redir_here_doc_child(char *limiter);
 
-int	redir_here_doc(void)
-{
-	int		hd_fd;
-	char	*hd_filename;
-
-	// 파일 명 찾는 함수 ?? 로직 추가 필요합니다.. 
-	hd_filename = ft_strjoin(".here_doc", ft_itoa(0));
-	hd_fd = redir_open_file(hd_filename, INP_RDIR);
-	if (hd_fd == -1)
-	{
-		error_exit("ERR) HEREDOC: File creation failed!");
-		return (hd_fd);
-	}
-	dup2(hd_fd, STDIN_FILENO);
-	return (hd_fd);
-}
-
 int	redir_here_doc_file(t_token *token)
 {
 	pid_t	pid;
@@ -26,6 +9,8 @@ int	redir_here_doc_file(t_token *token)
 	char	*limiter;
 
 	limiter = exec_rm_char(token->next);
+	if (!limiter)
+		return (FALSE);
 	pid = fork();
 	if (pid == -1)
 		exit(EXIT_FAILURE);
@@ -40,9 +25,9 @@ int	redir_here_doc_file(t_token *token)
 		signal(SIGINT, SIG_IGN);
 		waitpid(pid, &pid, 0);
 		if (check_status(pid) == 130)
-			return (EXIT_FAILURE);
+			return (FALSE);
 	}
-	return (EXIT_SUCCESS);
+	return (SUCCESS);
 }
 
 static void	redir_here_doc_child(char *limiter)
@@ -55,7 +40,10 @@ static void	redir_here_doc_child(char *limiter)
 	hd_filename = ft_strjoin(".here_doc", ft_itoa(g_var.hd_cnt));
 	hd_fd = open(hd_filename, O_CREAT | O_RDWR | O_TRUNC, 0744);
 	if (hd_fd == -1)
-		error_exit("ERR) HEREDOC: File creation failed!");
+	{
+		ft_perror(hd_filename, ": No such file or directory");
+		exit(EXIT_FAILURE);
+	}
 	line = readline("> ");
 	while (line && ft_strncmp(line, limiter, ft_strlen(limiter)) != 0)
 	{
@@ -65,5 +53,5 @@ static void	redir_here_doc_child(char *limiter)
 		line = readline("> ");
 	}
 	close(hd_fd);
-	exit(EXIT_FAILURE);
+	exit(EXIT_SUCCESS);
 }

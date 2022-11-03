@@ -9,7 +9,11 @@
 # include <signal.h>
 # include <fcntl.h>
 # include <termios.h>
-
+# include <sys/types.h>
+# include <sys/wait.h>
+# include <sys/stat.h>
+# include <dirent.h>
+# include <fcntl.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 
@@ -25,6 +29,7 @@
 # include "builtin.h"
 # include "redirection.h"
 # include "utils.h"
+# include "expans.h"
 
 t_global	g_var;
 void		rl_replace_line(const char *text, int clear_undo);

@@ -2,13 +2,14 @@
 
 int	exec_parens(t_tree_node *root)
 {
+	pid_t	pid;
 	int		status;
 	char	*cmd_line;
 	pid_t	pid;
 
 	status = 0;
 	cmd_line = exec_rm_char(root->tokens);
-	pid = fork(); //괄호 안 exit문제로 자식프로세스일때만 실행 한번만 해주게 함..
+	pid = fork();
 	if (pid == -1)
 		exit(0);
 	if (pid == 0)
