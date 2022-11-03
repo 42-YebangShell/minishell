@@ -5,8 +5,8 @@ static int	cd_chdir(char *cwd, char *path);
 
 int	ft_cd(t_token *command)
 {
-	char	*path;
-	int		res;
+	char		*path;
+	int			res;
 	static char	*cwd;
 	char		*tmp;
 

@@ -62,7 +62,7 @@ static void	put_quote(char *str, int fd)
 	while (*str)
 	{
 		if (*(str + 1) == '\0')
-			break;
+			break ;
 		write(fd, str, 1);
 		str++;
 	}
