@@ -2,20 +2,32 @@
 
 static int	check_option(char *content);
 static void	put_quote(char *str, int fd);
+static void	put_echostr(t_token *tmp);
 
 int	ft_echo(t_token *command)
 {
 	int		option;
 	t_token	*tmp;
 
-	if (command == NULL || command->next == NULL)
+	if (command->next == NULL)
+	{
+		ft_putstr_fd("\n", STDOUT_FILENO);
 		return (0);
+	}
 	if (command->next)
 		option = check_option(command->next->content);
 	if (option)
 		tmp = command->next->next;
 	else
 		tmp = command->next;
+	put_echostr(tmp);
+	if (!option)
+		ft_putstr_fd("\n", STDOUT_FILENO);
+	return (EXIT_SUCCESS);
+}
+
+static void	put_echostr(t_token *tmp)
+{
 	while (tmp)
 	{
 		if (tmp->type == D_QUOTE || tmp->type == S_QUOTE)
@@ -33,9 +45,6 @@ int	ft_echo(t_token *command)
 		}
 		tmp = tmp->next;
 	}
-	if (!option)
-		ft_putstr_fd("\n", STDOUT_FILENO);
-	return (EXIT_SUCCESS);
 }
 
 static int	check_option(char *content)
