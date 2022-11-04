@@ -1,7 +1,6 @@
 #include "../../includes/minishell.h"
 
 static void	show_env_list(t_environ *env_list);
-static void	lstaibangdd_env_node(t_environ **env_list, t_environ *new);
 static int	already_exist(char *key);
 static void	update_env_var(char *key, char *val);
 static void	do_export(t_token *tmp, int i, int flag);
@@ -12,6 +11,8 @@ int	ft_export(t_token *command)
 	int		i;
 	int		flag;
 
+	i = 0;
+	flag = 0;
 	if (command == NULL)
 		return (0);
 	if (command->next == NULL)
@@ -30,8 +31,6 @@ static void	do_export(t_token *tmp, int i, int flag)
 	char	*key;
 	char	*val;
 
-	i = 0;
-	flag = 0;
 	while (tmp->content[i] && tmp->content[i] != '=')
 	{
 		i++;

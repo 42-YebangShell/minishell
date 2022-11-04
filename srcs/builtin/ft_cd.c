@@ -10,6 +10,8 @@ int	ft_cd(t_token *command)
 	static char	*cwd;
 	char		*tmp;
 
+	res = 0;
+	tmp = NULL;
 	cwd = getcwd(NULL, 0);
 	if (command == NULL)
 		return (0);

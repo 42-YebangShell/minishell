@@ -5,7 +5,6 @@ static void	get_expans_list(t_token *token, t_token **expan_token);
 void	aster_replace(t_token **tokens_list)
 {
 	t_token	*tmp;
-	t_token	*itr;
 	t_token	*expan_tokens;
 
 	tmp = *tokens_list;

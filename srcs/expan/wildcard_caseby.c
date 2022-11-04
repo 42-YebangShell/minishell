@@ -2,11 +2,11 @@
 
 int	case_zero(char *d_name, t_token *token, t_token **expan_token)
 {
-	int		pos;
 	t_token	*new;
 	t_token	input;
 	int		res;
 
+	res = 0;
 	input.content = ft_strdup(d_name);
 	input.type = token->type;
 	new = new_token(input);
@@ -17,7 +17,6 @@ int	case_zero(char *d_name, t_token *token, t_token **expan_token)
 
 int	case_one(char *d_name, char *prefix, t_token *token, t_token **expan_token)
 {
-	int		pos;
 	t_token	*new;
 	t_token	input;
 	int		res;

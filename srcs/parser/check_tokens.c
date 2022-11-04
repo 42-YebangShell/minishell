@@ -101,7 +101,6 @@ t_token	*check_redir(int *i, char *line)
 t_token	*check_cmd_or_option(int *i, char *line)
 {
 	int		len;
-	int		type;
 	t_token	buf;
 	t_token	*new;
 

@@ -9,6 +9,7 @@ int	ft_echo(t_token *command)
 	int		option;
 	t_token	*tmp;
 
+	option = 0;
 	if (command->next == NULL)
 	{
 		ft_putstr_fd("\n", STDOUT_FILENO);

@@ -46,22 +46,20 @@ int	exec_last_word_child(t_info *info, t_tree_node *root, t_pipe p)
 
 int	exec_word_child(t_info *info, t_tree_node *root)
 {
-	char	*cmd;
 	char	*path;
 	char	**env;
 	char	**cmd_list;
-	int		r_status;
 
-	r_status = redirection(info, root);
-	if (r_status != EXIT_SUCCESS)
-		return (r_status);
+	if (redirection(info, root) != EXIT_SUCCESS)
+		return (EXIT_FAILURE);
 	if (root->command)
 	{
 		cmd_list = exec_token_str_list(root->command);
-		cmd = ft_strjoin("/", cmd_list[0]);
 		env = exec_env_str_list();
-		path = exec_find_path(cmd, env);
-		free(cmd);
+		if (ft_strchr(cmd_list[0], '/'))
+			path = cmd_list[0];
+		else
+			path = exec_find_path(ft_strjoin("/", cmd_list[0]), env);
 		if (execve(path, cmd_list, env) == -1)
 		{
 			ft_perror(*cmd_list, ": command not found");
