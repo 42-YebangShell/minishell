@@ -22,7 +22,7 @@ int	check_syntax_error(t_token *token)
 		return (FALSE);
 	if (token->type == AND || token->type == OR || token->type == PIPE)
 	{
-		ft_perror("syntax error near unexpected token ", token->content);
+		ft_perror("syntax error near unexpected token `", ft_strjoin(token->content, "\'"));
 		return (FALSE);
 	}
 	return (check_valid_token(token));
@@ -41,15 +41,15 @@ static int	check_valid_token(t_token *token)
 		if (check_valid_next_token(prev->type, tmp->type) == FALSE)
 		{
 			if (prev->type >= INP_RDIR && prev->type <= HERE_DOC)
-				ft_perror("syntax error near unexpected token ", tmp->content);
+				ft_perror("syntax error near unexpected token `", ft_strjoin(tmp->content, "\'"));
 			else
-				ft_perror("syntax error near unexpected token ", prev->content);
+				ft_perror("syntax error near unexpected token `", ft_strjoin(prev->content, "\'"));
 			return (FALSE);
 		}
 	}
 	if (!(tmp->type >= CMD && tmp->type <= S_QUOTE) && tmp->type != PARENS)
 	{
-		ft_perror("syntax error near unexpected token ", tmp->content);
+		ft_perror("syntax error near unexpected token `", ft_strjoin(tmp->content, "\'"));
 		return (FALSE);
 	}
 	return (SUCCESS);
