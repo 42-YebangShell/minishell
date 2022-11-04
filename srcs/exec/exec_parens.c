@@ -15,8 +15,8 @@ int	exec_parens(t_tree_node *root)
 	{
 		if (cmd_line)
 			exec_set(cmd_line);
-		exit(EXIT_FAILURE);
+		exit(EXIT_SUCCESS);
 	}
 	waitpid(pid, &status, 0);
-	return (status);
+	return (check_status(status));
 }
