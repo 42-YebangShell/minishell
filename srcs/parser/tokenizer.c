@@ -1,6 +1,7 @@
 #include "../../includes/minishell.h"
 
 static void	pass_space(int *idx, char *line);
+static void	tab_to_space(char *str);
 
 void	tokenizer(t_token **tokens, char *cmd_line)
 {
@@ -8,7 +9,8 @@ void	tokenizer(t_token **tokens, char *cmd_line)
 	char	*line;
 
 	i = 0;
-	line = ft_strtrim(cmd_line, " 	");
+	tab_to_space(cmd_line);
+	line = ft_strtrim(cmd_line, " ");
 	while (line[i])
 	{
 		if (ft_strchr("\'\"", line[i]))
@@ -36,9 +38,22 @@ static void	pass_space(int *idx, char *line)
 	i = *idx;
 	while (line[i])
 	{
-		if (line[i] != ' ' || line[i] != '	')
+		if (line[i] != ' ')
 			break ;
 		i++;
 	}
 	*idx = i;
+}
+
+static void	tab_to_space(char *str)
+{
+	int		i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == ' ')
+			str[i] = ' ';
+		i++;
+	}
 }
