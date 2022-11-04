@@ -3,7 +3,7 @@
 static char	*check_expand(char *str);
 static void	expand_replace(char **buff, char *str, int *idx);
 static char	*get_str_env(char *str, int *idx);
-static	int	expand_key_len(char *str);
+static	int	expand_key_end(char *str);
 
 void	expand(t_token **h_token)
 {
@@ -58,25 +58,25 @@ static void	expand_replace(char **buff, char *str, int *idx)
 
 static char	*get_str_env(char *str, int *idx)
 {
-	int			len;
+	int			end;
 	char		*env_key;
 	t_environ	*env_node;
 
-	len = expand_key_len(&str[1]);
-	*idx += len;
-	env_key = ft_substr(str, 1, len);
+	end = expand_key_end(&str[1]);
+	*idx += end;
+	env_key = ft_substr(str, 1, end);
 	env_node = get_env_node(env_key);
 	if (!env_node)
 		return (ft_strdup(""));
 	return (ft_strdup(env_node->value));
 }
 
-static int	expand_key_len(char *str)
+static int	expand_key_end(char *str)
 {
 	int	i;
 
 	i = 0;
-	while (str[i] && str[i] != '$')
+	while (str[i] && str[i] != '$' && str[i] != '\"')
 		i++;
 	return (i);
 }
