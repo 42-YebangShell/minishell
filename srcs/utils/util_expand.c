@@ -56,7 +56,6 @@ static void	expand_replace(char **buff, char *str, int *idx)
 		add_str_buff(buff, value);
 }
 
-
 static char	*get_str_env(char *str, int *idx)
 {
 	int			len;

@@ -35,7 +35,7 @@ static int	is_inside_bad(char *key)
 	return (0);
 }
 
-static char *get_envkey(char *key, int len)
+static char	*get_envkey(char *key, int len)
 {
 	char	*new_key;
 
