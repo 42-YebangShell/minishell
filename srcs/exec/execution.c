@@ -19,7 +19,10 @@ void	exec_set(char *cmd_line)
 		free(cmd_line);
 	}
 	else
+	{
+		g_var.status = EXIT_FAILURE;
 		delete_token(info.h_token);
+	}
 }
 
 void	execution(t_info *info)
