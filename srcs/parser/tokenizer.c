@@ -8,7 +8,7 @@ void	tokenizer(t_token **tokens, char *cmd_line)
 	char	*line;
 
 	i = 0;
-	line = ft_strtrim(cmd_line, " ");
+	line = ft_strtrim(cmd_line, " 	");
 	while (line[i])
 	{
 		if (ft_strchr("\'\"", line[i]))
@@ -36,7 +36,7 @@ static void	pass_space(int *idx, char *line)
 	i = *idx;
 	while (line[i])
 	{
-		if (line[i] != ' ')
+		if (line[i] != ' ' || line[i] != '	')
 			break ;
 		i++;
 	}
