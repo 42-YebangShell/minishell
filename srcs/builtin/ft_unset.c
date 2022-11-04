@@ -7,8 +7,6 @@ int	ft_unset(t_token *command)
 {
 	t_token	*tmp;
 	char	*key;
-	int		flag;
-	int		i;
 
 	if (command == NULL || command->next == NULL)
 		return (0);
@@ -44,10 +42,10 @@ static int	already_exist(char *key)
 static void	delete_env_node(t_environ **env_list, char *key)
 {
 	t_environ	*tmp;
-	t_environ	*tmp2;
 	t_environ	*target;
 
 	tmp = *env_list;
+	target = NULL;
 	if (env_list == NULL || target == NULL)
 		return ;
 	target = get_env_node(key);
@@ -71,8 +69,6 @@ static int	is_inside_bad(char *key)
 
 t_environ	*get_env_node(char *key)
 {
-	int			i;
-	int			len;
 	t_environ	*tmp;
 	char		*new_key;
 

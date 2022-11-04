@@ -22,6 +22,7 @@ int	run_builtin(t_info *info, t_tree_node *root)
 {
 	char	*cmd;
 
+	(void)info;
 	if (root && root->command && root->command->content)
 	{
 		cmd = root->command->content;

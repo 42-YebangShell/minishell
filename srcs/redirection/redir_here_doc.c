@@ -5,7 +5,6 @@ static void	redir_here_doc_child(char *limiter);
 int	redir_here_doc_file(t_token *token)
 {
 	pid_t	pid;
-	int		status;
 	char	*limiter;
 
 	limiter = exec_rm_char(token->next);

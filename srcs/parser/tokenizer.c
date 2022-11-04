@@ -24,7 +24,7 @@ void	tokenizer(t_token **tokens, char *cmd_line)
 		pass_space(&i, line);
 		if (!*tokens)
 			break ;
-		if (i > ft_strlen(line))
+		if (i > (int)ft_strlen(line))
 			break ;
 	}
 }
@@ -32,7 +32,6 @@ void	tokenizer(t_token **tokens, char *cmd_line)
 static void	pass_space(int *idx, char *line)
 {
 	int		i;
-	char	*str;
 
 	i = *idx;
 	while (line[i])

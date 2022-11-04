@@ -21,9 +21,7 @@ void	expand(t_token **h_token)
 static char	*check_expand(char *str)
 {
 	int		i;
-	int		len;
 	char	*buff;
-	char	*env_value;
 
 	i = 0;
 	buff = NULL;
@@ -63,7 +61,6 @@ static char	*get_str_env(char *str, int *idx)
 {
 	int			len;
 	char		*env_key;
-	t_environ	*env_list;
 	t_environ	*env_node;
 
 	len = expand_key_len(&str[1]);
