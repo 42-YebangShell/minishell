@@ -52,7 +52,7 @@ static void	tab_to_space(char *str)
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] == ' ')
+		if (str[i] == '\t')
 			str[i] = ' ';
 		i++;
 	}
