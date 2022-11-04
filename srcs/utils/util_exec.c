@@ -62,7 +62,7 @@ char	**exec_token_str_list(t_token *token)
 	tmp = token;
 	while (tmp)
 	{
-		cmd_list[i++] = tmp->content;
+		cmd_list[i++] = exec_rm_char(tmp);
 		tmp = tmp->next;
 	}
 	cmd_list[i] = NULL;

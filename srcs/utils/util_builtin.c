@@ -23,6 +23,8 @@ int	run_builtin(t_info *info, t_tree_node *root)
 	char	*cmd;
 
 	(void)info;
+	if (redirection(info, root) != EXIT_SUCCESS)
+		return (EXIT_FAILURE);
 	if (root && root->command && root->command->content)
 	{
 		cmd = root->command->content;
