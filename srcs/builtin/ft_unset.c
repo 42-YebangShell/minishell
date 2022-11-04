@@ -3,9 +3,6 @@
 static int	already_exist(char *key);
 static void	delete_env_node(t_environ **env_list, char *key);
 
-static int	already_exist(char *key);
-static void	delete_env_node(t_environ **env_list, char *key);
-
 int	ft_unset(t_token *command)
 {
 	t_token	*tmp;
