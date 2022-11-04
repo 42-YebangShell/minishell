@@ -46,8 +46,7 @@ static void	expand_replace(char **buff, char *str, int *idx)
 		add_str_buff(buff, ft_itoa(g_var.status));
 		return ;
 	}
-	if ((str[1] && str[1] == '$') || (str[1] != '{' && \
-		ft_isalnum(str[1]) == 0) || !str[1])
+	if ((str[1] && str[1] == '$') || !str[1])
 	{
 		add_char_buff(buff, '$');
 		return ;
@@ -56,6 +55,7 @@ static void	expand_replace(char **buff, char *str, int *idx)
 	if (value)
 		add_str_buff(buff, value);
 }
+
 
 static char	*get_str_env(char *str, int *idx)
 {

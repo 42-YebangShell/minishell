@@ -28,7 +28,7 @@ FTPRINT			= ft_printf/libftprintf.a
 HEADERS			= includes
 
 BUILTIN			= ft_echo ft_export ft_unset ft_env ft_pwd ft_cd ft_exit
-ENV				= environ
+ENV				= environ get_envnode
 EXEC			= execution exec_and_or exec_parens exec_pipe exec_word
 EXPAN			= wildcard wildcard_utils wildcard_caseby
 PARSER			= tokenizer check_tokens set_btree
