@@ -71,12 +71,14 @@ char	**exec_token_str_list(t_token *token)
 
 char	*exec_find_path(char *cmd, char *envp[])
 {
-	int		i;
-	char	*path;
-	char	**paths;
+	int			i;
+	char		*path;
+	char		**paths;
+	t_environ	*env_path;
 
 	i = 0;
-	if (!get_env_node("PATH"))
+	env_path = get_env_node("PATH");
+	if (!env_path || (env_path && !env_path->value))
 		return (NULL);
 	while (ft_strncmp(envp[i], "PATH", 4))
 		i++;
