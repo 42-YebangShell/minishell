@@ -76,6 +76,8 @@ char	*exec_find_path(char *cmd, char *envp[])
 	char	**paths;
 
 	i = 0;
+	if (!get_env_node("PATH"))
+		return (NULL);
 	while (ft_strncmp(envp[i], "PATH", 4))
 		i++;
 	paths = ft_split(envp[i] + 5, ':');
