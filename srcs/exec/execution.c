@@ -1,9 +1,11 @@
 #include "../../includes/minishell.h"
 
-void	exec_set(char *cmd_line)
+int	exec_set(char *cmd_line)
 {
+	int		status;
 	t_info	info;
 
+	status = EXIT_SUCCESS;
 	info.h_token = NULL;
 	tokenizer(&(info.h_token), cmd_line);
 	expand(&(info.h_token));
@@ -14,29 +16,31 @@ void	exec_set(char *cmd_line)
 		info.r_node = create_btree_node(info.h_token);
 		set_btree_node(&(info.r_node));
 		ft_display_ctrlx_set(DISPLAY);
-		execution(&info);
+		status = execution(&info);
 		ft_display_ctrlx_set(NODISPLAY);
 		free(cmd_line);
 	}
 	else
-	{
-		g_var.status = EXIT_FAILURE;
 		delete_token(info.h_token);
-	}
+	return (status);
 }
 
-void	execution(t_info *info)
+int	execution(t_info *info)
 {
+	int	status;
+
+	status = EXIT_SUCCESS;
 	signal(SIGINT, &sig_exec);
 	signal(SIGQUIT, &sig_exec);
-	execute_btree_node(info, info->r_node);
+	status = execute_btree_node(info, info->r_node);
 	delete_node(info->r_node);
+	return (status);
 }
 
-void	execute_btree_node(t_info *info, t_tree_node *root)
+int	execute_btree_node(t_info *info, t_tree_node *root)
 {
 	if (!root)
-		return ;
+		return (EXIT_FAILURE);
 	if (root->type == TN_WORD)
 		g_var.status = exec_word(info, root);
 	else if (root->type == TN_PARENS)
@@ -45,4 +49,5 @@ void	execute_btree_node(t_info *info, t_tree_node *root)
 		g_var.status = exec_and_or(info, root);
 	else if (root->type == TN_PIPE)
 		g_var.status = exec_pipe(info, root);
+	return (g_var.status);
 }
