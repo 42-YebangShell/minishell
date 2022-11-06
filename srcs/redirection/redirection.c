@@ -1,8 +1,8 @@
 #include "../../includes/minishell.h"
 
-static int	redir_open_fd(t_info *info, t_token *token);
+static int	redir_open_fd(t_token *token);
 
-int	redirection(t_info *info, t_tree_node *root)
+int	redirection(t_tree_node *root)
 {
 	t_token	*token;
 	int		r_status;
@@ -12,7 +12,7 @@ int	redirection(t_info *info, t_tree_node *root)
 	while (token)
 	{
 		if (token->type >= INP_RDIR && token->type <= HERE_DOC)
-			r_status = redir_open_fd(info, token);
+			r_status = redir_open_fd(token);
 		if (r_status != EXIT_SUCCESS)
 			break ;
 		token = token->next->next;
@@ -20,18 +20,16 @@ int	redirection(t_info *info, t_tree_node *root)
 	return (r_status);
 }
 
-static int	redir_open_fd(t_info *info, t_token *token)
+static int	redir_open_fd(t_token *token)
 {
-	int		file_num;
 	int		r_status;
 	char	*filename;
 
-	file_num = redir_here_doc_file_number(info, token);
 	filename = NULL;
 	if (!token->next)
 		return (EXIT_FAILURE);
 	if (token->type == HERE_DOC)
-		filename = ft_strjoin(".here_doc", ft_itoa(file_num));
+		filename = ft_strjoin(".here_doc", ft_itoa(token->hd_num));
 	else
 		filename = token->next->content;
 	if (!filename)

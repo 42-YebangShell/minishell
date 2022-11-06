@@ -15,7 +15,7 @@ int	redir_here_doc_file(t_token *token)
 		exit(EXIT_FAILURE);
 	else if (pid == 0)
 	{
-		signal(SIGINT, &sig_here_doc);
+		signal(SIGINT, sig_here_doc);
 		redir_here_doc_child(limiter);
 		exit(EXIT_FAILURE);
 	}
@@ -46,6 +46,8 @@ static void	redir_here_doc_child(char *limiter)
 	line = readline("> ");
 	while (line && ft_strncmp(line, limiter, ft_strlen(limiter)) != 0)
 	{
+		if (ft_strchr(line, '$'))
+			line = check_expand(line);
 		ft_putstr_fd(line, hd_fd);
 		ft_putstr_fd("\n", hd_fd);
 		free(line);

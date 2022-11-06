@@ -1,6 +1,6 @@
 #include "../../includes/minishell.h"
 
-int	exec_word(t_info *info, t_tree_node *root)
+int	exec_word(t_tree_node *root)
 {
 	pid_t	pid;
 	int		status;
@@ -12,7 +12,7 @@ int	exec_word(t_info *info, t_tree_node *root)
 	if (root->type == TN_PARENS)
 		return (exec_parens(root));
 	else if (root->command && (check_builtin(root->command) == EXIT_SUCCESS))
-		return (run_builtin(info, root));
+		return (run_builtin(root));
 	else
 	{
 		pid = fork();
@@ -20,7 +20,7 @@ int	exec_word(t_info *info, t_tree_node *root)
 			exit(EXIT_FAILURE);
 		else if (pid == 0)
 		{
-			status = exec_word_child(info, root);
+			status = exec_word_child(root);
 			exit(status);
 		}
 		waitpid(pid, &p_status, 0);
@@ -28,7 +28,7 @@ int	exec_word(t_info *info, t_tree_node *root)
 	}
 }
 
-int	exec_last_word_child(t_info *info, t_tree_node *root, t_pipe p)
+int	exec_last_word_child(t_tree_node *root, t_pipe p)
 {
 	dup2(p.prev, STDIN_FILENO);
 	close(p.prev);
@@ -37,20 +37,20 @@ int	exec_last_word_child(t_info *info, t_tree_node *root, t_pipe p)
 	else
 	{
 		if (check_builtin(root->command) == EXIT_SUCCESS)
-			p.status = run_builtin(info, root);
+			p.status = run_builtin(root);
 		else
-			p.status = exec_word_child(info, root);
+			p.status = exec_word_child(root);
 	}
 	return (p.status);
 }
 
-int	exec_word_child(t_info *info, t_tree_node *root)
+int	exec_word_child(t_tree_node *root)
 {
 	char	*path;
 	char	**env;
 	char	**cmd_list;
 
-	if (redirection(info, root) != EXIT_SUCCESS)
+	if (redirection(root) != EXIT_SUCCESS)
 		return (EXIT_FAILURE);
 	if (root->command)
 	{

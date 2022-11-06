@@ -23,6 +23,7 @@ typedef struct s_global
 typedef struct s_token
 {
 	enum e_token_type	type;
+	int					hd_num;
 	char				*content;
 	struct s_token		*next;
 }	t_token;

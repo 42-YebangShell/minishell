@@ -9,6 +9,8 @@ t_token	*new_token(t_token token)
 		return (NULL);
 	new->type = token.type;
 	new->content = token.content;
+	if (token.hd_num)
+		new->hd_num = token.hd_num;
 	return (new);
 }
 

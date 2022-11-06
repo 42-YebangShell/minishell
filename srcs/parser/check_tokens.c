@@ -6,7 +6,7 @@
 /*   By: yeblee <yeblee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 19:28:28 by yeblee            #+#    #+#             */
-/*   Updated: 2022/11/04 19:28:28 by yeblee           ###   ########.fr       */
+/*   Updated: 2022/11/06 17:23:43 by yeblee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ t_token	*check_quote(int *i, char *line)
 			error_exit("minish: syntax error near unexpected token `''");
 		else if (buf.type == D_QUOTE)
 			error_exit("minish: syntax error near unexpected token `\"'");
+		g_var.status = 258;
 		return (new);
 	}
 	buf.content = ft_substr(line, *i, len - *i + 1);
@@ -53,6 +54,7 @@ t_token	*check_parens(int *i, char *line)
 			error_exit("minish: syntax error near unexpected token `('");
 		else if (len < 0)
 			error_exit("minish: syntax error near unexpected token `)'");
+		g_var.status = 258;
 		return (new);
 	}
 	buf.content = ft_substr(line, *i, len - *i);
