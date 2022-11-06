@@ -7,7 +7,7 @@ void		add_char_buff(char **buff, char c);
 
 /* builtin */
 int			check_builtin(t_token *token);
-int			run_builtin(t_info *info, t_tree_node *root);
+int			run_builtin(t_tree_node *root);
 
 /* error */
 void		error_exit(char *str);
