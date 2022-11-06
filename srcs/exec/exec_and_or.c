@@ -2,16 +2,14 @@
 
 int	exec_and_or(t_info *info, t_tree_node *root)
 {
-	int	status;
-
 	if (root->left->type == TN_WORD)
-		status = exec_word(root->left);
+		g_var.status = exec_word(root->left);
 	if (root->left->type == TN_PARENS)
-		status = exec_parens(root->left);
+		g_var.status = exec_parens(root->left);
 	if (root->left->type == TN_PIPE)
-		status = exec_pipe(root->left);
-	if ((root->type == TN_AND && status == EXIT_SUCCESS) || \
-		(root->type == TN_OR && status != EXIT_SUCCESS))
+		g_var.status = exec_pipe(root->left);
+	if ((root->type == TN_AND && g_var.status == EXIT_SUCCESS) || \
+		(root->type == TN_OR && g_var.status != EXIT_SUCCESS))
 		execute_btree_node(info, root->right);
-	return (status);
+	return (g_var.status);
 }
