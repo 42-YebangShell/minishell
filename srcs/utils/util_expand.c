@@ -1,6 +1,5 @@
 #include "../../includes/minishell.h"
 
-static char	*check_expand(char *str);
 static void	expand_replace(char **buff, char *str, int *idx);
 static char	*get_str_env(char *str, int *idx);
 static	int	expand_key_end(char *str);
@@ -18,7 +17,7 @@ void	expand(t_token **h_token)
 	}
 }
 
-static char	*check_expand(char *str)
+char	*check_expand(char *str)
 {
 	int		i;
 	char	*buff;

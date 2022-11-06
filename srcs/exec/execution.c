@@ -22,6 +22,7 @@ int	exec_set(char *cmd_line)
 	}
 	else
 		delete_token(info.h_token);
+	redir_unlink();
 	return (status);
 }
 

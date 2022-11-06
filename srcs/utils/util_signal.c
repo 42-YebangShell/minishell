@@ -4,7 +4,7 @@ void	sig_readline(int signo)
 {
 	if (signo == SIGINT)
 	{
-		g_var.status = 1;
+		g_var.status = EXIT_FAILURE;
 		write(1, "\n", 1);
 		rl_on_new_line();
 		rl_replace_line("", 1);
@@ -28,6 +28,7 @@ void	sig_here_doc(int sig)
 		rl_replace_line("", 0);
 		write(1, "\n", 1);
 		rl_on_new_line();
-		exit(sig + 128);
+		redir_unlink();
+		exit(EXIT_FAILURE);
 	}
 }

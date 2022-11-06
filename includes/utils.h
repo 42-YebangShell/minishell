@@ -23,6 +23,7 @@ char		*exec_rm_char(t_token *token);
 
 /* expand */
 void		expand(t_token **h_token);
+char		*check_expand(char *str);
 
 /* redirection */
 int			redir_here_doc_check(t_info *info);
