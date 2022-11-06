@@ -20,6 +20,8 @@ int	redir_here_doc_check(t_info *info)
 		}
 		here_doc = here_doc->next;
 	}
+	if (!status)
+		g_var.status = EXIT_FAILURE;
 	return (status);
 }
 
