@@ -7,6 +7,7 @@ int	redir_here_doc_check(t_info *info)
 
 	status = SUCCESS;
 	here_doc = info->h_token;
+	g_var.hd_cnt = 0;
 	while (here_doc)
 	{
 		if (here_doc->type == AND || here_doc->type == OR \
